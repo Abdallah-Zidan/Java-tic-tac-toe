@@ -8,18 +8,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="317.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="318.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField layoutX="115.0" layoutY="391.0" prefHeight="26.0" prefWidth="175.0" promptText="Enter your username" />
       <TextField layoutX="115.0" layoutY="445.0" prefHeight="26.0" prefWidth="175.0" promptText="Enter your Password" />
-      <ImageView fitHeight="317.0" fitWidth="317.0">
-         <image>
-            <Image url="@../../../../filast.png" />
-         </image>
-      </ImageView>
       <Label layoutX="28.0" layoutY="391.0" prefHeight="26.0" prefWidth="70.0" text="Username" />
       <Label layoutX="28.0" layoutY="445.0" prefHeight="26.0" prefWidth="70.0" text="Password" />
-      <Button contentDisplay="CENTER" layoutX="118.0" layoutY="503.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="Next" textFill="#4a0404">
+      <Button contentDisplay="CENTER" layoutX="118.0" layoutY="503.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="Go" textFill="#4a0404">
          <font>
             <Font size="14.0" />
          </font>

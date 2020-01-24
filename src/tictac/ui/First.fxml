@@ -5,19 +5,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="317.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="317.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="317.0" fitWidth="317.0">
-         <image>
-            <Image url="@../../../../filast.png" />
-         </image>
-      </ImageView>
-      <Button contentDisplay="CENTER" layoutX="100.0" layoutY="362.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="118.0" text="Register" textAlignment="CENTER" />
-      <Button contentDisplay="CENTER" layoutX="100.0" layoutY="455.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="118.0" text="Login " />
-      <ImageView fitHeight="317.0" fitWidth="317.0">
+      <ImageView fitHeight="317.0" fitWidth="317.0" layoutY="6.0">
          <image>
             <Image url="@filast.png" />
          </image>
       </ImageView>
+      <Button contentDisplay="CENTER" layoutX="94.0" layoutY="392.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="130.0" text="Register New User" textAlignment="CENTER" wrapText="true" />
+      <Button contentDisplay="CENTER" layoutX="94.0" layoutY="481.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="130.0" text="Login" textAlignment="CENTER" />
    </children>
 </AnchorPane>

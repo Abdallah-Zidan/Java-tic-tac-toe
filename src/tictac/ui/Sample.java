@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author zidan
+ * @author nour
  */
 public class Sample extends Application {
     @Override
