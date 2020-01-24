@@ -1,11 +1,11 @@
 package tictac.logic;
 
-import java.util.ArrayList;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.text.Font;
 
 public  class GameTestUi extends BorderPane {
 
@@ -148,6 +148,7 @@ public  class GameTestUi extends BorderPane {
 
     }
     public void setText(Button btn , char sign){
+        btn.setFont(Font.font("verdana", 40));
         btn.setText(String.valueOf(sign));
     }
     public char getButtonSign(Button btn){
@@ -179,5 +180,9 @@ public  class GameTestUi extends BorderPane {
                 buttons[i][j].setText("");
             }
         }
+    }
+    
+    public void highLight(Button btn){
+        btn.setStyle(" -fx-background-color: red;-fx-text-fill: white;");
     }
 }

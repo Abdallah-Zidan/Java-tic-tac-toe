@@ -6,9 +6,7 @@
 package tictac.logic;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
@@ -23,11 +21,10 @@ public class MainTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         GameTestUi ui = new GameTestUi();
-        SingleMode sm = new SingleMode(false, new Player(), PlayerSign.Circle,ui  );
-        sm.startActionHandling();
-      // GameTestUi root=  new GameTestUi();
-   
-          
+      //  SingleMode sm = nnew SingleMode(false, new Player(), PlayerSign.Cross,ui  );
+      TwoPlayersMode tp = new TwoPlayersMode(false, new Player(), PlayerSign.Cross, ui);
+        tp.startActionHandling();
+ 
        Scene scene = new Scene(ui);
        primaryStage.setScene(scene);
        primaryStage.show();

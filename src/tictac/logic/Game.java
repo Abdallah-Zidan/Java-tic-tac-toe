@@ -1,8 +1,10 @@
 package tictac.logic;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import javafx.event.ActionEvent;
+
 import javafx.scene.control.*;
+//import javax.swing.JOptionPane;
 class Player{
     
 }
@@ -12,19 +14,20 @@ class Step{
 }
 
 public abstract class Game {
-    private static Scanner in = new Scanner(System.in);
+  
     protected Board board; //= new Board();
     protected boolean gameEnded; //= false;
     protected boolean myTurn;// = true;
     protected boolean isRecorded ;
     protected Player oppenent;
-    protected PlayerSign oppenentMark ;
-    protected PlayerSign myMark;
-    protected PlayerSign currentPlayerMark;
+    protected char oppenentMark ;
+    protected char myMark;
+   // protected PlayerSign currentPlayerMark;
     protected ArrayList<Step> steps;
     protected Button[][] buttons;
     protected GameTestUi ui;
-    public Game(boolean isRecorded , Player oppenent , PlayerSign myMark , GameTestUi ui  ){
+    protected Position[] winnigPositions = new Position[3];
+    public Game(boolean isRecorded , Player oppenent , char myMark , GameTestUi ui  ){
         this.ui = ui;
         buttons = ui.getBoardButtons();
         gameEnded =false;
@@ -42,39 +45,86 @@ public abstract class Game {
             steps = new ArrayList<Step>();
         }
     }
+    
+     public void startActionHandling(){
+                 
+        
+        //  buttons = ui.getBoardButtons();
+          buttons[0][0].setOnAction((ActionEvent event) -> {
+                    play(0,0);
+                });
+                 buttons[0][1].setOnAction((ActionEvent event) -> {
+                    play(0,1);
+                });
+                  buttons[0][2].setOnAction((ActionEvent event) -> {
+                    play(0,2);
+                });
+                   buttons[1][0].setOnAction((ActionEvent event) -> {
+                    play(1,0);
+                });
+                    buttons[1][1].setOnAction((ActionEvent event) -> {
+                    play(1,1);
+                });
+                     buttons[1][2].setOnAction((ActionEvent event) -> {
+                    play(1,2);
+                });
+                      buttons[2][0].setOnAction((ActionEvent event) -> {
+                    play(2,0);
+                });
+                       buttons[2][1].setOnAction((ActionEvent event) -> {
+                    play(2,1);
+                });
+                        buttons[2][2].setOnAction((ActionEvent event) -> {
+                    play(2,2);
+                });
+     }   
+    
     public GameTestUi getUi(){
         return ui;
     }
-    protected  void evaluateGame(){
-        GameState gameState = board.getGameState();
+    
+    private void disableButtons(){
+        for(int i=0;i<3;i++){
+                for(int j =0 ; j<3 ;j++){
+                    buttons[i][j].setDisable(true);
+                }
+                
+            }
+    }
+    protected  int evaluateGame(){
+        GameState gameState = board.getGameState(myMark , oppenentMark ,winnigPositions);
+        int retval =4;
         gameEnded = true;
         switch(gameState){
-            case CrossWin : 
+            case YouWin: 
                 System.out.println("You Won!");
+                retval =1;
+              
+                 // JOptionPane.showMessageDialog(null, "you win");
+                  disableButtons();
                 break;
-            case CircleWin : 
+            case OppWin : 
                 System.out.println("openent Won!");
+              
+                retval =2;
+               //  JOptionPane.showMessageDialog(null, "oppenent win");
+                  disableButtons();
                 break;
             case Draw : 
                 System.out.println("Draw!");
+                retval =3;
+             //  JOptionPane.showMessageDialog(null, "draw");
+                disableButtons();
                 break;
             default : gameEnded = false;
+                retval =4;
                 break;
         }
+        return retval;
     }
 
     public  Position makeMove(int x , int y){
         Position position = null;
-//        while(true){
-//            System.out.print("Pick 0, 1 or 2 for column: ");
-//            int column = getColOrRow();
-//            System.out.print("Pick 0, 1 or 2 for row: ");
-//            int row = getColOrRow();
-//            position = new Position(column, row);
-//            if(board.isMarked(position))
-//                System.out.println("Already marked!");
-//            else break;
-//        }
         position = new Position(y, x);
         if(board.isMarked(position)){
            position = null;
@@ -82,23 +132,16 @@ public abstract class Game {
          return position;
     }
 
-    private  int getColOrRow(){
-        int ret = -1;
-        while(true){
-            try{
-                ret = Integer.parseInt(in.nextLine());
-            } catch (NumberFormatException e){}
-            if(ret < 0 | ret > 2)
-                System.out.print("\nInvalid input. Please pick 0, 1 or 2: ");
-            else break;
-        }
-        return ret;
-    }
+  
     public void drawBoardOnButtons(Board board){
         ui.resetButtons();
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
-                ui.setText(buttons[i][j],board.getBoard()[j][i]);
+                char sign = board.getBoard()[j][i];
+                if(sign!='e'){
+                    ui.setText(buttons[i][j],sign);
+                }
+                
             }
         }
     }
@@ -122,12 +165,12 @@ final class Position {
     }
 }
 
-enum PlayerSign{
-    Cross, Circle
+class PlayerSign{
+   public static char Cross ='x', Circle ='o';
 }
 
 enum GameState {
-    Incomplete, CrossWin, CircleWin, Draw
+    Incomplete, YouWin, OppWin, Draw
 }
 
 class Board {
@@ -137,12 +180,12 @@ class Board {
         board = new char[3][3];
         for(int y = 0; y < 3; y++)
             for(int x = 0; x < 3; x++)
-                board[x][y] = ' '; //Board initially empty
+                board[x][y] = 'e'; //Board initially empty
     }
     public char[][] getBoard(){
         return board;
     }
-    public Board(Board from, Position position, PlayerSign sign){
+    public Board(Board from, Position position, char sign){
         board = new char[3][3];
         for(int y = 0; y < 3; y++)
             for(int x = 0; x < 3; x++)
@@ -154,37 +197,42 @@ class Board {
         ArrayList<Position> retArr = new ArrayList<Position>();     
         for(int y = 0; y < 3; y++)
             for(int x = 0; x < 3; x++)
-                if(board[x][y] == ' ')
+                if(board[x][y] == 'e')
                     retArr.add(new Position(x, y));
         return retArr;
     }
 
-    public GameState getGameState(){    
-        if(hasWon('x'))
-            return GameState.CrossWin;
-        else if(hasWon('o'))
-            return GameState.CircleWin;
+    public GameState getGameState(char myMark , char oppenentMark , Position[] pos){    
+        if(hasWon(myMark , pos))
+            return GameState.YouWin;
+        else if(hasWon(oppenentMark ,pos))
+            return GameState.OppWin;
         else if(getFreePositions().isEmpty())
             return GameState.Draw;
         else return GameState.Incomplete;
     }
 
-    private boolean hasWon(char sign){ 
+    private boolean hasWon(char sign ,Position[] pos){ 
 	int x,y;
-
+      //  Button[][] btns = ui.getBoardButtons();
 	//Check diagonals
-	if(board[0][0]==sign && board[1][1] == sign && board [2][2]==sign)
-	    return true;
-	if(board[0][2]==sign && board[1][1] == sign && board [2][0]==sign)
-	    return true;
+	if(board[0][0]==sign && board[1][1] == sign && board [2][2]==sign){
+              
+               return true;
+        }
+	 
+	if(board[0][2]==sign && board[1][1] == sign && board [2][0]==sign){
+       
+                 return true;
+        }
+	   
 
 	//Check row
 	for(x=0;x<3;x++){
-	    for(y=0;y<3;y++)
-		if(board[x][y] != sign)
-		    break;
-	    if(y==3)
-		return true;
+            if(board[x][0] == board[x][1] &&board[x][1] ==board[x][2] &&board[x][1] == sign){
+            
+                return true;
+            }
 	}
 
 	//Check col

@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/ITI/Developing%20Applications%20using%20Java%20Programming/Project/Java-tic-tac-toe/src/tictac/game/MainGame.java</file>
-            <file>file:/D:/ITI/Developing%20Applications%20using%20Java%20Programming/Project/Java-tic-tac-toe/src/tictac/controllers/SceneController.java</file>
-            <file>file:/D:/ITI/Developing%20Applications%20using%20Java%20Programming/Project/Java-tic-tac-toe/src/tictac/controllers/StageController.java</file>
+            <file>file:/C:/Users/zidan/Desktop/Java-tic-tac-toe/src/tictac/logic/MainTest.java</file>
+            <file>file:/C:/Users/zidan/Desktop/Java-tic-tac-toe/src/tictac/logic/SingleMode.java</file>
+            <file>file:/C:/Users/zidan/Desktop/Java-tic-tac-toe/src/tictac/logic/Game.java</file>
+            <file>file:/C:/Users/zidan/Desktop/Java-tic-tac-toe/src/tictac/logic/GameTestUi.java</file>
         </group>
     </open-files>
 </project-private>
