@@ -6,12 +6,16 @@
 package tictac.logic;
 
 import java.util.ArrayList;
-import javafx.event.ActionEvent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javax.swing.JOptionPane;
 
 public class SingleMode extends Game{
 
-    public SingleMode(boolean isRecorded, Player oppenent, char myMark , GameTestUi ui ) {
-        super(isRecorded, oppenent, myMark , ui );      
+    public SingleMode(boolean isRecorded, Player oppenent, char myMark , GameTestUi ui , EndGameUi endUi ) {
+        super(isRecorded, oppenent, myMark , ui , endUi);      
     }
     
       private  Board findBestMove(Board board) {
@@ -80,7 +84,7 @@ public class SingleMode extends Game{
   @Override 
   public void play(int x , int y){
         System.out.println(board);
-        
+        int result = 4;
         if(!gameEnded){
             Position position = null;
             if(myTurn){
@@ -91,7 +95,7 @@ public class SingleMode extends Game{
                     
                      myTurn = !myTurn;
                     
-                     evaluateGame() ;
+                   result =  evaluateGame() ;
                 }else{
                     System.out.println("Already marked!");
                 }
@@ -101,16 +105,49 @@ public class SingleMode extends Game{
          
              if(!myTurn && !board.getFreePositions().isEmpty()){
                 board = findBestMove(board);
-                 myTurn = !myTurn;
-               drawBoardOnButtons(board);
+                myTurn = !myTurn;
+                drawBoardOnButtons(board);
                
-               evaluateGame();
+               result =  evaluateGame();
              }
-                 
-           // myTurn = !myTurn;
+          
                 System.out.println(board);
                
         }
+        
+           
+            final Stage endStage = new Stage();
+            endStage.initModality(Modality.APPLICATION_MODAL);
+            endStage.initStyle(StageStyle.UTILITY);
+             Scene  endScene;
+           // myTurn = !myTurn;
+           switch(result){
+               case 1:
+                   //JOptionPane.showMessageDialog(null, "you won");
+                   highlightButtons();
+                  endUi.setMsg("you won");
+                   endScene = new Scene(endUi);
+                  endStage.setScene(endScene);
+                  endStage.show();
+                   break;
+               case 2:
+  
+                   //JOptionPane.showMessageDialog(null, "oppenent won");
+                   highlightButtons();
+                    endUi.setMsg("you lost");
+                    endScene = new Scene(endUi);
+                    endStage.setScene(endScene);
+                   endStage.show();
+                   break;
+               case 3:       
+                   //JOptionPane.showMessageDialog(null, "draw");
+                     endUi.setMsg("Draw");
+                      endScene = new Scene(endUi);
+                    endStage.setScene(endScene);
+                   endStage.show();
+                   break;
+                   
+           }
         
     }
     

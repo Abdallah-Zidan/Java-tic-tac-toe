@@ -21,8 +21,11 @@ public class MainTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         GameTestUi ui = new GameTestUi();
-      //  SingleMode sm = nnew SingleMode(false, new Player(), PlayerSign.Cross,ui  );
-      TwoPlayersMode tp = new TwoPlayersMode(false, new Player(), PlayerSign.Cross, ui);
+        final Stage endStage = new Stage();
+        EndGameUi endUi = new EndGameUi();
+      
+       SingleMode tp= new SingleMode(false, new Player(), PlayerSign.Cross,ui  , endUi );
+     // TwoPlayersMode tp = new TwoPlayersMode(false, new Player(), PlayerSign.Circle, ui);
         tp.startActionHandling();
  
        Scene scene = new Scene(ui);

@@ -6,13 +6,16 @@
 package tictac.logic;
 //
 ///**
+
+import javafx.stage.Stage;
+
 // *
 // * @author zidan
 // */
 public class TwoPlayersMode extends Game {
 
-    public TwoPlayersMode(boolean isRecorded, Player  oppenent, char myMark,GameTestUi ui) {
-        super(isRecorded, oppenent, myMark,ui);
+    public TwoPlayersMode(boolean isRecorded, Player  oppenent, char myMark,GameTestUi ui , EndGameUi endUi) {
+        super(isRecorded, oppenent, myMark,ui,endUi);
     }
 
    
