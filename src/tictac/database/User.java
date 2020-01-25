@@ -22,6 +22,7 @@ public class User {
     private String lname;
     private DBConnection db = new DBConnection();
     
+    public User(){}
     //signup constructor
     public User(String username, String password, String fname, String lname)
     {
@@ -141,7 +142,6 @@ public class User {
     public int getScore(){
         return score;
     }
-    
     //increment score by 3 in case of victory
     public boolean victory() {
         try {
