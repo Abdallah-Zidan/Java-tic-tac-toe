@@ -2,9 +2,12 @@ package tictac.logic;
 
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 class Player{
     
@@ -28,7 +31,7 @@ public abstract class Game {
     protected GameTestUi ui;
     protected Position[] winnigPositions = new Position[3];
     protected EndGameUi endUi;
-    public Game(boolean isRecorded , Player oppenent , char myMark , GameTestUi ui , EndGameUi endUi ){
+    Game(boolean isRecorded , Player oppenent , char myMark , GameTestUi ui , EndGameUi endUi ){
         this.ui = ui;
         this.endUi = endUi;
         buttons = ui.getBoardButtons();
@@ -46,6 +49,7 @@ public abstract class Game {
         if(isRecorded){
             steps = new ArrayList<Step>();
         }
+       
     }
     
     /*
@@ -122,7 +126,7 @@ public abstract class Game {
     }
     
     // check if clicked position is available or not ... if available return it
-    public  Position makeMove(int x , int y){
+   Position makeMove(int x , int y){
         Position position = null;
         position = new Position(y, x);
         if(board.isMarked(position)){
@@ -181,7 +185,36 @@ public abstract class Game {
 	}
     }
     
-    
+    public void showResult(int result){
+         final Stage endStage = new Stage();
+            endStage.initModality(Modality.APPLICATION_MODAL);
+            endStage.initStyle(StageStyle.UTILITY);
+             Scene  endScene;
+
+           switch(result){
+               case 1: 
+                   highlightButtons();
+                  endUi.setMsg("you won");
+                   endScene = new Scene(endUi);
+                  endStage.setScene(endScene);
+                  endStage.show();
+                   break;
+               case 2:
+                   highlightButtons();
+                    endUi.setMsg("you lost");
+                    endScene = new Scene(endUi);
+                    endStage.setScene(endScene);
+                   endStage.show();
+                   break;
+               case 3:       
+                     endUi.setMsg("Draw");
+                      endScene = new Scene(endUi);
+                    endStage.setScene(endScene);
+                   endStage.show();
+                   break;
+                   
+           }
+    }
     
     // abstract method that should be implemented to specify how the game is played in single or two players mode
     abstract public void play(int x , int y);

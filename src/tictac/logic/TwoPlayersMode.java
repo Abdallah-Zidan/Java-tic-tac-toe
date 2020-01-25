@@ -1,28 +1,16 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
+
 package tictac.logic;
-//
-///**
 
-import javafx.stage.Stage;
-
-// *
-// * @author zidan
-// */
 public class TwoPlayersMode extends Game {
 
     public TwoPlayersMode(boolean isRecorded, Player  oppenent, char myMark,GameTestUi ui , EndGameUi endUi) {
         super(isRecorded, oppenent, myMark,ui,endUi);
     }
-
-   
-
+    
     @Override
     public void play(int x , int y) {
          System.out.println(board);
+         int result =4;
         if(!gameEnded){
             Position position = null;
             if(myTurn){
@@ -33,7 +21,7 @@ public class TwoPlayersMode extends Game {
                     
                      myTurn = !myTurn;
                     
-                     evaluateGame() ;
+                    result = evaluateGame() ;
                 }else{
                     System.out.println("Already marked!");
                 }
@@ -46,12 +34,14 @@ public class TwoPlayersMode extends Game {
                     
                      myTurn = !myTurn;
                     
-                     evaluateGame() ;
+                     result = evaluateGame() ;
                 }else{
                     System.out.println("Already marked!");
                 }
             }
         }
+            showResult(result);
+
     }
     
 }

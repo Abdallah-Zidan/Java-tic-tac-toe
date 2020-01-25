@@ -1,21 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tictac.logic;
 
 import java.util.ArrayList;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javax.swing.JOptionPane;
 
 public class SingleMode extends Game{
 
     public SingleMode(boolean isRecorded, Player oppenent, char myMark , GameTestUi ui , EndGameUi endUi ) {
-        super(isRecorded, oppenent, myMark , ui , endUi);      
+        super(isRecorded, oppenent, myMark , ui , endUi);  
     }
     
       private  Board findBestMove(Board board) {
@@ -116,38 +107,7 @@ public class SingleMode extends Game{
         }
         
            
-            final Stage endStage = new Stage();
-            endStage.initModality(Modality.APPLICATION_MODAL);
-            endStage.initStyle(StageStyle.UTILITY);
-             Scene  endScene;
-           // myTurn = !myTurn;
-           switch(result){
-               case 1:
-                   //JOptionPane.showMessageDialog(null, "you won");
-                   highlightButtons();
-                  endUi.setMsg("you won");
-                   endScene = new Scene(endUi);
-                  endStage.setScene(endScene);
-                  endStage.show();
-                   break;
-               case 2:
-  
-                   //JOptionPane.showMessageDialog(null, "oppenent won");
-                   highlightButtons();
-                    endUi.setMsg("you lost");
-                    endScene = new Scene(endUi);
-                    endStage.setScene(endScene);
-                   endStage.show();
-                   break;
-               case 3:       
-                   //JOptionPane.showMessageDialog(null, "draw");
-                     endUi.setMsg("Draw");
-                      endScene = new Scene(endUi);
-                    endStage.setScene(endScene);
-                   endStage.show();
-                   break;
-                   
-           }
+           showResult(result);
         
     }
     
