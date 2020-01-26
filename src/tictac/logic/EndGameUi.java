@@ -1,8 +1,6 @@
 package tictac.logic;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 

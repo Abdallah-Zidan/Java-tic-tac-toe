@@ -47,7 +47,7 @@ public abstract class Game {
              oppenentMark =PlayerSign.Circle;
         }
         if(isRecorded){
-            steps = new ArrayList<Step>();
+            steps = new ArrayList<>();
         }
        
     }
