@@ -23,7 +23,9 @@ public abstract class Game {
     protected boolean gameEnded; //= false;
     protected boolean myTurn;// = true;
     protected boolean isRecorded ;
-    protected Player oppenent;
+    protected String game_type;
+    protected int oppenent_id;
+    protected int user_id;
     protected char oppenentMark ;
     protected char myMark;
     protected ArrayList<Step> steps;
@@ -31,7 +33,7 @@ public abstract class Game {
     protected GameTestUi ui;
     protected Position[] winnigPositions = new Position[3];
     protected EndGameUi endUi;
-    Game(boolean isRecorded , Player oppenent , char myMark , GameTestUi ui , EndGameUi endUi ){
+    Game(boolean isRecorded,String game_type , int  oppenent_id , int user_id, char myMark , GameTestUi ui , EndGameUi endUi ){
         this.ui = ui;
         this.endUi = endUi;
         buttons = ui.getBoardButtons();
@@ -39,7 +41,9 @@ public abstract class Game {
         myTurn = true;
         board = new Board();
         this.isRecorded = isRecorded;
-        this.oppenent = oppenent;
+        this.game_type = game_type;
+        this.oppenent_id = oppenent_id;
+        this.user_id = user_id;
         this.myMark = myMark;
         if(myMark == PlayerSign.Circle){
             oppenentMark =PlayerSign.Cross;

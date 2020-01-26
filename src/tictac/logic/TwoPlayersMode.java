@@ -3,8 +3,8 @@ package tictac.logic;
 
 public class TwoPlayersMode extends Game {
 
-    public TwoPlayersMode(boolean isRecorded, Player  oppenent, char myMark,GameTestUi ui , EndGameUi endUi) {
-        super(isRecorded, oppenent, myMark,ui,endUi);
+    public TwoPlayersMode(boolean isRecorded, int  oppenent_id,int user_id, char myMark,GameTestUi ui , EndGameUi endUi) {
+        super(isRecorded,"dual", oppenent_id,user_id, myMark,ui,endUi);
     }
     
     @Override

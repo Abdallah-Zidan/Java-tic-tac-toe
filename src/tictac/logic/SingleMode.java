@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class SingleMode extends Game{
 
-    public SingleMode(boolean isRecorded, Player oppenent, char myMark , GameTestUi ui , EndGameUi endUi ) {
-        super(isRecorded, oppenent, myMark , ui , endUi);  
+    public SingleMode(boolean isRecorded, int oppenent_id,int user_id, char myMark , GameTestUi ui , EndGameUi endUi ) {
+        super(isRecorded,"solo",oppenent_id,user_id, myMark , ui , endUi);  
     }
     
       private  Board findBestMove(Board board) {

@@ -16,8 +16,8 @@ public class MainTest extends Application {
         final Stage endStage = new Stage();
         EndGameUi endUi = new EndGameUi();
       
-       //SingleMode tp= new SingleMode(false, new Player(), PlayerSign.Cross,ui  , endUi );
-       TwoPlayersMode tp = new TwoPlayersMode(false, new Player(), PlayerSign.Circle, ui,endUi);
+       SingleMode tp= new SingleMode(false, 1,1, PlayerSign.Cross,ui  , endUi );
+      // TwoPlayersMode tp = new TwoPlayersMode(false, 1, PlayerSign.Circle, ui,endUi);
        tp.startActionHandling();
  
        Scene scene = new Scene(ui);
