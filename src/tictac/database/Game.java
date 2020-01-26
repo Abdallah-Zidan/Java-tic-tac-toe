@@ -20,14 +20,10 @@ public class Game {
     private int player_id;
     private String result;
     private char sympol;
+    private int user_id;
     private DBConnection db = new DBConnection();
     
-    public Game(){}
-    public Game(String game_type, char sympol){
-        this.game_type = game_type;
-        this.sympol = sympol;
-    }
-    public Game(String game_type, char sympol, int player_id){
+    public Game(String game_type, char sympol, int player_id, int user_id){
         this.game_type = game_type;
         this.sympol = sympol;
         this.player_id = player_id;
@@ -64,5 +60,8 @@ public class Game {
     }
     public String getResult(){
         return result;
+    }
+    public int getUserId(){
+        return user_id;
     }
 }

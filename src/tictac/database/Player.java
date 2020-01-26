@@ -15,16 +15,19 @@ import java.sql.Statement;
  * @author al-haitham
  */
 public class Player {
+    private int id;
     private String ip_address;
     private String fname;
     private String lname;
+    private int user_id;
     private DBConnection db = new DBConnection();
     
     public Player(){}
-    public Player(String fname, String lname, String ip_address){
+    public Player(String fname, String lname, String ip_address, int user_id){
         this.fname = fname;
         this.lname = lname;
         this.ip_address = ip_address;
+        this.user_id = user_id;
     }
     public Player(String ip_address){
         this.ip_address = ip_address;
@@ -36,7 +39,7 @@ public class Player {
             Connection conn;
             conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "INSERT INTO 'players'('fname', 'lname', 'ip_address') VALUES ('"+fname+"', '"+lname+"', '"+ip_address+"')";
+            String queryString = "INSERT INTO 'players'('fname', 'lname', 'ip_address', 'user_id') VALUES ('"+fname+"', '"+lname+"', '"+ip_address+"', '"+user_id+"')";
             stmt.executeUpdate(queryString);
             stmt.close();
             db.disconnect(conn);
@@ -73,7 +76,8 @@ public class Player {
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
                 setFname(rs.getString("fname"));
-                setLname(rs.getString("lname"));
+                setId(rs.getInt("id"));
+                setUserId(rs.getInt("user_id"));
                 setIpAddress(rs.getString("ip_adress"));
             }
             stmt.close();
@@ -81,6 +85,12 @@ public class Player {
         } catch (SQLException ex) {
         }
         return this;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
+    public void setUserId(int user_id){
+        this.user_id = user_id;
     }
     public void setFname(String fname){
         this.fname = fname;
@@ -91,6 +101,9 @@ public class Player {
     public void setIpAddress(String ip_address){
         this.ip_address = ip_address;
     }
+    public int getId(){
+        return id;
+    }
     public String getFname(){
         return fname;
     }
@@ -99,6 +112,9 @@ public class Player {
     }
     public String getIpAddress(){
         return ip_address;
+    }
+    public int getUserId(){
+        return user_id;
     }
 //    public static void main(String[] args) {
 //        Player player = new Player("test", "test","192.168.1.2");
