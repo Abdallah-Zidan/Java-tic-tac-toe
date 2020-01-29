@@ -58,4 +58,8 @@ public class Step {
     public String getTurn(){
         return turn;
     }
+//    public static void main(String[] args) {
+//        Step step = new Step(3, 3, 1, "mine");
+//        step.save();
+//    }
 }

@@ -116,6 +116,7 @@ public class Player {
     public int getUserId(){
         return user_id;
     }
+    
 //    public static void main(String[] args) {
 //        Player player = new Player("test", "test","192.168.1.2");
 //        boolean x = player.save();
