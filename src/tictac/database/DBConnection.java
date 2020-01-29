@@ -34,4 +34,8 @@ public class DBConnection {
             System.out.println(ex.getMessage());
         }
     }
+    
+    public Connection getConnection(){
+        return conn;
+    }
 }

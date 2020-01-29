@@ -1,5 +1,5 @@
 package tictac.logic;
-
+import tictac.database.*;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -10,19 +10,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 
-class Step{
-    int x;
-    int y ;
-    char mark;
-    public Step(int x,int y , char mark){
-        this.x = x;
-        this.y=y;
-        this.mark = mark;
-    }
-    public int getX(){return x;}
-     public int getY(){return y;}
-      public char getMark(){return mark;}
-}
 
 public abstract class Game {
   
@@ -31,8 +18,8 @@ public abstract class Game {
     protected boolean myTurn;// = true;
     protected boolean isRecorded ;
     protected String game_type;
-    protected int oppenent_id;
-    protected int user_id;
+    protected Player oppenent;
+    protected User user;
     protected char oppenentMark ;
     protected char myMark;
     protected ArrayList<Step> steps;
@@ -40,7 +27,8 @@ public abstract class Game {
     protected GameTestUi ui;
     protected Position[] winnigPositions = new Position[3];
     protected EndGameUi endUi;
-    Game(boolean isRecorded,String gameType , int  oppenent_id , int user_id, char myMark , GameTestUi ui , EndGameUi endUi ){
+    protected int gameId;
+    Game(boolean isRecorded,String gameType , Player  oppenent , User user, char myMark , GameTestUi ui , EndGameUi endUi ){
         this.ui = ui;
         this.endUi = endUi;
         buttons = ui.getBoardButtons();
@@ -49,8 +37,8 @@ public abstract class Game {
         board = new Board();
         this.isRecorded = isRecorded;
         this.game_type = gameType;
-        this.oppenent_id = oppenent_id;
-        this.user_id = user_id;
+        this.oppenent = oppenent;
+        this.user= user;
         this.myMark = myMark;
         if(myMark == PlayerSign.Circle){
             oppenentMark =PlayerSign.Cross;
@@ -153,6 +141,19 @@ public abstract class Game {
             for(int j=0;j<3;j++){
                 char sign = board.getBoard()[j][i];
                 if(sign!='e'){
+                    if( isRecorded){
+                         boolean recorded = false;
+                    for(Step step : steps) {
+                        if(step.getX() == i && step.getY() == j){
+                            recorded = true;
+                            break;
+                        }
+                         }
+                        if(!recorded ){
+                        recordStep(i, j,"oponent");
+                        }
+                    }
+                   
                     ui.setText(buttons[i][j],sign);
                 }
                 
@@ -205,7 +206,10 @@ public abstract class Game {
            switch(result){
                case 1: 
                    highlightButtons();
+                   
                   endUi.setMsg("you won");
+                   saveGame("victory");
+                   user.victory();
                    endScene = new Scene(endUi);
                   endStage.setScene(endScene);
                   endStage.show();
@@ -213,18 +217,46 @@ public abstract class Game {
                case 2:
                    highlightButtons();
                     endUi.setMsg("you lost");
+                     saveGame("loss");
+                     
                     endScene = new Scene(endUi);
                     endStage.setScene(endScene);
                    endStage.show();
                    break;
                case 3:       
                      endUi.setMsg("Draw");
+                     saveGame("draw");
+                     user.draw();
                       endScene = new Scene(endUi);
                     endStage.setScene(endScene);
                    endStage.show();
                    break;
                    
            }
+    }
+    
+    public void saveGame(String result){
+        if(isRecorded){
+            GameModel game = new GameModel(game_type, myMark, oppenent.getId(), user.getId(), 3, result);
+           
+            game.save();
+            gameId = game.getId();
+            saveSteps();
+        }
+    }
+    
+    public void recordStep(int x , int y  , String turn){
+       
+        
+        
+             steps.add(new Step(x , y , 5 ,turn ));
+       
+    }
+    
+    public void saveSteps(){
+        for(Step step : steps){
+            step.save();
+        }
     }
     
     // abstract method that should be implemented to specify how the game is played in single or two players mode

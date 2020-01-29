@@ -20,7 +20,7 @@ public class GameModel {
     private String game_type;
     private int player_id;
     private String result;
-    private char sympol;
+    private String sympol;
     private int user_id;
     private int game_no;
     private DBConnection db = new DBConnection();
@@ -36,7 +36,7 @@ public class GameModel {
      */
     public GameModel(String game_type, char sympol, int player_id, int user_id, int game_no, String result){
         this.game_type = game_type;
-        this.sympol = sympol;
+        this.sympol =String.valueOf(sympol).toLowerCase() ;
         this.player_id = player_id;
         this.result = result;
         this.user_id = user_id;
@@ -60,7 +60,7 @@ public class GameModel {
         }
     }
    
-    public ArrayList<Step> steps(){
+    public  ArrayList<Step> steps(){
         ArrayList<Step> steps = new ArrayList<>();
         try {
             Connection conn = db.connect();
@@ -96,6 +96,35 @@ public class GameModel {
     }
     public int getUserId(){
         return user_id;
+    }
+    
+    public static ArrayList<Step> getSteps(int gameId){
+        ArrayList<Step> steps = new ArrayList<>();
+        DBConnection dbCon = new DBConnection();
+        Connection con = dbCon.connect();
+        Statement stmt =null;
+        try{
+            stmt = con.createStatement();
+            String queryString = "SELECT * FROM steps WHERE game_id ="+gameId;
+             ResultSet rs = stmt.executeQuery(queryString);
+            while (rs.next()) {
+                Step s = new Step(rs.getInt("x"), rs.getInt("y"), rs.getInt("game_id"), rs.getString("turn"));
+                steps.add(s);
+            }
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }finally{
+            try{
+                stmt.close();
+                dbCon.disconnect(con);
+            }catch(SQLException ex){
+                ex.printStackTrace();
+            }
+        }
+        
+        return steps;
+        
     }
 //    public static void main(String[] args) {
 //        GameModel game = new GameModel("dual", 'x', 1, 1, 1, "loss");

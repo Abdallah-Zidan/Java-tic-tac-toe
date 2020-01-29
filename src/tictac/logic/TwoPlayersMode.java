@@ -1,10 +1,10 @@
 
 package tictac.logic;
-
+import tictac.database.*;
 public class TwoPlayersMode extends Game {
 
-    public TwoPlayersMode(boolean isRecorded, int  oppenent_id,int user_id, char myMark,GameTestUi ui , EndGameUi endUi) {
-        super(isRecorded,Constants.DUAL, oppenent_id,user_id, myMark,ui,endUi);
+    public TwoPlayersMode(boolean isRecorded, Player  oppenent,User user, char myMark,GameTestUi ui , EndGameUi endUi) {
+        super(isRecorded,Constants.DUAL, oppenent,user, myMark,ui,endUi);
     }
     
     @Override

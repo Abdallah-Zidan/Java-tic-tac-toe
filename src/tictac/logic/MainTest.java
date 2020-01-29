@@ -1,6 +1,6 @@
 
 package tictac.logic;
-
+import tictac.database.*;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -16,25 +16,23 @@ public class MainTest extends Application {
         GameTestUi ui = new GameTestUi();
         final Stage endStage = new Stage();
         EndGameUi endUi = new EndGameUi();
-      
-       //SingleMode tp= new SingleMode(false, 1,1, PlayerSign.Cross,ui  , endUi );
+        Player p = Player.getPlayer(1);
+        User u = new User("test","test");
+        u.getUserInfo();
+      // SingleMode tp= new SingleMode(true, p,u, PlayerSign.Cross,ui  , endUi );
       // TwoPlayersMode tp = new TwoPlayersMode(false, 1, PlayerSign.Circle, ui,endUi);
+        ArrayList<Step> steps = GameModel.getSteps(5);
+     // tp.startActionHandling();
+       ReplayGame replay = new ReplayGame( null, null, PlayerSign.Cross,5 ,ui);
       
-     //  tp.startActionHandling();
-        ReplayGame replay = new ReplayGame(Constants.SOLO, 1, 1, PlayerSign.Cross, ui, endUi);
-       replay.steps = new ArrayList<>();
      
      
  
        Scene scene = new Scene(ui);
        primaryStage.setScene(scene);
        primaryStage.show();
-        replay.steps.add(new Step(0, 0, 'x'));
-        replay.steps.add(new Step(0, 1, 'o'));
-        replay.steps.add(new Step(1, 1, 'x'));
-        replay.steps.add(new Step(0, 2, 'o'));
-        
-        //replay.startReplay();
+  
+     // replay.startReplay();
     }
     
     

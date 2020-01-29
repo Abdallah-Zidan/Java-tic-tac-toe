@@ -33,6 +33,8 @@ public class User {
         this.fname = fname;
         this.lname = lname;
     }
+    
+  
     //login constructor
     public User(String username, String password)
     {

@@ -32,6 +32,40 @@ public class Player {
     public Player(String ip_address){
         this.ip_address = ip_address;
     }
+    
+    // get a player from database using id
+    public static Player getPlayer(int id){
+       Player p =null ;
+       DBConnection dbCon;
+       dbCon= new DBConnection();
+       dbCon.connect();
+       Connection conn = dbCon.getConnection();
+        Statement stmt =null;
+       try{
+           stmt = conn.createStatement();
+           p = new Player();
+           String queryString = "select id , fname , lname , ip_address , user_id from players where id ="+id;
+           ResultSet result = stmt.executeQuery(queryString);
+           result.next();
+           p.setId(id);
+           p.setFname(result.getString(2));
+           p.setLname(result.getString(3));
+           p.setIpAddress(result.getString(4));
+           p.setUserId(result.getInt(5));
+       }catch(SQLException ex){
+           System.out.println(ex.getMessage());
+       }
+       finally{
+           try{
+               stmt.close();
+               dbCon.disconnect(conn);
+           }catch(SQLException ex){
+               ex.printStackTrace();
+           }
+       }
+       
+       return p;
+    }
     //insert player to database
     public boolean save()
     {
