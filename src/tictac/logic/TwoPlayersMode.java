@@ -4,7 +4,7 @@ package tictac.logic;
 public class TwoPlayersMode extends Game {
 
     public TwoPlayersMode(boolean isRecorded, int  oppenent_id,int user_id, char myMark,GameTestUi ui , EndGameUi endUi) {
-        super(isRecorded,"dual", oppenent_id,user_id, myMark,ui,endUi);
+        super(isRecorded,Constants.DUAL, oppenent_id,user_id, myMark,ui,endUi);
     }
     
     @Override
@@ -27,7 +27,7 @@ public class TwoPlayersMode extends Game {
                 }
             }
             if(!myTurn && !board.getFreePositions().isEmpty()){
-                 position = makeMove(x,y);
+                position = makeMove(x,y);
                 if(position !=null){
                      board = new Board(board, position, oppenentMark);
                      ui.setText(buttons[x][y], oppenentMark);

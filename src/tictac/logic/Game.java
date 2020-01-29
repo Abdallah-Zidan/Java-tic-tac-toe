@@ -9,12 +9,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-class Player{
-    
-}
 
 class Step{
-    
+    int x;
+    int y ;
+    char mark;
+    public Step(int x,int y , char mark){
+        this.x = x;
+        this.y=y;
+        this.mark = mark;
+    }
+    public int getX(){return x;}
+     public int getY(){return y;}
+      public char getMark(){return mark;}
 }
 
 public abstract class Game {
@@ -33,7 +40,7 @@ public abstract class Game {
     protected GameTestUi ui;
     protected Position[] winnigPositions = new Position[3];
     protected EndGameUi endUi;
-    Game(boolean isRecorded,String game_type , int  oppenent_id , int user_id, char myMark , GameTestUi ui , EndGameUi endUi ){
+    Game(boolean isRecorded,String gameType , int  oppenent_id , int user_id, char myMark , GameTestUi ui , EndGameUi endUi ){
         this.ui = ui;
         this.endUi = endUi;
         buttons = ui.getBoardButtons();
@@ -41,7 +48,7 @@ public abstract class Game {
         myTurn = true;
         board = new Board();
         this.isRecorded = isRecorded;
-        this.game_type = game_type;
+        this.game_type = gameType;
         this.oppenent_id = oppenent_id;
         this.user_id = user_id;
         this.myMark = myMark;

@@ -86,20 +86,6 @@ public class Board {
         return false;
     }
 
-    public String toString(){
-        String retString = "\n";
-        for(int y = 0; y < 3; y++){
-            for(int x = 0; x < 3; x++){
-                if(board[x][y] ==  'x' || board[x][y] == 'o')
-                    retString += "["+board[x][y]+"]";
-                else
-                    retString += "[ ]";
-            }
-            retString += "\n";
-        }       
-        return retString;
-    }   
-
 }
 
 
