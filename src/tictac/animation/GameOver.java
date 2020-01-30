@@ -1,14 +1,17 @@
 package tictac.animation;
 
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.AudioClip;
 
 public  class GameOver extends AnchorPane {
 
     protected final ImageView image;
    protected Image win;
     protected Image loss;
+    AudioClip audio;
     public GameOver() {
 
         image = new ImageView();
@@ -32,9 +35,15 @@ public  class GameOver extends AnchorPane {
     public void setState(int state){
         if(state==1){
             image.setImage(win);
+            audio = new AudioClip(getClass().getResource("win.mp3").toString());
         }else{
             image.setImage(loss);
+            audio = new AudioClip(getClass().getResource("lose.wav").toString());
         }
+    }
+    
+    public void playSound(){
+        audio.play();
     }
             
 }

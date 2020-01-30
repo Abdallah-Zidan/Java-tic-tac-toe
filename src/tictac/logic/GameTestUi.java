@@ -5,6 +5,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 
 public class GameTestUi extends BorderPane {
@@ -25,6 +26,7 @@ public class GameTestUi extends BorderPane {
     protected Button twoZero;
     protected Button twoOne;
     protected Button twoTwo;
+    protected AudioClip audio;
 
     public GameTestUi() {
 
@@ -145,7 +147,9 @@ public class GameTestUi extends BorderPane {
         gridPane.getChildren().add(twoZero);
         gridPane.getChildren().add(twoOne);
         gridPane.getChildren().add(twoTwo);
-
+        audio = new AudioClip(getClass().getResource("gameloop.mp3").toString());
+        audio.setCycleCount(1000);
+        audio.play();
     }
 
     public void setText(Button btn, char sign) {
@@ -187,5 +191,11 @@ public class GameTestUi extends BorderPane {
 
     public void highLight(Button btn) {
         btn.setStyle(" -fx-background-color: red;-fx-text-fill: white;");
+    }
+    public void stopSound(){
+        audio.stop();
+    }
+    public void playSound(){
+        audio.play();
     }
 }

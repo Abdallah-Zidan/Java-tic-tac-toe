@@ -218,7 +218,9 @@ public abstract class Game {
         switch (result) {
             case 1:
                 highlightButtons();
+                ui.stopSound();
                 endUi.setState(1);
+                endUi.playSound();
                 saveGame("victory");
                 user.victory();
                 endScene = new Scene(endUi);
@@ -228,22 +230,27 @@ public abstract class Game {
             case 2:
                 highlightButtons();
                 saveGame("loss");
+                ui.stopSound();
                 endUi.setState(2);
+                endUi.playSound();
                 endScene = new Scene(endUi);
                 endStage.setScene(endScene);
                 endStage.show();
                 break;
             case 3:
                 saveGame("draw");
+               
                 user.draw();
+                ui.stopSound();
                 endUi.setState(3);
+                 endUi.playSound();
                 endScene = new Scene(endUi);
                 endStage.setScene(endScene);
                 endStage.show();
                 break;
         }
-        delay = new PauseTransition(Duration.seconds(5));
-        delay.setOnFinished(event -> endStage.close());
+        delay = new PauseTransition(Duration.seconds(4));
+        delay.setOnFinished(event -> {endStage.close();});
         delay.play();
     }
     // save the game if recorded into the database using GameModel
