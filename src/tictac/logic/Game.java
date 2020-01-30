@@ -209,8 +209,9 @@ public abstract class Game {
     // show the game end results to the user
     public void showResult(int result) {
         final Stage endStage = new Stage();
-        endStage.initModality(Modality.APPLICATION_MODAL);
+        endStage.initModality(Modality.WINDOW_MODAL);
         endStage.initStyle(StageStyle.UNDECORATED);
+        endStage.initOwner(ui.getScene().getWindow());
         endStage.setResizable(false);
         Scene endScene;
         PauseTransition delay;
