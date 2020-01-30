@@ -22,6 +22,7 @@ public class User {
     private String password;
     private String fname;
     private String lname;
+    private int game_count;
     private DBConnection db = new DBConnection();
     
     public User(){}
@@ -39,7 +40,7 @@ public class User {
         this.username = username;
         this.password = password;
     }
-    
+    //check if the username already exist in db
     public boolean userExist(String username){
         boolean retval = false;
         try {
@@ -57,7 +58,7 @@ public class User {
         }
         return retval;
     }
-    
+    //check if user is authentic or not
     public boolean isAuthentic(){
         boolean retval = false;
         if (userExist(username)) {
@@ -96,6 +97,7 @@ public class User {
             return false;
         }
     }
+    // can be used with the login constructor to get the user info from database if authenticated
     public User getUserInfo() {
         try {
             Connection conn = db.connect();
@@ -108,12 +110,28 @@ public class User {
                 setUsername(rs.getString("username"));
                 setScore(rs.getInt("score"));
                 setId(rs.getInt("id"));
+                this.game_count = rs.getInt("game_count");
             }
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
         }
         return this;
+    }
+    // to increment the game count for the user before you save the game
+    // and to determine the game_no
+    public void incrementGameCount(){
+        this.game_count ++;
+        try {
+            Connection conn = db.connect();
+            Statement stmt = conn.createStatement();
+            String queryString = "UPDATE users SET game_count = game_count+1  WHERE username = '" + username + "'";
+            stmt.executeUpdate(queryString);
+            stmt.close();
+            db.disconnect(conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
     public void setUsername(String username){
         this.username = username;
@@ -151,6 +169,9 @@ public class User {
     public int getId(){
         return id;
     }
+    public int getGameCount(){
+        return game_count;
+    }
     //increment score by 3 in case of victory
     public boolean victory() {
         try {
@@ -183,6 +204,7 @@ public class User {
             return false;
         }
     }
+    //returns a collection of games that the user played
     public ArrayList<GameModel> games() {
         ArrayList<GameModel> games = new ArrayList<>();
         try {
@@ -201,15 +223,18 @@ public class User {
         }
         return games;
     }
-    public static void main(String[] args) {
-        User user = new User("test", "test");
-        
-        //user.draw();
-        user = user.getUserInfo();
-        ArrayList<GameModel> ar = user.games();
-        
-        for(GameModel game: ar){
-            System.out.println(game.getType());
-        }
-    }
+//    public static void main(String[] args) {
+//        User user = new User("test", "test");
+//        
+//        user.draw();
+//        user = user.getUserInfo();
+//        ArrayList<GameModel> ar = user.games();
+//        
+//        for(GameModel game: ar){
+//            System.out.println(game.getType());
+//        }
+//        user.incrementGameCount();
+//        user = user.getUserInfo();
+//        System.out.println(user.getGameCount()); 
+//    }
 }

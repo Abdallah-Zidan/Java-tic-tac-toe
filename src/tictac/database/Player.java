@@ -50,6 +50,7 @@ public class Player {
             return false;
         }
     }
+    //check if ip already exist in db
     public boolean playerExist(String ip_address){
         boolean retval = false;
         try {
@@ -67,8 +68,9 @@ public class Player {
         }
         return retval;
     }
-    
-    public Player getUserInfo() {
+    //to get player info
+    //to be used with constructor that takes ip only
+    public Player getPlayerInfo() {
         try {
             Connection conn = db.connect();
             Statement stmt = conn.createStatement();
@@ -121,7 +123,7 @@ public class Player {
 //        Player player = new Player("test", "test","192.168.1.2");
 //        boolean x = player.save();
 //
-//        player = player.getUserInfo();
+//        player = player.getPlayerInfo();
 //
 //        System.out.println(player.getIpAddress() + " " + x);
 //    }
