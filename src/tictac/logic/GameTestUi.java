@@ -7,7 +7,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 
-public  class GameTestUi extends BorderPane {
+public class GameTestUi extends BorderPane {
 
     protected final GridPane gridPane;
     protected final ColumnConstraints columnConstraints;
@@ -16,15 +16,15 @@ public  class GameTestUi extends BorderPane {
     protected final RowConstraints rowConstraints;
     protected final RowConstraints rowConstraints0;
     protected final RowConstraints rowConstraints1;
-    protected  Button zeroZero;
-    protected  Button zeroOne;
+    protected Button zeroZero;
+    protected Button zeroOne;
     protected Button zeroTwo;
-    protected  Button oneZero;
-    protected  Button oneOne;
-    protected  Button oneTwo;
+    protected Button oneZero;
+    protected Button oneOne;
+    protected Button oneTwo;
     protected Button twoZero;
-    protected  Button twoOne;
-    protected  Button twoTwo;
+    protected Button twoOne;
+    protected Button twoTwo;
 
     public GameTestUi() {
 
@@ -147,42 +147,45 @@ public  class GameTestUi extends BorderPane {
         gridPane.getChildren().add(twoTwo);
 
     }
-    public void setText(Button btn , char sign){
+
+    public void setText(Button btn, char sign) {
         btn.setFont(Font.font("verdana", 40));
         btn.setText(String.valueOf(sign));
     }
-    public char getButtonSign(Button btn){
+
+    public char getButtonSign(Button btn) {
         return btn.getText().charAt(0);
     }
-    public Button[][] getBoardButtons(){
-        
-       // ArrayList<Button> buttons = new ArrayList<Button>();
-        Button [][] buttons = new  Button[3][3];
+
+    public Button[][] getBoardButtons() {
+
+        // ArrayList<Button> buttons = new ArrayList<Button>();
+        Button[][] buttons = new Button[3][3];
         buttons[0][0] = zeroZero;
         buttons[0][1] = zeroOne;
         buttons[0][2] = zeroTwo;
-        
+
         buttons[1][0] = oneZero;
         buttons[1][1] = oneOne;
         buttons[1][2] = oneTwo;
-        
+
         buttons[2][0] = twoZero;
         buttons[2][1] = twoOne;
         buttons[2][2] = twoTwo;
-        
+
         return buttons;
     }
-    
-    public void resetButtons(){
+
+    public void resetButtons() {
         Button[][] buttons = getBoardButtons();
-        for(int i=0;i<3;i++){
-            for(int j=0 ; j<3;j++){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 buttons[i][j].setText("");
             }
         }
     }
-    
-    public void highLight(Button btn){
+
+    public void highLight(Button btn) {
         btn.setStyle(" -fx-background-color: red;-fx-text-fill: white;");
     }
 }
