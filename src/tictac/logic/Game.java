@@ -10,25 +10,29 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 
+/*
+this is an abstract class thatcontains the main attributes and methods of the game
+regardless of it type
+*/
 
 public abstract class Game {
   
-    protected Board board; //= new Board();
-    protected boolean gameEnded; //= false;
-    protected boolean myTurn;// = true;
-    protected boolean isRecorded ;
-    protected String game_type;
+    protected Board board;   
+    protected boolean gameEnded; 
+    protected boolean myTurn;
+    protected boolean isRecorded ; // if the player wants to record the game or not 
+    // game type : Solo or dual (using Constants.SOLO || Constant.DUAL)
+    protected String game_type; 
     protected Player oppenent;
     protected User user;
-    protected char oppenentMark ;
-    protected char myMark;
-    protected ArrayList<Step> steps;
-    protected Button[][] buttons;
-    protected GameTestUi ui;
-    protected Position[] winnigPositions = new Position[3];
-    protected EndGameUi endUi;
+    protected char oppenentMark ; // ( x or o)
+    protected char myMark;  // ( x or o )
+    protected ArrayList<Step> steps; // the moves in order to replay them later if the game is recorded
+    protected Button[][] buttons; // board buttons in the game play
+    protected GameTestUi ui; // simple ui for testing
+    protected EndGameUi endUi; // what will be shown to the player at the end of the game
     protected int gameId;
-    Game(boolean isRecorded,String gameType , Player  oppenent , User user, char myMark , GameTestUi ui , EndGameUi endUi ){
+    Game(boolean isRecorded,String gameType , Player  oppenent , User user, char myMark , GameTestUi ui ,EndGameUi endUi ){
         this.ui = ui;
         this.endUi = endUi;
         buttons = ui.getBoardButtons();
@@ -98,7 +102,7 @@ public abstract class Game {
     }
     // check if someone won or there is a draw 
     protected  int evaluateGame(){
-        GameState gameState = board.getGameState(myMark , oppenentMark ,winnigPositions);
+        GameState gameState = board.getGameState(myMark , oppenentMark );
         int retval =4;
         gameEnded = true;
         switch(gameState){
@@ -160,7 +164,7 @@ public abstract class Game {
             }
         }
     }
-    
+    // highlight the winning buttons at the end of the game
     public void highlightButtons (){
         // check diagonal 
         if(buttons[0][0].getText().equals(buttons[1][1].getText()) && buttons[0][0].getText().equals(buttons[2][2].getText())){
@@ -197,6 +201,7 @@ public abstract class Game {
 	}
     }
     
+    // show the game end results to the user
     public void showResult(int result){
          final Stage endStage = new Stage();
             endStage.initModality(Modality.APPLICATION_MODAL);
@@ -207,26 +212,30 @@ public abstract class Game {
                case 1: 
                    highlightButtons();
                    
-                  endUi.setMsg("you won");
+                   endUi.setMsg("Victory");
                    saveGame("victory");
                    user.victory();
+                   //  endUi.setState(1);
                    endScene = new Scene(endUi);
-                  endStage.setScene(endScene);
-                  endStage.show();
+                   endStage.setScene(endScene);
+                   endStage.show();
                    break;
                case 2:
                    highlightButtons();
-                    endUi.setMsg("you lost");
+                   
                      saveGame("loss");
-                     
+                  //     endUi.setState(2);
+                     endUi.setMsg("loss");
                     endScene = new Scene(endUi);
                     endStage.setScene(endScene);
                    endStage.show();
                    break;
                case 3:       
-                     endUi.setMsg("Draw");
+                     
                      saveGame("draw");
                      user.draw();
+                   //   endUi.setState(2);
+                     endUi.setMsg("Draw");
                       endScene = new Scene(endUi);
                     endStage.setScene(endScene);
                    endStage.show();
@@ -234,7 +243,7 @@ public abstract class Game {
                    
            }
     }
-    
+    // save the game if recorded into the database using GameModel
     public void saveGame(String result){
         if(isRecorded){
             GameModel game = new GameModel(game_type, myMark, oppenent.getId(), user.getId(), 3, result);
@@ -244,15 +253,11 @@ public abstract class Game {
             saveSteps();
         }
     }
-    
+    // record Step
     public void recordStep(int x , int y  , String turn){
-       
-        
-        
-             steps.add(new Step(x , y , 5 ,turn ));
-       
+             steps.add(new Step(x , y , 5 ,turn ));  
     }
-    
+    // save the steps at the end of the game
     public void saveSteps(){
         for(Step step : steps){
             step.save();

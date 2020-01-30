@@ -15,10 +15,10 @@ public class ReplayGame  {
     User user;
     Player oppenent;
     Button[][] buttons;
-    ArrayList<Step> steps;
+    ArrayList<Step> steps =null;
     public ReplayGame(Player oppenent , User user, char myMark ,int gameId, GameTestUi ui ){
         counter =0;
-        
+        this.gameId = gameId;
         this.user = user;
         this.oppenent = oppenent;
         this.myMark = myMark;
@@ -31,24 +31,37 @@ public class ReplayGame  {
         this.buttons = ui.getBoardButtons();
         this.steps = GameModel.getSteps(gameId);
         this.ui = ui;
-        timer =new ReplayTimer();
-        timer.start();
+         if(steps !=null && steps.size() >0){
+                 timer =new ReplayTimer();
+                 timer.start();
+            }
+          
+        
     }
     public void startReplay(){
             SingleMode sm = new SingleMode(false, null, null, 'c', ui, null);
-            ui.setText(buttons[steps.get(counter).getX()][steps.get(counter).getY()],steps.get(counter).getTurn().equals("mine")?myMark:oppenentMark);
-            counter ++;
             if (counter >= steps.size()){
                 timer.stop();
-                sm.highlightButtons();
+                if(steps.size() >=6){
+                     sm.highlightButtons();
+                }
+               
+            }else{
+                 ui.setText(buttons[steps.get(counter).getX()][steps.get(counter).getY()],steps.get(counter).getTurn().equals("mine")?myMark:oppenentMark);
+                 counter ++;
             }
+           
+            
              
     }
    class ReplayTimer extends AnimationTimer{
 
         @Override
         public void handle(long now) {
-            startReplay();
+            if(steps !=null && steps.size() >0){
+                  startReplay();
+            }
+          
            try{
                Thread.sleep(700); 
             }catch(InterruptedException ex){

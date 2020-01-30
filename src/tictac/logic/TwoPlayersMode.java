@@ -18,6 +18,7 @@ public class TwoPlayersMode extends Game {
                 if(position !=null){
                      board = new Board(board, position, myMark);
                      ui.setText(buttons[x][y], myMark);
+                     recordStep(x, y, "mine");
                     
                      myTurn = !myTurn;
                     
@@ -31,6 +32,7 @@ public class TwoPlayersMode extends Game {
                 if(position !=null){
                      board = new Board(board, position, oppenentMark);
                      ui.setText(buttons[x][y], oppenentMark);
+                     recordStep(x, y, "oponent");
                     
                      myTurn = !myTurn;
                     

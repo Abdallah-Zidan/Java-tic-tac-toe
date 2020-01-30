@@ -36,17 +36,17 @@ public class Board {
         return retArr;
     }
 
-    public GameState getGameState(char myMark , char oppenentMark , Position[] pos){    
-        if(hasWon(myMark , pos))
+    public GameState getGameState(char myMark , char oppenentMark ){    
+        if(hasWon(myMark))
             return GameState.YouWin;
-        else if(hasWon(oppenentMark ,pos))
+        else if(hasWon(oppenentMark))
             return GameState.OppWin;
         else if(getFreePositions().isEmpty())
             return GameState.Draw;
         else return GameState.Incomplete;
     }
 
-    private boolean hasWon(char sign ,Position[] pos){ 
+    private boolean hasWon(char sign ){ 
 	int x,y;
 
 	//Check diagonals

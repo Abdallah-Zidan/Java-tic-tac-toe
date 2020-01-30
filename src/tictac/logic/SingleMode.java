@@ -3,6 +3,7 @@ package tictac.logic;
 import tictac.database.*;
 import java.util.ArrayList;
 
+
 public class SingleMode extends Game{
 
     public SingleMode(boolean isRecorded, Player  oppenent,User user, char myMark , GameTestUi ui , EndGameUi endUi ) {
@@ -26,7 +27,7 @@ public class SingleMode extends Game{
     }
 
     public int max(Board board){
-        GameState gameState = board.getGameState(myMark , oppenentMark , winnigPositions);
+        GameState gameState = board.getGameState(myMark , oppenentMark );
         if(null != gameState)
             switch (gameState) {
             case OppWin:
@@ -50,7 +51,7 @@ public class SingleMode extends Game{
     }
     
     public  int min(Board board){
-        GameState gameState = board.getGameState(myMark , oppenentMark,winnigPositions);
+        GameState gameState = board.getGameState(myMark , oppenentMark);
         if(null != gameState)
             switch (gameState) {
             case OppWin:
