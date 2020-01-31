@@ -20,7 +20,10 @@ public class TwoPlayersMode extends Game {
                 if (position != null) {
                     board = new Board(board, position, myMark);
                     ui.setText(buttons[x][y], myMark);
-                    recordStep(x, y, Constants.MINE);
+                    if(isRecorded){
+                         recordStep(x, y, Constants.MINE);
+                    }
+                   
 
                     myTurn = !myTurn;
 
@@ -34,7 +37,9 @@ public class TwoPlayersMode extends Game {
                 if (position != null) {
                     board = new Board(board, position, oppenentMark);
                     ui.setText(buttons[x][y], oppenentMark);
-                    recordStep(x, y, Constants.OPPENENT);
+                    if(isRecorded){
+                     recordStep(x, y, Constants.OPPENENT);
+                    }
 
                     myTurn = !myTurn;
 
