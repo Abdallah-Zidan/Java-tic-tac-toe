@@ -110,6 +110,43 @@ public class GameModel {
         }
         return steps;
     }
+    //static method that takes game id and return a collection of steps
+    public static ArrayList<Step> getSteps(int game_id){
+        ArrayList<Step> steps = new ArrayList<>();
+        try {
+            DBConnection db = new DBConnection();
+            Connection conn;
+            conn = db.connect();
+            Statement stmt = conn.createStatement();
+            String queryString = "SELECT * FROM steps WHERE game_id = '" +game_id+"'";
+            ResultSet rs = stmt.executeQuery(queryString);
+            while (rs.next()) {
+                Step s = new Step(rs.getInt("x"), rs.getInt("y"), rs.getInt("game_id"), rs.getString("turn"));
+                steps.add(s);
+            }
+            stmt.close();
+            db.disconnect(conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return steps;
+    }
+    public static int getGameId(int user_id, int game_no) {
+        int id = 0;
+        try {
+            DBConnection db = new DBConnection();
+            Connection conn = db.connect();
+            Statement stmt = conn.createStatement();
+            String queryString = "SELECT id from games WHERE game_no = '"+game_no+"' AND user_id = '"+user_id+"'";
+            ResultSet rs = stmt.executeQuery(queryString);
+            id = rs.getInt("id");
+            stmt.close();
+            db.disconnect(conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return id;
+    }
     
     public void setResult (String result){
         this.result = result;
@@ -131,10 +168,11 @@ public class GameModel {
     }
 //    public static void main(String[] args) {
 //        GameModel game = new GameModel("dual", 'x', 1, 1, 1, "loss");
-//        game.save();
-//        ArrayList<Step> ar = GameModel.getSteps(1, 1);
+//        //game.save();
+//        ArrayList<Step> ar = GameModel.getSteps(1);
+//        System.out.println(ar);
 //        for(Step step: ar){
-//            System.out.println(step.getTurn());
+//            System.out.println(step);
 //        }
 //    }
 }

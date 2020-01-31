@@ -78,15 +78,37 @@ public class Player {
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
                 setFname(rs.getString("fname"));
+                setLname(rs.getString("lname"));
                 setId(rs.getInt("id"));
                 setUserId(rs.getInt("user_id"));
-                setIpAddress(rs.getString("ip_adress"));
+                setIpAddress(rs.getString("ip_address"));
             }
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return this;
+    }
+    //static method that returns a player by it's id
+    public static Player getPlayer(int id) {
+        Player p = null;
+        try {
+            DBConnection db = new DBConnection();
+            Connection conn = db.connect();
+            Statement stmt = conn.createStatement();
+            String queryString = "SELECT * FROM players WHERE id = '" + id + "'";
+            ResultSet rs = stmt.executeQuery(queryString);
+            while (rs.next()) {
+                p = new Player(rs.getString("fname"), rs.getString("lname"), rs.getString("ip_address"), rs.getInt("user_id"));
+                p.setId(rs.getInt("id"));
+            }
+            stmt.close();
+            db.disconnect(conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return p;
     }
     public void setId(int id){
         this.id = id;
@@ -120,12 +142,12 @@ public class Player {
     }
     
 //    public static void main(String[] args) {
-//        Player player = new Player("test", "test","192.168.1.2");
-//        boolean x = player.save();
+//        Player player ;
+//        //boolean x = player.save();
 //
-//        player = player.getPlayerInfo();
+//        player = Player.getPlayer(1);
 //
-//        System.out.println(player.getIpAddress() + " " + x);
+//        System.out.println(player.getIpAddress());
 //    }
 
 }
