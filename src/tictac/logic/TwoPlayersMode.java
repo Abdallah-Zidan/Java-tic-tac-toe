@@ -21,10 +21,10 @@ public class TwoPlayersMode extends Game {
                     board = new Board(board, position, myMark);
                     ui.setText(buttons[x][y], myMark);
                     if(isRecorded){
+
                         recordStep(x, y, Constants.MINE);
                     }
                     
-
                     myTurn = !myTurn;
 
                     result = evaluateGame();
@@ -37,9 +37,11 @@ public class TwoPlayersMode extends Game {
                 if (position != null) {
                     board = new Board(board, position, oppenentMark);
                     ui.setText(buttons[x][y], oppenentMark);
-                     if(isRecorded){
-                    recordStep(x, y, Constants.OPPENENT);
-                     }
+
+                    if(isRecorded){
+                     recordStep(x, y, Constants.OPPENENT);
+                    }
+
                     myTurn = !myTurn;
 
                     result = evaluateGame();
