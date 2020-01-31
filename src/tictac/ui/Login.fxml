@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="325.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="326.0" fitWidth="325.0">
+         <image>
+            <Image url="@images/filast.png" />
+         </image>
+      </ImageView>
+      <TextField layoutX="34.0" layoutY="446.0" prefHeight="38.0" prefWidth="257.0" />
+      <Label layoutX="57.0" layoutY="391.0" text="Enter Your Name" textFill="#930a0a">
+         <font>
+            <Font name="THORN" size="30.0" />
+         </font>
+      </Label>
+      <Button fx:id="logGo" layoutX="124.0" layoutY="541.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="77.0" styleClass="btn" text="Go" textFill="#930a0a">
+         <font>
+            <Font name="Cookie Dough" size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="31.0" layoutY="542.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="38.0" styleClass="arrow">
+         <graphic>
+            <ImageView fx:id="arrow" fitHeight="32.0" fitWidth="33.0" styleClass="arrow">
+               <image>
+                  <Image url="@images/arrow.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</Pane>

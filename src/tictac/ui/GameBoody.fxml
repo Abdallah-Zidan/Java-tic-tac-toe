@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="325.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="lastB" layoutX="208.0" layoutY="362.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="103.0" styleClass="sym">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="eightB" layoutX="112.0" layoutY="362.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="103.0" styleClass="sym">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="sevB" layoutX="10.0" layoutY="358.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="103.0" styleClass="sym">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="sixB" layoutX="208.0" layoutY="267.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="103.0" styleClass="sym">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="centerB" layoutX="111.0" layoutY="267.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="103.0" styleClass="sym">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="forthB" layoutX="10.0" layoutY="267.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="103.0" styleClass="sym">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="thirdB" layoutX="208.0" layoutY="165.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="103.0" styleClass="sym">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="secB" layoutX="112.0" layoutY="165.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="103.0" styleClass="sym">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="firstB" layoutX="10.0" layoutY="165.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="103.0" styleClass="sym">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fitHeight="285.0" fitWidth="310.0" layoutX="8.0" layoutY="164.0">
+         <image>
+            <Image url="@images/Tic-tac-toe.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="arrow" layoutX="14.0" layoutY="542.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="38.0" styleClass="arrow">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="33.0" styleClass="arrow">
+               <image>
+                  <Image url="@images/arrow.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="185.0" layoutY="522.0" prefHeight="71.0" prefWidth="47.0" text="X" textFill="#930a0a">
+         <font>
+            <Font name="Bubbleboddy Neue Trial Regular" size="58.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="1.0" prefHeight="71.0" prefWidth="47.0" text="O">
+         <font>
+            <Font name="Bubbleboddy Neue Trial Regular" size="58.0" />
+         </font>
+      </Label>
+      <Label layoutX="73.0" layoutY="21.0" text="Player">
+         <font>
+            <Font name="THORN" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="238.0" layoutY="542.0" text="Player" textFill="#930a0a">
+         <font>
+            <Font name="THORN" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
