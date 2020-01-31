@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import tictac.controllers.EventController;
 
 public class TwoPlayerB extends AnchorPane {
 
@@ -45,11 +46,13 @@ public class TwoPlayerB extends AnchorPane {
         createRoom.setLayoutY(257.0);
         createRoom.setStyle("-fx-background-color: #930a0a;");
         createRoom.setFont(new Font("Bubbleboddy Neue Trial Regular", 16.0));
+        createRoom.setOnAction(EventController.TwoPlayer.createRoomOnAction());
 
         selectRoom.setLayoutX(94.0);
         selectRoom.setLayoutY(387.0);
         selectRoom.setStyle("-fx-background-color: #930a0a;");
         selectRoom.setFont(new Font("Bubbleboddy Neue Trial Regular", 16.0));
+        selectRoom.setOnAction(EventController.TwoPlayer.selectRoomOnAction());
 
         pane.getChildren().add(label);
         pane.getChildren().add(createRoom);

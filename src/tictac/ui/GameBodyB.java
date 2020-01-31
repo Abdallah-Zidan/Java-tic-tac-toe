@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
+import tictac.controllers.EventController;
 
 public class GameBodyB extends AnchorPane {
 
@@ -104,50 +105,59 @@ public class GameBodyB extends AnchorPane {
         btn00.setMnemonicParsing(false);
         btn00.setPrefHeight(166.0);
         btn00.setPrefWidth(256.0);
+        btn00.setOnAction(EventController.GameBody.btn00OnAction());
 
         GridPane.setColumnIndex(btn01, 1);
         btn01.setMnemonicParsing(false);
         btn01.setPrefHeight(89.0);
         btn01.setPrefWidth(103.0);
+        btn01.setOnAction(EventController.GameBody.btn01OnAction());
 
         GridPane.setColumnIndex(btn02, 2);
         btn02.setMnemonicParsing(false);
         btn02.setPrefHeight(89.0);
         btn02.setPrefWidth(103.0);
+        btn02.setOnAction(EventController.GameBody.btn02OnAction());
 
         GridPane.setRowIndex(btn10, 1);
         btn10.setMnemonicParsing(false);
         btn10.setPrefHeight(89.0);
         btn10.setPrefWidth(103.0);
+        btn10.setOnAction(EventController.GameBody.btn10OnAction());
 
         GridPane.setColumnIndex(btn11, 1);
         GridPane.setRowIndex(btn11, 1);
         btn11.setMnemonicParsing(false);
         btn11.setPrefHeight(89.0);
         btn11.setPrefWidth(103.0);
+        btn11.setOnAction(EventController.GameBody.btn11OnAction());
 
         GridPane.setColumnIndex(btn12, 2);
         GridPane.setRowIndex(btn12, 1);
         btn12.setMnemonicParsing(false);
         btn12.setPrefHeight(89.0);
         btn12.setPrefWidth(103.0);
+        btn12.setOnAction(EventController.GameBody.btn12OnAction());
 
         GridPane.setRowIndex(btn20, 2);
         btn20.setMnemonicParsing(false);
         btn20.setPrefHeight(89.0);
         btn20.setPrefWidth(103.0);
+        btn20.setOnAction(EventController.GameBody.btn20OnAction());
 
         GridPane.setColumnIndex(btn21, 1);
         GridPane.setRowIndex(btn21, 2);
         btn21.setMnemonicParsing(false);
         btn21.setPrefHeight(89.0);
         btn21.setPrefWidth(103.0);
+        btn21.setOnAction(EventController.GameBody.btn21OnAction());
 
         GridPane.setColumnIndex(btn22, 2);
         GridPane.setRowIndex(btn22, 2);
         btn22.setMnemonicParsing(false);
         btn22.setPrefHeight(89.0);
         btn22.setPrefWidth(103.0);
+        btn22.setOnAction(EventController.GameBody.btn22OnAction());
 
         label.setLayoutX(227.0);
         label.setLayoutY(39.0);

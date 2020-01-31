@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import tictac.controllers.EventController;
 
 public class RegisterB extends AnchorPane {
 
@@ -60,6 +61,7 @@ public class RegisterB extends AnchorPane {
         nextPage.setLayoutY(533.0);
         nextPage.setStyle("-fx-background-color: #930a0a;");
         nextPage.setFont(new Font("Bubbleboddy Neue Trial Regular", 15.0));
+        nextPage.setOnAction(EventController.Register.nextPageOnAction());
 
         label.setLayoutX(19.0);
         label.setLayoutY(386.0);

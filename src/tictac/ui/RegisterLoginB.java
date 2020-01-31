@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import tictac.controllers.EventController;
 
 public class RegisterLoginB extends AnchorPane {
 
@@ -43,11 +44,13 @@ public class RegisterLoginB extends AnchorPane {
         registerNew.setLayoutY(393.0);
         registerNew.setStyle("-fx-background-color: #930a0a;");
         registerNew.setFont(new Font("Bubbleboddy Neue Trial Regular", 15.0));
+        registerNew.setOnAction(EventController.RegisterLogin.registerNewOnAction());
 
         loginOld.setLayoutX(99.0);
         loginOld.setLayoutY(487.0);
         loginOld.setStyle("-fx-background-color: #930a0a;");
         loginOld.setFont(new Font("Bubbleboddy Neue Trial Regular", 16.0));
+        loginOld.setOnAction(EventController.RegisterLogin.loginOldOnAction());
 
         pane.getChildren().add(imageView);
         pane.getChildren().add(registerNew);

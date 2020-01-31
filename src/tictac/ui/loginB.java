@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import tictac.controllers.EventController;
 
 public class loginB extends AnchorPane {
 
@@ -86,6 +87,7 @@ public class loginB extends AnchorPane {
         jFXButton.setLayoutY(514.0);
         jFXButton.setStyle("-fx-background-color: #930a0a;");
         jFXButton.setFont(new Font("Bubbleboddy Neue Trial Regular", 16.0));
+        jFXButton.setOnAction(EventController.Login.jFXButtonOnAction());
 
         pane.getChildren().add(label);
         pane.getChildren().add(imageView);

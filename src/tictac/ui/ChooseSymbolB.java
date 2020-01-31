@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import tictac.controllers.EventController;
 
 public class ChooseSymbolB extends AnchorPane {
 
@@ -50,10 +51,12 @@ public class ChooseSymbolB extends AnchorPane {
         xBtn.setLayoutX(80.0);
         xBtn.setLayoutY(378.0);
         xBtn.setMnemonicParsing(false);
+        xBtn.setOnAction(EventController.ChooseSymbol.xOnAction());
 
         oBtn.setLayoutX(231.0);
         oBtn.setLayoutY(378.0);
         oBtn.setMnemonicParsing(false);
+        oBtn.setOnAction(EventController.ChooseSymbol.oOnAction());
 
         imageView.setFitHeight(157.0);
         imageView.setFitWidth(145.0);
@@ -71,6 +74,7 @@ public class ChooseSymbolB extends AnchorPane {
         contBtn.setLayoutY(490.0);
         contBtn.setStyle("-fx-background-color: #930a0a;");
         contBtn.setFont(new Font("Bubbleboddy Neue Trial Regular", 15.0));
+        contBtn.setOnAction(EventController.ChooseSymbol.contOnAction());
 
         pane.getChildren().add(label);
         pane.getChildren().add(xBtn);

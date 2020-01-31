@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import tictac.controllers.EventController;
 
 public class RecordGameB extends AnchorPane {
 
@@ -44,14 +45,17 @@ public class RecordGameB extends AnchorPane {
         withR.setLayoutY(389.0);
         withR.setStyle("-fx-background-color: #930a0a;");
         withR.setFont(new Font("Bubbleboddy Neue Trial Regular", 16.0));
+        withR.setOnAction(EventController.RecordGame.withROnAction());
 
         withoutR.setLayoutX(169.0);
         withoutR.setLayoutY(389.0);
         withoutR.setStyle("-fx-background-color: #930a0a;");
         withoutR.setFont(new Font("Bubbleboddy Neue Trial Regular", 16.0));
+        withoutR.setOnAction(EventController.RecordGame.withoutROnAction());
 
         jFXButton.setLayoutX(121.0);
         jFXButton.setLayoutY(468.0);
+        jFXButton.setOnAction(EventController.RecordGame.jFXButtonOnAction());
 
         pane.getChildren().add(imageView);
         pane.getChildren().add(withR);
