@@ -23,6 +23,7 @@ public class GameModel {
     private char sympol;
     private int user_id;
     private int game_no;
+    private String level;
     private DBConnection db = new DBConnection();
     
     /**
@@ -34,13 +35,14 @@ public class GameModel {
      * @param game_no       determined game_count in user model
      * @param result        victory | loss
      */
-    public GameModel(String game_type, char sympol, int player_id, int user_id, int game_no, String result){
+    public GameModel(String game_type, char sympol, int player_id, int user_id, int game_no, String result, String level){
         this.game_type = game_type;
         this.sympol = sympol;
         this.player_id = player_id;
         this.result = result;
         this.user_id = user_id;
         this.game_no = game_no;
+        this.level = level;
     }
     //insert game to db
     public boolean save()
@@ -49,7 +51,7 @@ public class GameModel {
             Connection conn;
             conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "INSERT INTO 'games'('game_type', 'sympol', 'player_id', 'result','game_no', 'user_id') VALUES ('"+game_type+"', '"+sympol+"', '"+player_id+"', '"+result+"', '"+game_no+"', "+user_id+")";
+            String queryString = "INSERT INTO 'games'('game_type', 'sympol', 'player_id', 'result','game_no', 'user_id', 'level') VALUES ('"+game_type+"', '"+sympol+"', '"+player_id+"', '"+result+"', '"+game_no+"', "+user_id+", "+level+")";
             stmt.executeUpdate(queryString);
             stmt.close();
             db.disconnect(conn);
@@ -151,8 +153,14 @@ public class GameModel {
     public void setResult (String result){
         this.result = result;
     }
+    public void setLevel(String level){
+        this.level = level;
+    }
     public int getId(){
         return id;
+    }
+    public String getLevel(){
+        return level;
     }
     public String getType(){
         return game_type;
