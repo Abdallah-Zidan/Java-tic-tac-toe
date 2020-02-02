@@ -51,12 +51,12 @@ public class Player {
         }
     }
     //check if ip already exist in db
-    public boolean playerExist(String ip_address){
+    public boolean playerExist(String ip_address, int user_id){
         boolean retval = false;
         try {
             Connection conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "SELECT * FROM players WHERE ip_address ='" + ip_address + "'";
+            String queryString = "SELECT * FROM players WHERE ip_address ='" + ip_address + "' AND user_id = '"+ user_id + "'";
             ResultSet rs = stmt.executeQuery(queryString);
             if (rs.next()) {
                 retval = true;

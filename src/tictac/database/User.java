@@ -213,7 +213,7 @@ public class User {
             String queryString = "SELECT * FROM games WHERE user_id = "+id;
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
-                GameModel g = new GameModel(rs.getString("game_type"), rs.getString("Sympol").charAt(0), rs.getInt("player_id"),rs.getInt("user_id") ,rs.getInt("game_no") ,rs.getString("result"));
+                GameModel g = new GameModel(rs.getString("game_type"), rs.getString("Sympol").charAt(0), rs.getInt("player_id"),rs.getInt("user_id") ,rs.getInt("game_no") ,rs.getString("result"), rs.getString("level"));
                 games.add(g);
             }
             stmt.close();
@@ -222,6 +222,25 @@ public class User {
             ex.printStackTrace();
         }
         return games;
+    }
+    //static method that returns a collectopn of players who played with this user
+    public ArrayList<Player> players() {
+        ArrayList<Player> players = new ArrayList<>();
+        try {
+            Connection conn = db.connect();
+            Statement stmt = conn.createStatement();
+            String queryString = "SELECT * FROM players WHERE user_id = "+id;
+            ResultSet rs = stmt.executeQuery(queryString);
+            while (rs.next()) {
+                Player p = new Player(rs.getString("fname"), rs.getString("lname"), rs.getString("ip_address"), rs.getInt("user_id"));
+                players.add(p);
+            }
+            stmt.close();
+            db.disconnect(conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return players;
     }
 //    public static void main(String[] args) {
 //        User user = new User("test", "test");
