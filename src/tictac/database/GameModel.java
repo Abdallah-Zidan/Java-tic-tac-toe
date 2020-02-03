@@ -45,21 +45,25 @@ public class GameModel {
         this.level = level;
     }
     //insert game to db
-    public boolean save()
+    public GameModel save()
     {
         try{
             Connection conn;
             conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "INSERT INTO 'games'('game_type', 'sympol', 'player_id', 'result','game_no', 'user_id', 'level') VALUES ('"+game_type+"', '"+sympol+"', '"+player_id+"', '"+result+"', '"+game_no+"', "+user_id+", "+level+")";
+            String queryString = "INSERT INTO 'games'('game_type', 'sympol', 'player_id', 'result','game_no', 'user_id', 'level') VALUES ('"+game_type+"', '"+sympol+"', '"+player_id+"', '"+result+"', '"+game_no+"', "+user_id+", '"+level+"')";
             stmt.executeUpdate(queryString);
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
             stmt.close();
             db.disconnect(conn);
-            return true;
+            return this;
         }
         catch(SQLException se){
             se.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -175,12 +179,12 @@ public class GameModel {
         return user_id;
     }
 //    public static void main(String[] args) {
-//        GameModel game = new GameModel("dual", 'x', 1, 1, 1, "loss");
-//        //game.save();
-//        ArrayList<Step> ar = GameModel.getSteps(1);
-//        System.out.println(ar);
-//        for(Step step: ar){
-//            System.out.println(step);
-//        }
+//        GameModel game = new GameModel("solo", 'x', 1, 1, 2, "loss", "easy");
+//        game = game.save();
+//        //ArrayList<Step> ar = GameModel.getSteps(1);
+//        System.out.println(game.getId());
+////        for(Step step: ar){
+////            System.out.println(step);
+////        }
 //    }
 }
