@@ -28,6 +28,7 @@ public class GameBodyB extends Pane {
     protected final Label label1;
     protected final Label label2;
     protected AudioClip audio;
+    protected final Button playAgain;
 
     public GameBodyB() {
         lastB = new Button();
@@ -46,6 +47,7 @@ public class GameBodyB extends Pane {
         label0 = new Label();
         label1 = new Label();
         label2 = new Label();
+        playAgain = new Button();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -179,6 +181,15 @@ public class GameBodyB extends Pane {
         label2.setText("Player");
         label2.setTextFill(javafx.scene.paint.Color.valueOf("#930a0a"));
         label2.setFont(new Font("THORN", 24.0));
+        
+        playAgain.setLayoutX(60.0);
+        playAgain.setLayoutY(542.0);
+        playAgain.setMnemonicParsing(false);
+        playAgain.setPrefHeight(34.0);
+        playAgain.setPrefWidth(38.0);
+        playAgain.setCursor(Cursor.HAND);
+        playAgain.setText("Play Again");
+        playAgain.setOnAction(EventController.GameBody.playAgainOnAction());
 
         getChildren().add(lastB);
         getChildren().add(eightB);
@@ -195,6 +206,7 @@ public class GameBodyB extends Pane {
         getChildren().add(label0);
         getChildren().add(label1);
         getChildren().add(label2);
+        getChildren().add(playAgain);
 
         audio = new AudioClip(getClass().getResource("gameloop.mp3").toString());
         audio.setCycleCount(1000);

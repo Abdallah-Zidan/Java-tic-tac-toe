@@ -7,9 +7,9 @@ Close socket on back
 Handle play again
 Audio not reloading
 Handle all text areas values
-*/
+ */
 
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -41,10 +41,14 @@ import tictac.ui.RegisterB;
  * @author Tarek
  */
 public class EventController {
-    private EventController() {}
+
+    private EventController() {
+    }
 
     public static class Primary {
-        private Primary() {}
+
+        private Primary() {
+        }
 
         public static EventHandler<ActionEvent> registerOnAction() {
             return (event) -> {
@@ -53,6 +57,7 @@ public class EventController {
                 MainGame.game.showScene();
             };
         }
+
         public static EventHandler<ActionEvent> loginOnAction() {
             return (event) -> {
                 MainGame.game.setParentScene(new Scene(new LoginB()));
@@ -64,7 +69,9 @@ public class EventController {
 
     // TODO: Register
     public static class Register {
-        private Register() {}
+
+        private Register() {
+        }
 
         public static EventHandler<ActionEvent> registerOnAction(RegisterB pane) {
             return (event) -> {
@@ -72,8 +79,7 @@ public class EventController {
 
                 if (user.userExist(user.getUsername())) {
                     System.out.println("User exists");
-                }
-                else {
+                } else {
                     user.save();
                     MainGame.gameInfo.setUser(user);
                     MainGame.game.setParentScene(new Scene(new PlayB()));
@@ -82,6 +88,7 @@ public class EventController {
                 }
             };
         }
+
         public static EventHandler<ActionEvent> backOnAction() {
             return (event) -> {
                 MainGame.game.setParentScene(new Scene(new PrimaryB()));
@@ -93,7 +100,9 @@ public class EventController {
 
     // TODO: Login
     public static class Login {
-        private Login() {}
+
+        private Login() {
+        }
 
         public static EventHandler<ActionEvent> loginOnAction(LoginB pane) {
             return (event) -> {
@@ -101,8 +110,7 @@ public class EventController {
 
                 if (!user.isAuthentic()) {
                     System.out.println("User is not valid");
-                }
-                else {
+                } else {
                     MainGame.gameInfo.setUser(user);
                     MainGame.game.setParentScene(new Scene(new PlayB()));
                     MainGame.game.initializeScene();
@@ -110,6 +118,7 @@ public class EventController {
                 }
             };
         }
+
         public static EventHandler<ActionEvent> backOnAction() {
             return (event) -> {
                 MainGame.game.setParentScene(new Scene(new PrimaryB()));
@@ -122,7 +131,9 @@ public class EventController {
     // TODO: Online
     // TODO: Replay
     public static class Play {
-        private Play() {}
+
+        private Play() {
+        }
 
         public static EventHandler<ActionEvent> singleOnAction() {
             return (event) -> {
@@ -131,6 +142,7 @@ public class EventController {
                 MainGame.game.showScene();
             };
         }
+
         public static EventHandler<ActionEvent> twoOnAction() {
             return (event) -> {
                 MainGame.game.setParentScene(new Scene(new ChooseSymB("two")));
@@ -138,6 +150,7 @@ public class EventController {
                 MainGame.game.showScene();
             };
         }
+
         public static EventHandler<ActionEvent> onlineOnAction() {
             return (event) -> {
                 MainGame.game.setParentScene(new Scene(new ChooseRoleUI()));
@@ -145,6 +158,7 @@ public class EventController {
                 MainGame.game.showScene();
             };
         }
+
         public static EventHandler<ActionEvent> replayOnAction() {
             return (event) -> {
                 // TODO: Replay
@@ -153,6 +167,7 @@ public class EventController {
 //                MainGame.game.showScene();
             };
         }
+
         public static EventHandler<ActionEvent> backOnAction() {
             return (event) -> {
                 MainGame.game.setParentScene(new Scene(new PrimaryB()));
@@ -163,7 +178,9 @@ public class EventController {
     }
 
     public static class ChooseHost {
-        private ChooseHost() {}
+
+        private ChooseHost() {
+        }
 
         public static EventHandler<ActionEvent> serverOnAction() {
             return (event) -> {
@@ -173,6 +190,7 @@ public class EventController {
                 MainGame.game.showScene();
             };
         }
+
         public static EventHandler<ActionEvent> clientOnAction() {
             return (event) -> {
                 MainGame.gameInfo.isServer = false;
@@ -185,18 +203,22 @@ public class EventController {
 
     // TODO: Online
     public static class ChooseSymbol {
-        private ChooseSymbol() {}
+
+        private ChooseSymbol() {
+        }
 
         public static EventHandler<ActionEvent> xOnAction(String screen) {
             return (event) -> {
                 startGame('X', screen);
             };
         }
+
         public static EventHandler<ActionEvent> oOnAction(String screen) {
             return (event) -> {
                 startGame('O', screen);
             };
         }
+
         public static EventHandler<ActionEvent> backOnAction() {
             return (event) -> {
                 MainGame.game.setParentScene(new Scene(new PlayB()));
@@ -216,12 +238,10 @@ public class EventController {
             if (screen.toLowerCase().equals("single")) {
                 SingleMode single = new SingleMode(false, player, user, symbol, ui, endUi);
                 single.startActionHandling();
-            }
-            else if (screen.toLowerCase().equals("two")) {
+            } else if (screen.toLowerCase().equals("two")) {
                 TwoPlayersMode two = new TwoPlayersMode(false, player, user, symbol, ui, endUi);
                 two.startActionHandling();
-            }
-            else if (screen.toLowerCase().equals("online")) {
+            } else if (screen.toLowerCase().equals("online")) {
                 if (MainGame.gameInfo.isServer) {
                     Thread test = new Thread(new Runnable() {
                         @Override
@@ -229,7 +249,7 @@ public class EventController {
                             Server server = new Server();
                             Socket socket = server.getSocket();
 
-                            if(socket != null) {
+                            if (socket != null) {
                                 TwoPlayersNetwork tp = new TwoPlayersNetwork(false, player, user, symbol, ui, endUi, socket, true);
                                 tp.startActionHandling();
                             }
@@ -237,15 +257,14 @@ public class EventController {
                     });
 
                     test.start();
-                }
-                else {
+                } else {
                     Thread test = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Client client = new Client("172.16.2.27");    // 172.16.1.221
+                            Client client = new Client("127.0.0.1");    // 172.16.1.221
                             Socket socket = client.getSocket();
 
-                            if(socket != null) {
+                            if (socket != null) {
                                 TwoPlayersNetwork tp = new TwoPlayersNetwork(false, player, user, symbol, ui, endUi, socket, false);
                                 tp.startActionHandling();
                             }
@@ -254,8 +273,7 @@ public class EventController {
 
                     test.start();
                 }
-            }
-            else if (screen.toLowerCase().equals("replay")) {
+            } else if (screen.toLowerCase().equals("replay")) {
                 ReplayGame replay = new ReplayGame(player, user, symbol, 0, ui);
             }
 
@@ -267,7 +285,18 @@ public class EventController {
     }
 
     public static class GameBody {
-        private GameBody() {}
+
+        private GameBody() {
+        }
+
+        public static EventHandler<ActionEvent> playAgainOnAction() {
+            return (event) -> {
+                MainGame.game.setParentScene(new Scene(new ChooseSymB("online")));
+                MainGame.game.initializeScene();
+                MainGame.game.showScene();
+            };
+                      
+        }
 
         public static EventHandler<ActionEvent> backOnAction(GameBodyB pane) {
             return (event) -> {

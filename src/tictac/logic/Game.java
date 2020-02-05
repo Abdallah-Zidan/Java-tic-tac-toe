@@ -304,6 +304,27 @@ public abstract class Game {
             System.out.println(ex.getMessage());
         }
     }
+    
+    public void closeGame( DataInputStream dis , PrintStream ps){
+        try{
+            ps.close();
+            dis.close();
+        }catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    public void resetGame(boolean enabled){
+        board = new Board();
+        if(enabled){
+           enableButtons();
+           myTurn = true;
+        }
+        else{
+            disableButtons();
+            myTurn=false;
+        }
+        
+    }
     // abstract method that should be implemented to specify how the game is played in single or two players mode
     abstract public void play(int x, int y);
 }
