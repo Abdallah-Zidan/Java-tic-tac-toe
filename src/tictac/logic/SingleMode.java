@@ -3,10 +3,11 @@ package tictac.logic;
 import tictac.database.*;
 import java.util.ArrayList;
 import tictac.animation.GameOver;
+import tictac.ui.GameBodyB;
 
 public class SingleMode extends Game {
 
-    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark, GameTestUi ui, GameOver endUi) {
+    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyB ui, GameOver endUi) {
         super(isRecorded, Constants.SOLO, oppenent, user, myMark, ui, endUi);
     }
 

@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import tictac.database.*;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
+import tictac.ui.GameBodyB;
 
 public class ReplayGame {
 
     int counter;
     ReplayTimer timer;
     int gameId;
-    GameTestUi ui;
+    GameBodyB ui;
     char myMark;
     char oppenentMark;
     User user;
@@ -18,7 +19,7 @@ public class ReplayGame {
     Button[][] buttons;
     ArrayList<Step> steps = null;
 
-    public ReplayGame(Player oppenent, User user, char myMark, int gameId, GameTestUi ui) {
+    public ReplayGame(Player oppenent, User user, char myMark, int gameId, GameBodyB ui) {
         counter = 0;
         this.gameId = gameId;
         this.user = user;
@@ -44,7 +45,7 @@ public class ReplayGame {
         if (counter >= steps.size()) {
             timer.stop();
             if (steps.size() >= 6) {
-                sm.highlightButtons();
+                sm.highlightButtons(1);
             }
 
         } else {

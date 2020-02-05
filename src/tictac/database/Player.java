@@ -84,12 +84,12 @@ public class Player {
             return false;
         }
     }
-    public boolean playerExist(String ip_address){
+    public boolean playerExist(String ip_address, int user_id){
         boolean retval = false;
         try {
             Connection conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "SELECT * FROM players WHERE ip_address ='" + ip_address + "'";
+            String queryString = "SELECT * FROM players WHERE ip_address ='" + ip_address + "' and username ='" + user_id + "'";
             ResultSet rs = stmt.executeQuery(queryString);
             if (rs.next()) {
                 retval = true;
@@ -102,7 +102,7 @@ public class Player {
         return retval;
     }
     
-    public Player getUserInfo() {
+    public Player getPlayerInfo() {
         try {
             Connection conn = db.connect();
             Statement stmt = conn.createStatement();

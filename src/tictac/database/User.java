@@ -203,15 +203,15 @@ public class User {
         }
         return games;
     }
-    public static void main(String[] args) {
-        User user = new User("test", "test");
-        
-        //user.draw();
-        user = user.getUserInfo();
-        ArrayList<GameModel> ar = user.games();
-        
-        for(GameModel game: ar){
-            System.out.println(game.getType());
-        }
-    }
+//    public static void main(String[] args) {
+//        User user = new User("test", "test");
+//        
+//        //user.draw();
+//        user = user.getUserInfo();
+//        ArrayList<GameModel> ar = user.games();
+//        
+//        for(GameModel game: ar){
+//            System.out.println(game.getType());
+//        }
+//    }
 }
