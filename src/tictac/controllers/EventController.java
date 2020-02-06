@@ -206,7 +206,7 @@ public class EventController {
 
         private ChooseSymbol() {
         }
-
+         static Game g;
         public static EventHandler<ActionEvent> xOnAction(String screen) {
             return (event) -> {
                 startGame('X', screen);
@@ -236,22 +236,22 @@ public class EventController {
             Player player = Player.getPlayer(1);
 
             if (screen.toLowerCase().equals("single")) {
-                SingleMode single = new SingleMode(false, player, user, symbol, ui, endUi);
-                single.startActionHandling();
+               g = new SingleMode(false, player, user, symbol, ui);
+                g.startActionHandling();
             } else if (screen.toLowerCase().equals("two")) {
-                TwoPlayersMode two = new TwoPlayersMode(false, player, user, symbol, ui, endUi);
-                two.startActionHandling();
+                g = new TwoPlayersMode(false, player, user, symbol, ui);
+                g.startActionHandling();
             } else if (screen.toLowerCase().equals("online")) {
                 if (MainGame.gameInfo.isServer) {
                     Thread test = new Thread(new Runnable() {
                         @Override
                         public void run() {
                             Server server = new Server();
-                            Socket socket = server.getSocket();
+//                            Socket socket = server.getSocket();
 
-                            if (socket != null) {
-                                TwoPlayersNetwork tp = new TwoPlayersNetwork(false, player, user, symbol, ui, endUi, socket, true);
-                                tp.startActionHandling();
+                            if (MainGame.gameInfo.socket != null) {
+                                g = new TwoPlayersNetwork(false, player, user, symbol, ui, MainGame.gameInfo.socket, true);
+                                g.startActionHandling();
                             }
                         }
                     });
@@ -262,11 +262,11 @@ public class EventController {
                         @Override
                         public void run() {
                             Client client = new Client("127.0.0.1");    // 172.16.1.221
-                            Socket socket = client.getSocket();
+//                            Socket socket = client.getSocket();
 
-                            if (socket != null) {
-                                TwoPlayersNetwork tp = new TwoPlayersNetwork(false, player, user, symbol, ui, endUi, socket, false);
-                                tp.startActionHandling();
+                            if (MainGame.gameInfo.socket != null) {
+                                g = new TwoPlayersNetwork(false, player, user, symbol, ui, MainGame.gameInfo.socket, false);
+                                g.startActionHandling();
                             }
                         }
                     });
@@ -291,9 +291,10 @@ public class EventController {
 
         public static EventHandler<ActionEvent> playAgainOnAction() {
             return (event) -> {
-                MainGame.game.setParentScene(new Scene(new ChooseSymB("online")));
-                MainGame.game.initializeScene();
-                MainGame.game.showScene();
+//                MainGame.game.setParentScene(new Scene(new ChooseSymB("online")));
+//                MainGame.game.initializeScene();
+//                MainGame.game.showScene();
+                ChooseSymbol.g.resetGame(ChooseSymbol.g.isMyTurn());
             };
                       
         }
@@ -305,6 +306,7 @@ public class EventController {
                 if (MainGame.gameInfo.socket != null) {
                     try {
                         MainGame.gameInfo.socket.close();
+                        MainGame.gameInfo.socket=null;
                     } catch (IOException e) {
                         // TODO
                     }
@@ -312,6 +314,7 @@ public class EventController {
                 if (MainGame.gameInfo.serverSocket != null) {
                     try {
                         MainGame.gameInfo.serverSocket.close();
+                        MainGame.gameInfo.serverSocket = null;
                     } catch (IOException e) {
                         // TODO
                     }

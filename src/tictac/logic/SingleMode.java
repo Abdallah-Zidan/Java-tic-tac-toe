@@ -7,8 +7,8 @@ import tictac.ui.GameBodyB;
 
 public class SingleMode extends Game {
 
-    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyB ui, GameOver endUi) {
-        super(isRecorded, Constants.SOLO, oppenent, user, myMark, ui, endUi);
+    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyB ui) {
+        super(isRecorded, Constants.SOLO, oppenent, user, myMark, ui);
     }
 
     private Board findBestMove(Board board) {

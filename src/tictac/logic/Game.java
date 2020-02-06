@@ -40,8 +40,9 @@ public abstract class Game {
     protected GameBodyB ui; // simple ui for testing
     protected GameOver endUi; // what will be shown to the player at the end of the game
     protected int gameId;
+    
 
-    Game(boolean isRecorded, String gameType, Player oppenent, User user, char myMark, GameBodyB ui, GameOver endUi) {
+    Game(boolean isRecorded, String gameType, Player oppenent, User user, char myMark, GameBodyB ui) {
         this.ui = ui;
         this.endUi = endUi;
         buttons = ui.getBoardButtons();
@@ -63,7 +64,7 @@ public abstract class Game {
         }
 
     }
-
+    public boolean isMyTurn(){return myTurn;}
     /*
     this method is responsible for adding action events on the game buttons
      */
@@ -222,6 +223,8 @@ public abstract class Game {
 
     // show the game end results to the user
     public void showResult(int result) {
+        GameOver showEnd;
+        showEnd = new GameOver();
         final Stage endStage = new Stage();
         endStage.initModality(Modality.WINDOW_MODAL);
         endStage.initStyle(StageStyle.UNDECORATED);
@@ -235,11 +238,11 @@ public abstract class Game {
             case 1:
                 highlightButtons(1);
                 ui.stopSound();
-                endUi.setState(1);
-                endUi.playSound();
+                showEnd.setState(1);
+                showEnd.playSound();
                 saveGame("victory");
                 user.victory();
-                endScene = new Scene(endUi);
+                endScene = new Scene(showEnd);
                 endStage.setScene(endScene);
                 endStage.show();
                 break;
@@ -247,9 +250,9 @@ public abstract class Game {
                 highlightButtons(2);
                 saveGame("loss");
                 ui.stopSound();
-                endUi.setState(2);
-                endUi.playSound();
-                endScene = new Scene(endUi);
+                showEnd.setState(2);
+                showEnd.playSound();
+                endScene = new Scene(showEnd);
                 endStage.setScene(endScene);
                 endStage.show();
                 break;
@@ -258,9 +261,9 @@ public abstract class Game {
                
                 user.draw();
                 ui.stopSound();
-                endUi.setState(3);
-                 endUi.playSound();
-                endScene = new Scene(endUi);
+                showEnd.setState(3);
+                showEnd.playSound();
+                endScene = new Scene(showEnd);
                 endStage.setScene(endScene);
                 
                 endStage.show();
@@ -299,12 +302,23 @@ public abstract class Game {
         try{
             ps.close();
             dis.close();
-            socket.close();
+            if(socket != null){
+                 socket.close();
+            }
+           
+          
         }catch(IOException ex){
             System.out.println(ex.getMessage());
         }
     }
-    
+    public void clearButtons(){
+        for(int i =0;i<3;i++){
+            for(int j=0;j<3;j++){
+                buttons[i][j].setText("");
+                ui.highLight(buttons[i][j],11);
+            }
+        }
+    }
     public void closeGame( DataInputStream dis , PrintStream ps){
         try{
             ps.close();
@@ -315,15 +329,19 @@ public abstract class Game {
     }
     public void resetGame(boolean enabled){
         board = new Board();
-        if(enabled){
-           enableButtons();
+       if(enabled){
+         
+           //enableButtons();
            myTurn = true;
         }
         else{
             disableButtons();
             myTurn=false;
+            
         }
         
+        clearButtons();
+        gameEnded =false;
     }
     // abstract method that should be implemented to specify how the game is played in single or two players mode
     abstract public void play(int x, int y);

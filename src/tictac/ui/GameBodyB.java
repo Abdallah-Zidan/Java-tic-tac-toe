@@ -253,7 +253,10 @@ public class GameBodyB extends Pane {
     public void highLight(Button btn ,int state) {
         if(state == 1){
               btn.setStyle("-fx-background-color: yellow;-fx-text-fill: white;");
-        }else{
+        }else if(state==11){
+            btn.setStyle("-fx-background-color: white;");
+        }
+        else{
             btn.setStyle("-fx-background-color: red;-fx-text-fill: white;");
         }
       

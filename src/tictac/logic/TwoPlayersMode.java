@@ -6,8 +6,8 @@ import tictac.ui.GameBodyB;
 
 public class TwoPlayersMode extends Game {
 
-    public TwoPlayersMode(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyB ui, GameOver endUi) {
-        super(isRecorded, Constants.DUAL, oppenent, user, myMark, ui, endUi);
+    public TwoPlayersMode(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyB ui) {
+        super(isRecorded, Constants.DUAL, oppenent, user, myMark, ui);
     }
 
     @Override
