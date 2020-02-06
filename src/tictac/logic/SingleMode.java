@@ -1,8 +1,6 @@
 package tictac.logic;
-
 import tictac.database.*;
 import java.util.ArrayList;
-import tictac.animation.GameOver;
 import tictac.ui.GameBodyB;
 
 public class SingleMode extends Game {
@@ -10,7 +8,12 @@ public class SingleMode extends Game {
     public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyB ui) {
         super(isRecorded, Constants.SOLO, oppenent, user, myMark, ui);
     }
-
+    /**
+     * this function return a new board with computer movement depending on the
+     * min and max algorithm
+     * @param board : Board
+     * @return bestChild : Board
+     */
     private Board findBestMove(Board board) {
         ArrayList<Position> positions = board.getFreePositions();
         Board bestChild = null;
@@ -18,7 +21,6 @@ public class SingleMode extends Game {
         for (Position p : positions) {
             Board child = new Board(board, p, oppenentMark);
             int current = min(child);
-
             if (current > previous) {
                 bestChild = child;
                 previous = current;
@@ -26,7 +28,6 @@ public class SingleMode extends Game {
         }
         return bestChild;
     }
-
     public int max(Board board) {
         GameState gameState = board.getGameState(myMark, oppenentMark);
         if (null != gameState) {
@@ -52,7 +53,6 @@ public class SingleMode extends Game {
         }
         return best;
     }
-
     public int min(Board board) {
         GameState gameState = board.getGameState(myMark, oppenentMark);
         if (null != gameState) {
@@ -78,7 +78,11 @@ public class SingleMode extends Game {
         }
         return best;
     }
-
+    /**
+     * overriding the abstract function play to suit single mode playing logic
+     * @param x : integer (the row number in the board)
+     * @param y : integer (the column number in the board)
+     */
     @Override
     public void play(int x, int y) {
         System.out.println(board);
@@ -90,31 +94,19 @@ public class SingleMode extends Game {
                 if (position != null) {
                     board = new Board(board, position, myMark);
                     ui.setText(buttons[x][y], myMark);
-                    if (isRecorded) {
-                        recordStep(x, y, Constants.MINE);
-                    }
-
+                    recordStep(x, y, Constants.MINE);
                     myTurn = !myTurn;
-
                     result = evaluateGame();
-                } else {
-                    System.out.println("Already marked!");
-                }
-
+                } 
             }
-
             if (!myTurn && !board.getFreePositions().isEmpty()) {
                 board = findBestMove(board);
                 myTurn = !myTurn;
                 drawBoardOnButtons(board);
-
                 result = evaluateGame();
             }
-
         }
-
         showResult(result);
-
     }
 
 }

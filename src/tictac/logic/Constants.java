@@ -6,5 +6,6 @@ public class Constants {
     public static String SOLO = "solo";
     public static String MINE = "mine";
     public static String OPPENENT = "oponent";
+    public static char Cross = 'X', Circle = 'O';
 
 }
