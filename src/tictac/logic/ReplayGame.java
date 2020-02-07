@@ -41,7 +41,7 @@ public class ReplayGame {
     }
 
     public void startReplay() {
-        SingleMode sm = new SingleMode(false, null, null, 'c', ui);
+        SingleMode sm = new SingleMode(false, null, null, 'c',Constants.EASY, ui);
         if (counter >= steps.size()) {
             timer.stop();
             if (steps.size() >= 6) {

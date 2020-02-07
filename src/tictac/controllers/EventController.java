@@ -236,7 +236,7 @@ public class EventController {
             Player player = Player.getPlayer(1);
 
             if (screen.toLowerCase().equals("single")) {
-               g = new SingleMode(false, player, user, symbol, ui);
+               g = new SingleMode(false, player, user, symbol,Constants.HARD, ui);
                 g.startActionHandling();
             } else if (screen.toLowerCase().equals("two")) {
                 g = new TwoPlayersMode(false, player, user, symbol, ui);

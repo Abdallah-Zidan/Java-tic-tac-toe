@@ -1,9 +1,14 @@
 package tictac.animation;
 
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.AudioClip;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import tictac.ui.GameBodyB;
 
 public class GameOver extends AnchorPane {
 
@@ -50,9 +55,29 @@ public class GameOver extends AnchorPane {
     public void playSound() {
         audio.play();
     }
+
     public void stopSound() {
         audio.stop();
     }
 
-
+    public Stage prepareEndStage(GameBodyB ui) {
+        final Stage endStage = new Stage();
+        endStage.initModality(Modality.WINDOW_MODAL);
+        endStage.initStyle(StageStyle.UNDECORATED);
+        endStage.initOwner(ui.getScene().getWindow());
+        endStage.setX(ui.getScene().getWindow().getX());
+        endStage.setY(ui.getScene().getWindow().getY());
+        endStage.setResizable(false);
+        return endStage;
+    }
+    
+    public void showStage(int state, Stage stage  ,GameBodyB ui) {
+      //  highlightButtons(state);
+        ui.stopSound();
+        this.setState(state);
+        this.playSound();
+        Scene endScene = new Scene(this);
+        stage.setScene(endScene);
+        stage.show();
+    }
 }

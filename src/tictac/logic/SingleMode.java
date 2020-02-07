@@ -1,16 +1,21 @@
 package tictac.logic;
+
+import com.sun.corba.se.impl.orbutil.closure.Constant;
 import tictac.database.*;
-import java.util.ArrayList;
 import tictac.ui.GameBodyB;
+import java.util.*;
 
 public class SingleMode extends Game {
-
-    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyB ui) {
+    private int level;
+    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark,int level, GameBodyB ui) {
         super(isRecorded, Constants.SOLO, oppenent, user, myMark, ui);
+        this.level = level;
     }
+
     /**
      * this function return a new board with computer movement depending on the
      * min and max algorithm
+     *
      * @param board : Board
      * @return bestChild : Board
      */
@@ -28,6 +33,7 @@ public class SingleMode extends Game {
         }
         return bestChild;
     }
+
     public int max(Board board) {
         GameState gameState = board.getGameState(myMark, oppenentMark);
         if (null != gameState) {
@@ -53,6 +59,7 @@ public class SingleMode extends Game {
         }
         return best;
     }
+
     public int min(Board board) {
         GameState gameState = board.getGameState(myMark, oppenentMark);
         if (null != gameState) {
@@ -78,8 +85,33 @@ public class SingleMode extends Game {
         }
         return best;
     }
+
+    public Position getRandomMove() {
+        Random rand = new Random();
+        Position pos;
+        int x;
+        int y;
+        // Generate random move
+        do {
+            x = rand.nextInt(3);
+            y = rand.nextInt(3);
+        } while (board.getBoard()[x][y] == Constants.Cross || board.getBoard()[x][y] == Constants.Circle);
+        pos = new Position(x, y);
+        return pos;
+    }
+    public Position getWinningMove() {
+        Position pos = null;
+        int[][] preferredMoves = {{1, 1}, {0, 0}, {0, 2}, {2, 0}, {2, 2}, {0, 1}, {1, 0}, {1, 2}, {2, 1}};
+        for(int[] move : preferredMoves){
+            if(board.getBoard()[move[0]][move[1]] != Constants.Cross &&board.getBoard()[move[0]][move[1]]!= Constants.Circle ){
+                pos = new Position(move[0], move[1]);
+            }
+         }
+        return pos;
+    }
     /**
      * overriding the abstract function play to suit single mode playing logic
+     *
      * @param x : integer (the row number in the board)
      * @param y : integer (the column number in the board)
      */
@@ -96,12 +128,19 @@ public class SingleMode extends Game {
                     recordStep(x, y, Constants.MINE);
                     myTurn = !myTurn;
                     result = evaluateGame();
-                } 
+                }
             }
             if (!myTurn && !board.getFreePositions().isEmpty()) {
-                board = findBestMove(board);
-                myTurn = !myTurn;
-                drawBoardOnButtons(board);
+                if(level == Constants.EASY){
+                     position = getRandomMove();
+                     board = new Board(board, position, oppenentMark);
+                      ui.setText(buttons[position.getRow()][position.getColumn()], oppenentMark);
+                }
+                else{
+                    board = findBestMove(board);
+                    drawBoardOnButtons(board);
+                }  
+                myTurn = !myTurn;   
                 result = evaluateGame();
             }
         }

@@ -6,7 +6,6 @@ import tictac.database.*;
 import java.util.ArrayList;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.*;
 import javafx.util.Duration;
@@ -185,45 +184,26 @@ public abstract class Game {
         }
     }
 
-    public Stage prepareEndStage() {
-        final Stage endStage = new Stage();
-        endStage.initModality(Modality.WINDOW_MODAL);
-        endStage.initStyle(StageStyle.UNDECORATED);
-        endStage.initOwner(ui.getScene().getWindow());
-        endStage.setX(ui.getScene().getWindow().getX());
-        endStage.setY(ui.getScene().getWindow().getY());
-        endStage.setResizable(false);
-        return endStage;
-    }
-
-    public void showStage(int state, GameOver showEnd, Stage stage) {
-        highlightButtons(state);
-        ui.stopSound();
-        showEnd.setState(state);
-        showEnd.playSound();
-        Scene endScene = new Scene(showEnd);
-        stage.setScene(endScene);
-        stage.show();
-    }
-
     // show the game end results to the user
     public void showResult(int result) {
         GameOver showEnd;
         showEnd = new GameOver();
-        final Stage endStage = prepareEndStage();
+        final Stage endStage = showEnd.prepareEndStage(ui);
         PauseTransition delay;
         switch (result) {
             case 1:
-                showStage(1, showEnd, endStage);
+                 highlightButtons(1);
+                showEnd.showStage(1, endStage , ui);
                 user.victory();
                 saveGame("victory");
                 break;
             case 2:
-                showStage(2, showEnd, endStage);
+                 highlightButtons(2);
+                showEnd.showStage(2, endStage,ui);
                 saveGame("loss");
                 break;
             case 3:
-                showStage(3, showEnd, endStage);
+                showEnd.showStage(3, endStage,ui);
                 saveGame("draw");
                 user.draw();
                 break;

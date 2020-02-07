@@ -81,7 +81,7 @@ public class Board {
         }
         return false;
     }
-
+    
 }
 
 final class Position {
