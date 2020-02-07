@@ -22,7 +22,6 @@ public class GameModel {
     private String result;
     private char sympol;
     private int user_id;
-    private int game_no;
     private String level;
     private DBConnection db = new DBConnection();
     
@@ -32,16 +31,14 @@ public class GameModel {
      * @param sympol        x | o
      * @param player_id  
      * @param user_id
-     * @param game_no       determined game_count in user model
      * @param result        victory | loss
      */
-    public GameModel(String game_type, char sympol, int player_id, int user_id, int game_no, String result, String level){
+    public GameModel(String game_type, char sympol, int player_id, int user_id, String result, String level){
         this.game_type = game_type;
         this.sympol = sympol;
         this.player_id = player_id;
         this.result = result;
         this.user_id = user_id;
-        this.game_no = game_no;
         this.level = level;
     }
     //insert game to db
@@ -51,7 +48,7 @@ public class GameModel {
             Connection conn;
             conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "INSERT INTO 'games'('game_type', 'sympol', 'player_id', 'result','game_no', 'user_id', 'level') VALUES ('"+game_type+"', '"+sympol+"', '"+player_id+"', '"+result+"', '"+game_no+"', "+user_id+", '"+level+"')";
+            String queryString = "INSERT INTO 'games'('game_type', 'sympol', 'player_id', 'result', 'user_id', 'level') VALUES ('"+game_type+"', '"+sympol+"', '"+player_id+"', '"+result+"', "+user_id+", '"+level+"')";
             stmt.executeUpdate(queryString);
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
@@ -76,7 +73,7 @@ public class GameModel {
         try {
             Connection conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "SELECT * FROM steps WHERE game_id = (SELECT id from games WHERE game_no = '"+game_no+"' AND user_id = '"+user_id+"')";
+            String queryString = "SELECT * FROM steps WHERE game_id = '"+id+"'";
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
                 Step s = new Step(rs.getInt("x"), rs.getInt("y"), rs.getInt("game_id"), rs.getString("turn"));
@@ -96,26 +93,7 @@ public class GameModel {
      * @param game_no
      * @return a collection of steps
      */
-    public static ArrayList<Step> getSteps(int user_id, int game_no){
-        ArrayList<Step> steps = new ArrayList<>();
-        try {
-            DBConnection db = new DBConnection();
-            Connection conn;
-            conn = db.connect();
-            Statement stmt = conn.createStatement();
-            String queryString = "SELECT * FROM steps WHERE game_id = (SELECT id from games WHERE game_no = '"+game_no+"' AND user_id = '"+user_id+"')";
-            ResultSet rs = stmt.executeQuery(queryString);
-            while (rs.next()) {
-                Step s = new Step(rs.getInt("x"), rs.getInt("y"), rs.getInt("game_id"), rs.getString("turn"));
-                steps.add(s);
-            }
-            stmt.close();
-            db.disconnect(conn);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return steps;
-    }
+    
     //static method that takes game id and return a collection of steps
     public static ArrayList<Step> getSteps(int game_id){
         ArrayList<Step> steps = new ArrayList<>();
@@ -137,22 +115,7 @@ public class GameModel {
         }
         return steps;
     }
-    public static int getGameId(int user_id, int game_no) {
-        int id = 0;
-        try {
-            DBConnection db = new DBConnection();
-            Connection conn = db.connect();
-            Statement stmt = conn.createStatement();
-            String queryString = "SELECT id from games WHERE game_no = '"+game_no+"' AND user_id = '"+user_id+"'";
-            ResultSet rs = stmt.executeQuery(queryString);
-            id = rs.getInt("id");
-            stmt.close();
-            db.disconnect(conn);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return id;
-    }
+
     
     public void setResult (String result){
         this.result = result;

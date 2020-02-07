@@ -22,7 +22,6 @@ public class User {
     private String password;
     private String fname;
     private String lname;
-    private int game_count;
     private DBConnection db = new DBConnection();
     
     public User(){}
@@ -110,7 +109,6 @@ public class User {
                 setUsername(rs.getString("username"));
                 setScore(rs.getInt("score"));
                 setId(rs.getInt("id"));
-                this.game_count = rs.getInt("game_count");
             }
             stmt.close();
             db.disconnect(conn);
@@ -118,21 +116,8 @@ public class User {
         }
         return this;
     }
-    // to increment the game count for the user before you save the game
-    // and to determine the game_no
-    public void incrementGameCount(){
-        this.game_count ++;
-        try {
-            Connection conn = db.connect();
-            Statement stmt = conn.createStatement();
-            String queryString = "UPDATE users SET game_count = game_count+1  WHERE username = '" + username + "'";
-            stmt.executeUpdate(queryString);
-            stmt.close();
-            db.disconnect(conn);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
+
+    
     public void setUsername(String username){
         this.username = username;
     }
@@ -169,9 +154,7 @@ public class User {
     public int getId(){
         return id;
     }
-    public int getGameCount(){
-        return game_count;
-    }
+
     //increment score by 3 in case of victory
     public boolean victory() {
         try {
@@ -213,7 +196,7 @@ public class User {
             String queryString = "SELECT * FROM games WHERE user_id = "+id;
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
-                GameModel g = new GameModel(rs.getString("game_type"), rs.getString("Sympol").charAt(0), rs.getInt("player_id"),rs.getInt("user_id") ,rs.getInt("game_no") ,rs.getString("result"), rs.getString("level"));
+                GameModel g = new GameModel(rs.getString("game_type"), rs.getString("Sympol").charAt(0), rs.getInt("player_id"),rs.getInt("user_id") ,rs.getString("result"), rs.getString("level"));
                 games.add(g);
             }
             stmt.close();
