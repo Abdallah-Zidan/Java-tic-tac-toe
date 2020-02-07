@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictac.database;
 
 import java.sql.Connection;
@@ -20,52 +15,61 @@ public class GameModel {
     private String game_type;
     private int player_id;
     private String result;
-    private String sympol;
+    private char sympol;
     private int user_id;
-    private int game_no;
+    private String level;
     private DBConnection db = new DBConnection();
     
     /**
-     *
-     * @param game_type     solo or dual
-     * @param sympol        x or o
+     * Game constructor
+     * @param game_type     solo | dual
+     * @param sympol        x | o
      * @param player_id  
      * @param user_id
-     * @param game_no       game_count in user model
-     * @param result        victory or loss
+     * @param result        victory | loss
      */
-    public GameModel(String game_type, char sympol, int player_id, int user_id, int game_no, String result){
+    public GameModel(String game_type, char sympol, int player_id, int user_id, String result, String level){
         this.game_type = game_type;
-        this.sympol =String.valueOf(sympol).toLowerCase() ;
+        this.sympol = sympol;
         this.player_id = player_id;
         this.result = result;
         this.user_id = user_id;
-        this.game_no = game_no;
+        this.level = level;
     }
-    public boolean save()
+    //insert game to db
+    public GameModel save()
     {
         try{
             Connection conn;
             conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "INSERT INTO 'games'('game_type', 'sympol', 'player_id', 'result','game_no', 'user_id') VALUES ('"+game_type+"', '"+sympol+"', '"+player_id+"', '"+result+"', '"+game_no+"', "+user_id+")";
+            String mark = String.valueOf(sympol).toLowerCase();
+            String queryString = "INSERT INTO 'games'('game_type', 'sympol', 'player_id', 'result', 'user_id', 'level') VALUES ('"+game_type+"', '"+mark+"', '"+player_id+"', '"+result+"', "+user_id+", '"+level+"')";
             stmt.executeUpdate(queryString);
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
             stmt.close();
             db.disconnect(conn);
-            return true;
+            return this;
         }
         catch(SQLException se){
             se.printStackTrace();
-            return false;
+            return null;
         }
     }
-   
-    public  ArrayList<Step> steps(){
+
+    /**
+     * member method 
+     * @return a collection of steps
+     */
+    public ArrayList<Step> steps(){
         ArrayList<Step> steps = new ArrayList<>();
         try {
             Connection conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "SELECT * FROM steps WHERE game_id = (SELECT id from games WHERE game_no = '"+game_no+"' AND user_id = '"+user_id+"')";
+            String queryString = "SELECT * FROM steps WHERE game_id = '"+id+"'";
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
                 Step s = new Step(rs.getInt("x"), rs.getInt("y"), rs.getInt("game_id"), rs.getString("turn"));
@@ -78,60 +82,68 @@ public class GameModel {
         }
         return steps;
     }
+
+    /**
+     *static method that takes
+     * @param user_id
+     * @param game_no
+     * @return a collection of steps
+     */
+    
+    //static method that takes game id and return a collection of steps
+    public static ArrayList<Step> getSteps(int game_id){
+        ArrayList<Step> steps = new ArrayList<>();
+        try {
+            DBConnection db = new DBConnection();
+            Connection conn;
+            conn = db.connect();
+            Statement stmt = conn.createStatement();
+            String queryString = "SELECT * FROM steps WHERE game_id = '" +game_id+"'";
+            ResultSet rs = stmt.executeQuery(queryString);
+            while (rs.next()) {
+                Step s = new Step(rs.getInt("x"), rs.getInt("y"), rs.getInt("game_id"), rs.getString("turn"));
+                steps.add(s);
+            }
+            stmt.close();
+            db.disconnect(conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return steps;
+    }
+
     
     public void setResult (String result){
         this.result = result;
     }
+    public void setLevel(String level){
+        this.level = level;
+    }
     public int getId(){
         return id;
+    }
+    public String getLevel(){
+        return level;
     }
     public String getType(){
         return game_type;
     }
-//    public char getSympol(){
-//        return sympol;
-//    }
+    public char getSympol(){
+        return sympol;
+    }
     public String getResult(){
         return result;
     }
     public int getUserId(){
         return user_id;
     }
-    
-    public static ArrayList<Step> getSteps(int gameId){
-        ArrayList<Step> steps = new ArrayList<>();
-        DBConnection dbCon = new DBConnection();
-        Connection con = dbCon.connect();
-        Statement stmt =null;
-        try{
-            stmt = con.createStatement();
-            String queryString = "SELECT * FROM steps WHERE game_id ="+gameId;
-             ResultSet rs = stmt.executeQuery(queryString);
-            while (rs.next()) {
-                Step s = new Step(rs.getInt("x"), rs.getInt("y"), rs.getInt("game_id"), rs.getString("turn"));
-                steps.add(s);
-            }
-            
-        }catch(SQLException ex){
-            ex.printStackTrace();
-        }finally{
-            try{
-                stmt.close();
-                dbCon.disconnect(con);
-            }catch(SQLException ex){
-                ex.printStackTrace();
-            }
-        }
-        
-        return steps;
-        
-    }
 //    public static void main(String[] args) {
-//        GameModel game = new GameModel("dual", 'x', 1, 1, 1, "loss");
-//        game.save();
-//        ArrayList<Step> ar = game.steps();
-//        for(Step step: ar){
-//            System.out.println(step.getTurn());
-//        }
+//        GameModel game = new GameModel("solo", 'x', 1, 1, 2, "loss", "easy");
+//        game = game.save();
+//        //ArrayList<Step> ar = GameModel.getSteps(1);
+//        System.out.println(game.getId());
+////        for(Step step: ar){
+////            System.out.println(step);
+////        }
 //    }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictac.database;
 
 import java.sql.Connection;
@@ -33,15 +28,13 @@ public class User {
         this.fname = fname;
         this.lname = lname;
     }
-    
-  
     //login constructor
     public User(String username, String password)
     {
         this.username = username;
         this.password = password;
     }
-    
+    //check if the username already exist in db
     public boolean userExist(String username){
         boolean retval = false;
         try {
@@ -59,7 +52,7 @@ public class User {
         }
         return retval;
     }
-    
+    //check if user is authentic or not
     public boolean isAuthentic(){
         boolean retval = false;
         if (userExist(username)) {
@@ -98,6 +91,7 @@ public class User {
             return false;
         }
     }
+    // can be used with the login constructor to get the user info from database if authenticated
     public User getUserInfo() {
         try {
             Connection conn = db.connect();
@@ -117,6 +111,8 @@ public class User {
         }
         return this;
     }
+
+    
     public void setUsername(String username){
         this.username = username;
     }
@@ -153,6 +149,7 @@ public class User {
     public int getId(){
         return id;
     }
+
     //increment score by 3 in case of victory
     public boolean victory() {
         try {
@@ -185,6 +182,7 @@ public class User {
             return false;
         }
     }
+    //returns a collection of games that the user played
     public ArrayList<GameModel> games() {
         ArrayList<GameModel> games = new ArrayList<>();
         try {
@@ -193,7 +191,7 @@ public class User {
             String queryString = "SELECT * FROM games WHERE user_id = "+id;
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
-                GameModel g = new GameModel(rs.getString("game_type"), rs.getString("Sympol").charAt(0), rs.getInt("player_id"),rs.getInt("user_id") ,rs.getInt("game_no") ,rs.getString("result"));
+                GameModel g = new GameModel(rs.getString("game_type"), rs.getString("Sympol").charAt(0), rs.getInt("player_id"),rs.getInt("user_id") ,rs.getString("result"), rs.getString("level"));
                 games.add(g);
             }
             stmt.close();
@@ -203,15 +201,37 @@ public class User {
         }
         return games;
     }
+    //static method that returns a collectopn of players who played with this user
+    public ArrayList<Player> players() {
+        ArrayList<Player> players = new ArrayList<>();
+        try {
+            Connection conn = db.connect();
+            Statement stmt = conn.createStatement();
+            String queryString = "SELECT * FROM players WHERE user_id = "+id;
+            ResultSet rs = stmt.executeQuery(queryString);
+            while (rs.next()) {
+                Player p = new Player(rs.getString("fname"), rs.getString("lname"), rs.getString("ip_address"), rs.getInt("user_id"));
+                players.add(p);
+            }
+            stmt.close();
+            db.disconnect(conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return players;
+    }
 //    public static void main(String[] args) {
 //        User user = new User("test", "test");
 //        
-//        //user.draw();
+//        user.draw();
 //        user = user.getUserInfo();
 //        ArrayList<GameModel> ar = user.games();
 //        
 //        for(GameModel game: ar){
 //            System.out.println(game.getType());
 //        }
+//        user.incrementGameCount();
+//        user = user.getUserInfo();
+//        System.out.println(user.getGameCount()); 
 //    }
 }

@@ -6,10 +6,9 @@ import tictac.ui.GameBodyB;
 import java.util.*;
 
 public class SingleMode extends Game {
-    private int level;
+   
     public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark,int level, GameBodyB ui) {
-        super(isRecorded, Constants.SOLO, oppenent, user, myMark, ui);
-        this.level = level;
+        super(isRecorded, Constants.SOLO, oppenent, user, myMark,level, ui);
     }
 
     /**

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictac.database;
 
 import java.sql.Connection;
@@ -22,13 +17,25 @@ public class Step {
     private DBConnection db = new DBConnection();
     
     public Step(){}
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param turn   mine | oponent
+     */
+    public Step(int x, int y, String turn){
+        this.x = x;
+        this.y = y;
+        this.turn = turn;
+    }
     public Step(int x, int y, int game_id, String turn){
         this.x = x;
         this.y = y;
-        this.game_id = game_id;
         this.turn = turn;
     }
     //insert step to database
+    //setGameId before you save
     public boolean save()
     {
         try{
@@ -57,6 +64,9 @@ public class Step {
     }
     public String getTurn(){
         return turn;
+    }
+    public void setGameId(int game_id){
+        this.game_id = game_id;
     }
 //    public static void main(String[] args) {
 //        Step step = new Step(3, 3, 1, "mine");

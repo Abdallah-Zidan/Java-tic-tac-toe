@@ -31,8 +31,8 @@ public abstract class Game {
     protected Button[][] buttons; // board buttons in the game play
     protected GameBodyB ui; // simple ui for testing
     protected int gameId;
-
-    Game(boolean isRecorded, String gameType, Player oppenent, User user, char myMark, GameBodyB ui) {
+    protected int level;
+    Game(boolean isRecorded, String gameType, Player oppenent, User user, char myMark,int level, GameBodyB ui) {
         this.ui = ui;
         buttons = ui.getBoardButtons();
         gameEnded = false;
@@ -43,6 +43,7 @@ public abstract class Game {
         this.oppenent = oppenent;
         this.user = user;
         this.myMark = myMark;
+        this.level = level;
         if (myMark == Constants.Circle) {
             oppenentMark = Constants.Cross;
         } else {
@@ -218,25 +219,35 @@ public abstract class Game {
 
     // save the game if recorded into the database using GameModel
     public void saveGame(String result) {
+        String nivel ="";
         if (isRecorded) {
-            GameModel game = new GameModel(game_type, myMark, oppenent.getId(), user.getId(), 3, result);
-            game.save();
+            if(game_type.equals(Constants.SOLO)){
+                if(level ==1){
+                     nivel = "easy";
+                }else if(level ==3){
+                    nivel = "hard";                }   
+            } else{
+                nivel = "no level";
+            }
+            GameModel game = new GameModel(game_type, myMark, oppenent.getId(), user.getId(),  result ,nivel);
+            game =game.save();
             gameId = game.getId();
-            saveSteps();
+            saveSteps(gameId);
         }
     }
 
     // record Step
     public void recordStep(int x, int y, String turn) {
         if (isRecorded) {
-            steps.add(new Step(x, y, 5, turn));
+            steps.add(new Step(x, y, turn));
         }
 
     }
 
     // save the steps at the end of the game
-    public void saveSteps() {
+    public void saveSteps(int gameId) {
         for (Step step : steps) {
+            step.setGameId(gameId);
             step.save();
         }
     }

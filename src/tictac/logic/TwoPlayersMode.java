@@ -4,7 +4,7 @@ import tictac.ui.GameBodyB;
 
 public class TwoPlayersMode extends Game {
     public TwoPlayersMode(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyB ui) {
-        super(isRecorded, Constants.DUAL, oppenent, user, myMark, ui);
+        super(isRecorded, Constants.DUAL, oppenent, user, myMark,0, ui);
     }
     /**
      * overriding the abstract function play to suit two players mode playing logic
