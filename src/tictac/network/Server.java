@@ -6,23 +6,16 @@ import tictac.game.MainGame;
 
 public class Server {
 
-   // ServerSocket serverSocket ;
     Socket client = null;
 
     public Server() {
         try {
             if (MainGame.gameInfo.serverSocket == null) {
                 MainGame.gameInfo.serverSocket = new ServerSocket(5000);
-
             }
-
-            //  while(client == null){
             client = MainGame.gameInfo.serverSocket.accept();
             MainGame.gameInfo.socket = client;
-            //    }
-
             System.out.println("Client has connected");
-
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

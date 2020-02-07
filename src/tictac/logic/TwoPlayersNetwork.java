@@ -37,13 +37,14 @@ public class TwoPlayersNetwork extends Game {
         }
         clearButtons();
         gameEnded = false;
+        ui.playSound();
     }
 
     @Override
     public void play(int x, int y) {
         int result = 4;
         if (!gameEnded) {
-            Position position = null;
+            Position position;
             if (myTurn) {
                 enableButtons();
                 position = makeMove(x, y);

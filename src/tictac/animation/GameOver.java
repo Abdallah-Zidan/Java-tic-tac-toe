@@ -50,5 +50,9 @@ public class GameOver extends AnchorPane {
     public void playSound() {
         audio.play();
     }
+    public void stopSound() {
+        audio.stop();
+    }
+
 
 }

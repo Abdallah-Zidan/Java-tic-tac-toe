@@ -254,7 +254,7 @@ public class GameBodyB extends Pane {
         if(state == 1){
               btn.setStyle("-fx-background-color: yellow;-fx-text-fill: white;");
         }else if(state==11){
-            btn.setStyle("-fx-background-color: white;");
+            btn.setStyle("-fx-background-color: transparent;hoverProperty(-fx-background-color: #930a0a;-fx-border-radius: 25;)");
         }
         else{
             btn.setStyle("-fx-background-color: red;-fx-text-fill: white;");

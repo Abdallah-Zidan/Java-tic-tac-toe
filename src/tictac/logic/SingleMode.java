@@ -85,10 +85,9 @@ public class SingleMode extends Game {
      */
     @Override
     public void play(int x, int y) {
-        System.out.println(board);
         int result = 4;
         if (!gameEnded) {
-            Position position = null;
+            Position position;
             if (myTurn) {
                 position = makeMove(x, y);
                 if (position != null) {

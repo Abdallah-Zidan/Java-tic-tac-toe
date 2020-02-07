@@ -4,10 +4,9 @@ import java.io.*;
 import java.net.*;
 import tictac.game.MainGame;
 
-public class Client  {
+public class Client {
 
-   Socket mainSocket =null;
-
+    Socket mainSocket = null;
 
     public Client(String ip) {
 
@@ -15,13 +14,12 @@ public class Client  {
             mainSocket = new Socket(ip, 5000);
             MainGame.gameInfo.socket = mainSocket;
         } catch (IOException ex) {
-          //  System.out.println("Something went Wrong");
-           // System.exit(0);
+            System.out.println("Something went Wrong");
         }
     }
 
-synchronized public Socket getSocket(){
-    return mainSocket;
-}
+    synchronized public Socket getSocket() {
+        return mainSocket;
+    }
 
 }

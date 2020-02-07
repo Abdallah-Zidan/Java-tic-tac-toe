@@ -63,36 +63,15 @@ public abstract class Game {
     this method is responsible for adding action events on the game buttons
      */
     public void startActionHandling() {
-        buttons[0][0].setOnAction((ActionEvent event) -> {
-            play(0, 0);
-        });
-
-        buttons[0][1].setOnAction((ActionEvent event) -> {
-            play(0, 1);
-        });
-
-        buttons[0][2].setOnAction((ActionEvent event) -> {
-            play(0, 2);
-        });
-
-        buttons[1][0].setOnAction((ActionEvent event) -> {
-            play(1, 0);
-        });
-        buttons[1][1].setOnAction((ActionEvent event) -> {
-            play(1, 1);
-        });
-        buttons[1][2].setOnAction((ActionEvent event) -> {
-            play(1, 2);
-        });
-        buttons[2][0].setOnAction((ActionEvent event) -> {
-            play(2, 0);
-        });
-        buttons[2][1].setOnAction((ActionEvent event) -> {
-            play(2, 1);
-        });
-        buttons[2][2].setOnAction((ActionEvent event) -> {
-            play(2, 2);
-        });
+        buttons[0][0].setOnAction((ActionEvent event) -> {play(0, 0);});
+        buttons[0][1].setOnAction((ActionEvent event) -> {play(0, 1);});
+        buttons[0][2].setOnAction((ActionEvent event) -> {play(0, 2);});
+        buttons[1][0].setOnAction((ActionEvent event) -> {play(1, 0);});
+        buttons[1][1].setOnAction((ActionEvent event) -> {play(1, 1);});
+        buttons[1][2].setOnAction((ActionEvent event) -> {play(1, 2);});
+        buttons[2][0].setOnAction((ActionEvent event) -> {play(2, 0);});
+        buttons[2][1].setOnAction((ActionEvent event) -> {play(2, 1);});
+        buttons[2][2].setOnAction((ActionEvent event) -> {play(2, 2);});
     }
 
     // disable the game buttons when game ends
@@ -121,17 +100,14 @@ public abstract class Game {
             case YouWin:
                 System.out.println("You Won!");
                 retval = 1;
-                //    disableButtons();
                 break;
             case OppWin:
                 System.out.println("openent Won!");
                 retval = 2;
-                //   disableButtons();
                 break;
             case Draw:
                 System.out.println("Draw!");
                 retval = 3;
-                //   disableButtons();
                 break;
             default:
                 gameEnded = false;
@@ -189,21 +165,19 @@ public abstract class Game {
 
         if (buttons[0][0].getText().equals(buttons[1][1].getText()) && buttons[0][0].getText().equals(buttons[2][2].getText())) {
             highlightTrio(buttons[0][0], buttons[1][1], buttons[2][2], state);
-        } 
-        else if (buttons[0][2].getText().equals(buttons[1][1].getText()) && buttons[0][2].getText().equals(buttons[2][0].getText())) {
+        } else if (buttons[0][2].getText().equals(buttons[1][1].getText()) && buttons[0][2].getText().equals(buttons[2][0].getText())) {
             highlightTrio(buttons[0][2], buttons[1][1], buttons[2][0], state);
-        }
-        else {
+        } else {
             for (int x = 0; x < 3; x++) {
                 String st1 = buttons[x][0].getText(), st2 = buttons[x][1].getText(), st3 = buttons[x][2].getText();
-                if (st1.equals(st2) && st1.equals(st3)) {
+                if (st1.equals(st2) && st1.equals(st3) && st1.equals("X") || st1.equals(st2) && st1.equals(st3) && st1.equals("O")) {
                     highlightTrio(buttons[x][0], buttons[x][1], buttons[x][2], state);
                     break;
                 }
             }
             for (int y = 0; y < 3; y++) {
                 String st1 = buttons[0][y].getText(), st2 = buttons[1][y].getText(), st3 = buttons[2][y].getText();
-                if (st1.equals(st2) && st1.equals(st3)) {
+                if (st1.equals(st2) && st1.equals(st3) && st1.equals("X") || st1.equals(st2) && st1.equals(st3) && st1.equals("O")) {
                     highlightTrio(buttons[0][y], buttons[1][y], buttons[2][y], state);
                     break;
                 }
@@ -211,11 +185,7 @@ public abstract class Game {
         }
     }
 
-    // show the game end results to the user
-    public void showResult(int result) {
-        GameOver showEnd;
-        showEnd = new GameOver();
-        int dur;
+    public Stage prepareEndStage() {
         final Stage endStage = new Stage();
         endStage.initModality(Modality.WINDOW_MODAL);
         endStage.initStyle(StageStyle.UNDECORATED);
@@ -223,57 +193,53 @@ public abstract class Game {
         endStage.setX(ui.getScene().getWindow().getX());
         endStage.setY(ui.getScene().getWindow().getY());
         endStage.setResizable(false);
-        Scene endScene;
+        return endStage;
+    }
+
+    public void showStage(int state, GameOver showEnd, Stage stage) {
+        highlightButtons(state);
+        ui.stopSound();
+        showEnd.setState(state);
+        showEnd.playSound();
+        Scene endScene = new Scene(showEnd);
+        stage.setScene(endScene);
+        stage.show();
+    }
+
+    // show the game end results to the user
+    public void showResult(int result) {
+        GameOver showEnd;
+        showEnd = new GameOver();
+        final Stage endStage = prepareEndStage();
         PauseTransition delay;
         switch (result) {
             case 1:
-                highlightButtons(1);
-                ui.stopSound();
-                showEnd.setState(1);
-                showEnd.playSound();
-                saveGame("victory");
-                dur = 4;
+                showStage(1, showEnd, endStage);
                 user.victory();
-                endScene = new Scene(showEnd);
-                endStage.setScene(endScene);
-                endStage.show();
+                saveGame("victory");
                 break;
             case 2:
-                highlightButtons(2);
+                showStage(2, showEnd, endStage);
                 saveGame("loss");
-                dur = 4;
-                ui.stopSound();
-                showEnd.setState(2);
-                showEnd.playSound();
-                endScene = new Scene(showEnd);
-                endStage.setScene(endScene);
-                endStage.show();
                 break;
             case 3:
+                showStage(3, showEnd, endStage);
                 saveGame("draw");
                 user.draw();
-                ui.stopSound();
-                showEnd.setState(3);
-                showEnd.playSound();
-                endScene = new Scene(showEnd);
-                endStage.setScene(endScene);
-                dur = 3;
-                endStage.show();
                 break;
         }
-        delay = new PauseTransition(Duration.seconds(dur));
+        delay = new PauseTransition(Duration.seconds(4));
         delay.setOnFinished(event -> {
             endStage.close();
         });
         delay.play();
-        //   enableButtons();
+       
     }
 
     // save the game if recorded into the database using GameModel
     public void saveGame(String result) {
         if (isRecorded) {
             GameModel game = new GameModel(game_type, myMark, oppenent.getId(), user.getId(), 3, result);
-
             game.save();
             gameId = game.getId();
             saveSteps();
@@ -282,7 +248,6 @@ public abstract class Game {
 
     // record Step
     public void recordStep(int x, int y, String turn) {
-
         if (isRecorded) {
             steps.add(new Step(x, y, 5, turn));
         }
