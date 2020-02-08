@@ -59,7 +59,7 @@ public class GameModel {
             return this;
         }
         catch(SQLException se){
-            se.printStackTrace();
+            System.err.println("Failed to save the game\n"+se.getMessage());
             return null;
         }
     }
@@ -82,17 +82,11 @@ public class GameModel {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to retrieve the game steps from database\n"+ex.getMessage());
         }
         return steps;
     }
 
-    /**
-     *static method that takes
-     * @param user_id
-     * @param game_no
-     * @return a collection of steps
-     */
     
     //static method that takes game id and return a collection of steps
     public static ArrayList<Step> getSteps(int game_id){
@@ -111,7 +105,7 @@ public class GameModel {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to retrieve the game steps from database\n"+ex.getMessage());
         }
         return steps;
     }
@@ -141,13 +135,5 @@ public class GameModel {
     public int getUserId(){
         return user_id;
     }
-//    public static void main(String[] args) {
-//        GameModel game = new GameModel("solo", 'x', 1, 1, 2, "loss", "easy");
-//        game = game.save();
-//        //ArrayList<Step> ar = GameModel.getSteps(1);
-//        System.out.println(game.getId());
-////        for(Step step: ar){
-////            System.out.println(step);
-////        }
-//    }
+
 }

@@ -46,7 +46,7 @@ public class Player {
             return true;
         }
         catch(SQLException se){
-            se.printStackTrace();
+            System.err.println("Failed to save player\n"+se.getMessage());
             return false;
         }
     }
@@ -64,7 +64,7 @@ public class Player {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to check if player exist\n"+ex.getMessage());
         }
         return retval;
     }
@@ -86,7 +86,7 @@ public class Player {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to retrieve player info from database\n"+ex.getMessage());
         }
         return this;
     }
@@ -106,7 +106,7 @@ public class Player {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to retrieve player info from database\n"+ex.getMessage());
         }
         return p;
     }
@@ -141,13 +141,4 @@ public class Player {
         return user_id;
     }
     
-//    public static void main(String[] args) {
-//        Player player ;
-//        //boolean x = player.save();
-//
-//        player = Player.getPlayer(1);
-//
-//        System.out.println(player.getIpAddress());
-//    }
-
 }

@@ -54,7 +54,7 @@ public class Step {
             return true;
         }
         catch(SQLException se){
-            se.printStackTrace();
+            System.err.println("Failed to save the game steps\n"+se.getMessage());
             return false;
         }
     }
@@ -73,8 +73,5 @@ public class Step {
     public void setGameId(int game_id){
         this.game_id = game_id;
     }
-//    public static void main(String[] args) {
-//        Step step = new Step(3, 3, 1, "mine");
-//        step.save();
-//    }
+
 }
