@@ -11,14 +11,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import tictac.controllers.EventController;
+import tictac.database.GameModel;
+import tictac.database.SavedGameModel;
+import tictac.database.User;
 
 public class SavedGameScreen extends Pane {
     protected final ImageView imageView;
-    protected final TableView tableView;
-    protected final TableColumn<String, Person> tableColumn;
-    protected final TableColumn<String, Person> tableColumn0;
-//    protected final TableColumn tableColumn1;
-//    protected final TableColumn tableColumn2;
+    protected final TableView<SavedGameModel> tableView;
+    protected final TableColumn<SavedGameModel, String> tableColumn;
+    protected final TableColumn<SavedGameModel, String> tableColumn0;
+    protected final TableColumn<SavedGameModel, String> tableColumn1;
+    protected final TableColumn<SavedGameModel, String> tableColumn2;
     protected final Label label;
     protected final Label label0;
     protected final Button replay;
@@ -27,13 +30,11 @@ public class SavedGameScreen extends Pane {
 
     public SavedGameScreen() {
         imageView = new ImageView();
-        tableView = new TableView();
-        tableColumn = new TableColumn<>("First Name");
-        tableColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        tableColumn0 = new TableColumn<>("Last Name");
-        tableColumn0.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-//        tableColumn1 = new TableColumn();
-//        tableColumn2 = new TableColumn();
+        tableView = new TableView<>();
+        tableColumn = new TableColumn<>("Date/Time");
+        tableColumn0 = new TableColumn<>("Game Type");
+        tableColumn1 = new TableColumn<>("Player Name");
+        tableColumn2 = new TableColumn<>("Result");
         label = new Label();
         label0 = new Label();
         replay = new Button();
@@ -57,17 +58,17 @@ public class SavedGameScreen extends Pane {
         tableView.setPrefHeight(398.0);
         tableView.setPrefWidth(425.0);
 
-//        tableColumn.setPrefWidth(87.0);
-//        tableColumn.setText("Date/Time");
-//
-//        tableColumn0.setPrefWidth(108.0);
-//        tableColumn0.setText("Game Type");
-//
-//        tableColumn1.setPrefWidth(118.0);
-//        tableColumn1.setText("Player Name");
-//
-//        tableColumn2.setPrefWidth(111.0);
-//        tableColumn2.setText("Result");
+        tableColumn.setPrefWidth(87.0);
+        tableColumn.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
+
+        tableColumn0.setPrefWidth(108.0);
+        tableColumn0.setCellValueFactory(new PropertyValueFactory<>("gameType"));
+
+        tableColumn1.setPrefWidth(118.0);
+        tableColumn1.setCellValueFactory(new PropertyValueFactory<>("playerName"));
+
+        tableColumn2.setPrefWidth(111.0);
+        tableColumn2.setCellValueFactory(new PropertyValueFactory<>("result"));
 
         label.setLayoutX(40.0);
         label.setLayoutY(120.0);
@@ -89,7 +90,7 @@ public class SavedGameScreen extends Pane {
         replay.getStyleClass().add("btn");
         replay.setText("Replay");
         replay.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
-        replay.setOnAction(EventController.SavedGame.replayOnAction());
+        replay.setOnAction(EventController.SavedGame.replayOnAction(this));
 
         arrow.setLayoutX(52.0);
         arrow.setLayoutY(410.0);
@@ -108,8 +109,8 @@ public class SavedGameScreen extends Pane {
         getChildren().add(imageView);
         tableView.getColumns().add(tableColumn);
         tableView.getColumns().add(tableColumn0);
-//        tableView.getColumns().add(tableColumn1);
-//        tableView.getColumns().add(tableColumn2);
+        tableView.getColumns().add(tableColumn1);
+        tableView.getColumns().add(tableColumn2);
         getChildren().add(tableView);
         getChildren().add(label);
         getChildren().add(label0);
@@ -120,8 +121,14 @@ public class SavedGameScreen extends Pane {
     }
 
     private void loadSavedGames() {
-//        tableView.getItems().add(new Object[] { "A", "B", "C", "D" });
-//        tableView.getItems().add(new Object[] { "A", "B", "C", "D" });
-//        tableView.getItems().add(new Object[] { "A", "B", "C", "D" });
+        User user = new User("test", "test");
+        user.getUserInfo();
+
+        for (GameModel game : user.games())
+            tableView.getItems().add(new SavedGameModel(game.getId(), game.getTimestamp(), game.getType(), Integer.toString(game.getUserId()), game.getResult(), game.getSympol()));
+    }
+
+    public TableView getTable() {
+        return tableView;
     }
 }

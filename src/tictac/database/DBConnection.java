@@ -22,7 +22,7 @@ public class DBConnection {
             conn = DriverManager.getConnection(url);            
             //System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Faild to connect to database\n"+e.getMessage());
         }
         return conn;
     }
@@ -31,7 +31,7 @@ public class DBConnection {
             connection.close();
             //System.out.println("Connection to SQLite has been closed.");
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Faild to close connection with database\n"+ex.getMessage());
         }
     }
     

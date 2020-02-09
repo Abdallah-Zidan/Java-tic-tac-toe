@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import tictac.animation.GameOver;
 import tictac.database.Player;
+import tictac.database.SavedGameModel;
 import tictac.database.User;
 import tictac.game.MainGame;
 import tictac.logic.*;
@@ -174,8 +175,22 @@ public class EventController {
     public static class SavedGame {
         private SavedGame() {}
 
-        public static EventHandler<ActionEvent> replayOnAction() {
-            return (event) -> {};
+        public static EventHandler<ActionEvent> replayOnAction(SavedGameScreen pane) {
+            return (event) -> {
+                GameBodyScreen ui = new GameBodyScreen();
+                SavedGameModel game = (SavedGameModel)pane.getTable().getSelectionModel().getSelectedItem();
+                User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
+                user.getUserInfo();
+                Player player = Player.getPlayer(1);
+
+                ReplayGame replay = new ReplayGame(player, user, game.getSymbol(), game.getId(), ui);
+
+                MainGame.game.setParentScene(new Scene(ui));
+                MainGame.game.initializeScene();
+                MainGame.game.showScene();
+
+                ui.playSound();
+            };
         }
 
         public static EventHandler<ActionEvent> backOnAction() {
@@ -195,7 +210,8 @@ public class EventController {
                 String ip = "";
                 try {
                     ip = InetAddress.getLocalHost().getHostAddress();
-                } catch (UnknownHostException e) {
+                }
+                catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
                 CreateRoomScreen pane = new CreateRoomScreen();
@@ -336,9 +352,6 @@ public class EventController {
             else if (screen.toLowerCase().equals("two")) {
                 game = new TwoPlayersMode(pane.getRecord(), player, user, symbol, (GameBodyScreen)ui);
                 game.startActionHandling();
-            }
-            else if (screen.toLowerCase().equals("replay")) {
-                ReplayGame replay = new ReplayGame(player, user, symbol, 0, (GameBodyScreen)ui);
             }
             else if (screen.toLowerCase().equals("online")) {
                 ui = new WaitRoomScreen();

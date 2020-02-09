@@ -277,7 +277,7 @@ public abstract class Game {
     // save the game if recorded into the database using GameModel
     public void saveGame(String result) {
         if (isRecorded) {
-            GameModel game = new GameModel(game_type, myMark, oppenent.getId(), user.getId(), 3, result);
+            GameModel game = new GameModel(game_type, myMark, oppenent.getId(), user.getId(), "3", result);
 
             game.save();
             gameId = game.getId();

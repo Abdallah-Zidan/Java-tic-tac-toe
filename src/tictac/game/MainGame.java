@@ -1,16 +1,13 @@
 package tictac.game;
 
-import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import tictac.controllers.GameController;
 import tictac.database.User;
 import tictac.ui.PrimaryScreen;
-import tictac.ui.SavedGameScreen;
 
 public class MainGame extends Application {
     public static GameController game;
@@ -39,7 +36,7 @@ public class MainGame extends Application {
         });
 
         gameInfo = new GameInfo();
-        Scene scene = new Scene(new SavedGameScreen());
+        Scene scene = new Scene(new PrimaryScreen());
         game = new GameController(primaryStage);
         game.setParentScene(scene);
         game.initializeGame();

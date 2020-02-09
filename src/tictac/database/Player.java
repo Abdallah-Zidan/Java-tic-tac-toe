@@ -33,39 +33,6 @@ public class Player {
         this.ip_address = ip_address;
     }
     
-    // get a player from database using id
-    public static Player getPlayer(int id){
-       Player p =null ;
-       DBConnection dbCon;
-       dbCon= new DBConnection();
-       dbCon.connect();
-       Connection conn = dbCon.getConnection();
-        Statement stmt =null;
-       try{
-           stmt = conn.createStatement();
-           p = new Player();
-           String queryString = "select id , fname , lname , ip_address , user_id from players where id ="+id;
-           ResultSet result = stmt.executeQuery(queryString);
-           result.next();
-           p.setId(id);
-           p.setFname(result.getString(2));
-           p.setLname(result.getString(3));
-           p.setIpAddress(result.getString(4));
-           p.setUserId(result.getInt(5));
-       }catch(SQLException ex){
-           System.out.println(ex.getMessage());
-       }
-       finally{
-           try{
-               stmt.close();
-               dbCon.disconnect(conn);
-           }catch(SQLException ex){
-               ex.printStackTrace();
-           }
-       }
-       
-       return p;
-    }
     //insert player to database
     public boolean save()
     {
@@ -80,16 +47,17 @@ public class Player {
             return true;
         }
         catch(SQLException se){
-            se.printStackTrace();
+            System.err.println("Failed to save player\n"+se.getMessage());
             return false;
         }
     }
-    public boolean playerExist(String ip_address){
+    //check if ip already exist in db
+    public boolean playerExist(String ip_address, int user_id){
         boolean retval = false;
         try {
             Connection conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "SELECT * FROM players WHERE ip_address ='" + ip_address + "'";
+            String queryString = "SELECT * FROM players WHERE ip_address ='" + ip_address + "' AND user_id = '"+ user_id + "'";
             ResultSet rs = stmt.executeQuery(queryString);
             if (rs.next()) {
                 retval = true;
@@ -97,12 +65,13 @@ public class Player {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to check if player exist\n"+ex.getMessage());
         }
         return retval;
     }
-    
-    public Player getUserInfo() {
+    //to get player info
+    //to be used with constructor that takes ip only
+    public Player getPlayerInfo() {
         try {
             Connection conn = db.connect();
             Statement stmt = conn.createStatement();
@@ -110,15 +79,37 @@ public class Player {
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
                 setFname(rs.getString("fname"));
+                setLname(rs.getString("lname"));
                 setId(rs.getInt("id"));
                 setUserId(rs.getInt("user_id"));
-                setIpAddress(rs.getString("ip_adress"));
+                setIpAddress(rs.getString("ip_address"));
             }
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
+            System.err.println("Failed to retrieve player info from database\n"+ex.getMessage());
         }
         return this;
+    }
+    //static method that returns a player by it's id
+    public static Player getPlayer(int id) {
+        Player p = null;
+        try {
+            DBConnection db = new DBConnection();
+            Connection conn = db.connect();
+            Statement stmt = conn.createStatement();
+            String queryString = "SELECT * FROM players WHERE id = '" + id + "'";
+            ResultSet rs = stmt.executeQuery(queryString);
+            while (rs.next()) {
+                p = new Player(rs.getString("fname"), rs.getString("lname"), rs.getString("ip_address"), rs.getInt("user_id"));
+                p.setId(rs.getInt("id"));
+            }
+            stmt.close();
+            db.disconnect(conn);
+        } catch (SQLException ex) {
+            System.err.println("Failed to retrieve player info from database\n"+ex.getMessage());
+        }
+        return p;
     }
     public void setId(int id){
         this.id = id;
@@ -150,14 +141,4 @@ public class Player {
     public int getUserId(){
         return user_id;
     }
-    
-//    public static void main(String[] args) {
-//        Player player = new Player("test", "test","192.168.1.2");
-//        boolean x = player.save();
-//
-//        player = player.getUserInfo();
-//
-//        System.out.println(player.getIpAddress() + " " + x);
-//    }
-
 }

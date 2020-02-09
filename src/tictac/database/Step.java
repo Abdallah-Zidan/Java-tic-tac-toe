@@ -22,13 +22,25 @@ public class Step {
     private DBConnection db = new DBConnection();
     
     public Step(){}
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param turn   mine | oponent
+     */
+    public Step(int x, int y, String turn){
+        this.x = x;
+        this.y = y;
+        this.turn = turn;
+    }
     public Step(int x, int y, int game_id, String turn){
         this.x = x;
         this.y = y;
-        this.game_id = game_id;
         this.turn = turn;
     }
     //insert step to database
+    //setGameId before you save
     public boolean save()
     {
         try{
@@ -42,7 +54,7 @@ public class Step {
             return true;
         }
         catch(SQLException se){
-            se.printStackTrace();
+            System.err.println("Failed to save the game steps\n"+se.getMessage());
             return false;
         }
     }
@@ -58,8 +70,7 @@ public class Step {
     public String getTurn(){
         return turn;
     }
-//    public static void main(String[] args) {
-//        Step step = new Step(3, 3, 1, "mine");
-//        step.save();
-//    }
+    public void setGameId(int game_id){
+        this.game_id = game_id;
+    }
 }

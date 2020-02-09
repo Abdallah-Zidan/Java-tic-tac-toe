@@ -41,7 +41,7 @@ public class User {
         this.username = username;
         this.password = password;
     }
-    
+    //check if the username already exist in db
     public boolean userExist(String username){
         boolean retval = false;
         try {
@@ -55,11 +55,11 @@ public class User {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to check if user exist\n"+ex.getMessage());
         }
         return retval;
     }
-    
+    //check if user is authentic or not
     public boolean isAuthentic(){
         boolean retval = false;
         if (userExist(username)) {
@@ -74,7 +74,7 @@ public class User {
                 stmt.close();
                 db.disconnect(conn);
             } catch (SQLException ex) {
-                ex.printStackTrace();
+            System.err.println("Failed to check if user is authentic\n"+ex.getMessage());
             }
         }
         return retval;
@@ -94,10 +94,11 @@ public class User {
             return true;
         }
         catch(SQLException se){
-            se.printStackTrace();
+            System.err.println("Failed to save the game\n"+se.getMessage());
             return false;
         }
     }
+    // can be used with the login constructor to get the user info from database if authenticated
     public User getUserInfo() {
         try {
             Connection conn = db.connect();
@@ -113,7 +114,9 @@ public class User {
             }
             stmt.close();
             db.disconnect(conn);
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
+            System.err.println("Failed to retrieve the user info from database\n"+ex.getMessage());
         }
         return this;
     }
@@ -153,6 +156,7 @@ public class User {
     public int getId(){
         return id;
     }
+
     //increment score by 3 in case of victory
     public boolean victory() {
         try {
@@ -165,7 +169,7 @@ public class User {
             db.disconnect(conn);
             return true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to increment the score by 3\n"+ex.getMessage());
             return false;
         }
     }
@@ -181,10 +185,11 @@ public class User {
             db.disconnect(conn);
             return true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to increment the score by 1\n"+ex.getMessage());
             return false;
         }
     }
+    //returns a collection of games that the user played
     public ArrayList<GameModel> games() {
         ArrayList<GameModel> games = new ArrayList<>();
         try {
@@ -193,25 +198,35 @@ public class User {
             String queryString = "SELECT * FROM games WHERE user_id = "+id;
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
-                GameModel g = new GameModel(rs.getString("game_type"), rs.getString("Sympol").charAt(0), rs.getInt("player_id"),rs.getInt("user_id") ,rs.getInt("game_no") ,rs.getString("result"));
+                GameModel g = new GameModel(rs.getString("game_type"), rs.getString("Sympol").charAt(0), rs.getInt("player_id"),rs.getInt("user_id") ,rs.getString("result"), rs.getString("level"));
+                g.setId(rs.getInt("id"));
+                g.setTimestamp(rs.getString("timestamp"));
                 games.add(g);
             }
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to retrieve the user games from database\n"+ex.getMessage());
         }
         return games;
     }
-    public static void main(String[] args) {
-        User user = new User("test", "test");
-        
-        //user.draw();
-        user = user.getUserInfo();
-        ArrayList<GameModel> ar = user.games();
-        
-        for(GameModel game: ar){
-            System.out.println(game.getType());
+    //static method that returns a collectopn of players who played with this user
+    public ArrayList<Player> players() {
+        ArrayList<Player> players = new ArrayList<>();
+        try {
+            Connection conn = db.connect();
+            Statement stmt = conn.createStatement();
+            String queryString = "SELECT * FROM players WHERE user_id = "+id;
+            ResultSet rs = stmt.executeQuery(queryString);
+            while (rs.next()) {
+                Player p = new Player(rs.getString("fname"), rs.getString("lname"), rs.getString("ip_address"), rs.getInt("user_id"));
+                players.add(p);
+            }
+            stmt.close();
+            db.disconnect(conn);
+        } catch (SQLException ex) {
+            System.err.println("Failed to retrieve players from database\n"+ex.getMessage());
         }
+        return players;
     }
 }
