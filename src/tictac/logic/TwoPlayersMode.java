@@ -2,11 +2,12 @@ package tictac.logic;
 
 import tictac.animation.GameOver;
 import tictac.database.*;
+import tictac.ui.GameBodyScreen;
 
 public class TwoPlayersMode extends Game {
 
-    public TwoPlayersMode(boolean isRecorded, Player oppenent, User user, char myMark, GameTestUi ui, GameOver endUi) {
-        super(isRecorded, Constants.DUAL, oppenent, user, myMark, ui, endUi);
+    public TwoPlayersMode(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyScreen ui) {
+        super(isRecorded, Constants.DUAL, oppenent, user, myMark, ui);
     }
 
     @Override
@@ -20,11 +21,9 @@ public class TwoPlayersMode extends Game {
                 if (position != null) {
                     board = new Board(board, position, myMark);
                     ui.setText(buttons[x][y], myMark);
-                    if(isRecorded){
 
-                        recordStep(x, y, Constants.MINE);
-                    }
-                    
+                    recordStep(x, y, Constants.MINE);
+
                     myTurn = !myTurn;
 
                     result = evaluateGame();
@@ -37,13 +36,8 @@ public class TwoPlayersMode extends Game {
                 if (position != null) {
                     board = new Board(board, position, oppenentMark);
                     ui.setText(buttons[x][y], oppenentMark);
-
-                    if(isRecorded){
-                     recordStep(x, y, Constants.OPPENENT);
-                    }
-
+                    recordStep(x, y, Constants.OPPENENT);
                     myTurn = !myTurn;
-
                     result = evaluateGame();
                 } else {
                     System.out.println("Already marked!");
@@ -51,7 +45,5 @@ public class TwoPlayersMode extends Game {
             }
         }
         showResult(result);
-
     }
-
 }

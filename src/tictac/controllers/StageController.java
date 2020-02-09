@@ -61,10 +61,10 @@ public class StageController {
         this.stage = stage;
         this.parentStage = parentStage;
         stageStyle = StageStyle.DECORATED;
-        width = 500;
-        height = 400;
-        fullScreen = false;
-        resizable = true;
+//        width = 500;
+//        height = 400;
+//        fullScreen = false;
+//        resizable = false;
         title = "Tic Tac Toe";
     }
     // </editor-fold>
@@ -199,11 +199,10 @@ public class StageController {
         }
 
         stage.initStyle(stageStyle);
-
-        stage.setWidth(width);
-        stage.setHeight(height);
-        stage.setFullScreen(fullScreen);
-        stage.setResizable(resizable);
+//        stage.setWidth(width);
+//        stage.setHeight(height);
+//        stage.setFullScreen(fullScreen);
+//        stage.setResizable(resizable);
         stage.setTitle(title);
     }
 

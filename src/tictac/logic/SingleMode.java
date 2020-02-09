@@ -3,11 +3,12 @@ package tictac.logic;
 import tictac.database.*;
 import java.util.ArrayList;
 import tictac.animation.GameOver;
+import tictac.ui.GameBodyScreen;
 
 public class SingleMode extends Game {
 
-    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark, GameTestUi ui, GameOver endUi) {
-        super(isRecorded, Constants.SOLO, oppenent, user, myMark, ui, endUi);
+    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyScreen ui) {
+        super(isRecorded, Constants.SOLO, oppenent, user, myMark, ui);
     }
 
     private Board findBestMove(Board board) {
