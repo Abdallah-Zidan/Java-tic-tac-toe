@@ -23,6 +23,7 @@ public class GameModel {
     private char sympol;
     private int user_id;
     private String level;
+    private String timestamp;
     private DBConnection db = new DBConnection();
     
     /**
@@ -117,8 +118,17 @@ public class GameModel {
     public void setLevel(String level){
         this.level = level;
     }
+    public void setTimestamp(String timestamp){
+        this.timestamp = timestamp;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
     public int getId(){
         return id;
+    }
+    public String getTimestamp(){
+        return timestamp;
     }
     public String getLevel(){
         return level;

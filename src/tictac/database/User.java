@@ -199,6 +199,8 @@ public class User {
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
                 GameModel g = new GameModel(rs.getString("game_type"), rs.getString("Sympol").charAt(0), rs.getInt("player_id"),rs.getInt("user_id") ,rs.getString("result"), rs.getString("level"));
+                g.setId(rs.getInt("id"));
+                g.setTimestamp(rs.getString("timestamp"));
                 games.add(g);
             }
             stmt.close();
@@ -227,5 +229,17 @@ public class User {
         }
         return players;
     }
+//    public static void main(String[] args) {
+//        User user = new User("test", "test");
+//        user = user.getUserInfo();
+//        ArrayList<GameModel> ar = new ArrayList<>();
+//        ar = user.games();
+//        System.out.println(ar);
+//        for (GameModel g : ar) {
+//            System.out.println(g.getId());
+//            System.out.println(g.getTimestamp());
+//
+//        }
+//    }
 
 }
