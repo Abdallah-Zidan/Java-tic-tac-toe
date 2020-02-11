@@ -48,7 +48,7 @@ public class PlayScreen extends Pane {
         label.setPrefWidth(488.0);
         label.setText("Play New Game");
         label.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 40.0));
+//        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 40.0));
 
         singlePlayer.setLayoutX(225.0);
         singlePlayer.setLayoutY(179.0);
@@ -58,7 +58,7 @@ public class PlayScreen extends Pane {
         singlePlayer.getStyleClass().add("btn");
         singlePlayer.setText("Single Player");
         singlePlayer.setTextFill(javafx.scene.paint.Color.WHITE);
-        singlePlayer.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+//        singlePlayer.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
         singlePlayer.setCursor(Cursor.HAND);
         singlePlayer.setOnAction(EventController.Play.singleOnAction());
 
@@ -70,7 +70,7 @@ public class PlayScreen extends Pane {
         twoPlayer.getStyleClass().add("btn");
         twoPlayer.setText("Two Player");
         twoPlayer.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-        twoPlayer.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+//        twoPlayer.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
         twoPlayer.setCursor(Cursor.HAND);
         twoPlayer.setOnAction(EventController.Play.twoOnAction());
 
@@ -82,7 +82,7 @@ public class PlayScreen extends Pane {
         playOnline.getStyleClass().add("btn");
         playOnline.setText("Play Online");
         playOnline.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-        playOnline.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+//        playOnline.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
         playOnline.setCursor(Cursor.HAND);
         playOnline.setOnAction(EventController.Play.onlineOnAction());
 
@@ -94,7 +94,7 @@ public class PlayScreen extends Pane {
         savedgames.getStyleClass().add("btn");
         savedgames.setText("Saved Games");
         savedgames.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-        savedgames.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+//        savedgames.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
         savedgames.setCursor(Cursor.HAND);
         savedgames.setOnAction(EventController.Play.savedOnAction());
 

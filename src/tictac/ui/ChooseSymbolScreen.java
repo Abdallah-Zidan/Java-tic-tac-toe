@@ -60,7 +60,7 @@ public class ChooseSymbolScreen extends Pane {
         label.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         label.setTextFill(javafx.scene.paint.Color.valueOf("#fcfcfc"));
         label.setWrapText(true);
-        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 26.0));
+        //label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 26.0));
 
         xPlayer.setLayoutX(184.0);
         xPlayer.setLayoutY(127.0);
@@ -71,7 +71,7 @@ public class ChooseSymbolScreen extends Pane {
         xPlayer.setText("X");
         xPlayer.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
         xPlayer.setCursor(Cursor.HAND);
-        xPlayer.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 96.0));
+        //xPlayer.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 96.0));
         xPlayer.setOnAction(EventController.ChooseSymbol.xOnAction(screen, this));
 
         oPlayer.setLayoutX(398.0);
@@ -83,7 +83,7 @@ public class ChooseSymbolScreen extends Pane {
         oPlayer.setText("O");
         oPlayer.setTextFill(javafx.scene.paint.Color.valueOf("#fcfcfc"));
         oPlayer.setCursor(Cursor.HAND);
-        oPlayer.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 96.0));
+        //oPlayer.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 96.0));
         oPlayer.setOnAction(EventController.ChooseSymbol.oOnAction(screen, this));
 
         arrow.setLayoutX(52.0);
@@ -114,7 +114,7 @@ public class ChooseSymbolScreen extends Pane {
         imageView1.setImage(new Image(getClass().getResource("images/rec.png").toExternalForm()));
         record.setGraphic(imageView1);
         record.setCursor(Cursor.HAND);
-        record.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 17.0));
+        //record.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 17.0));
 
         if (!screen.equals("single"))
             button.setVisible(false);
@@ -126,7 +126,7 @@ public class ChooseSymbolScreen extends Pane {
         button.getStyleClass().add("btn");
         button.setText("Easy");
         button.setCursor(Cursor.HAND);
-        button.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+        //button.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
         button.setOnAction(EventController.ChooseSymbol.easyOnAction(this));
 
         if (!screen.equals("single"))
@@ -139,7 +139,7 @@ public class ChooseSymbolScreen extends Pane {
         button0.getStyleClass().add("btn");
         button0.setText("Medium");
         button0.setCursor(Cursor.HAND);
-        button0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
+        //button0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
         button0.setOnAction(EventController.ChooseSymbol.mediumOnAction(this));
 
         if (!screen.equals("single"))
@@ -152,7 +152,7 @@ public class ChooseSymbolScreen extends Pane {
         button1.getStyleClass().add("btn");
         button1.setText("Hard");
         button1.setCursor(Cursor.HAND);
-        button1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
+       // button1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
         button1.setOnAction(EventController.ChooseSymbol.hardOnAction(this));
 
         getChildren().add(imageView);
@@ -178,21 +178,21 @@ public class ChooseSymbolScreen extends Pane {
     public void changeDifficulty(String difficulty) {
         if (difficulty.equals("easy")) {
             this.difficulty = 0;
-            button.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
-            button0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
-            button1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
+         //   button.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+           // button0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
+           // button1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
         }
         else if (difficulty.equals("medium")) {
             this.difficulty = 1;
-            button.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
-            button0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
-            button1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
+           // button.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
+           // button0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+           // button1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
         }
         else if (difficulty.equals("hard")) {
             this.difficulty = 2;
-            button.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
-            button0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
-            button1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+           // button.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
+           // button0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 16.0));
+          //  button1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
         }
     }
 

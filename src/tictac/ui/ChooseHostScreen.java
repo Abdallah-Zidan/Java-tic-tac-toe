@@ -41,7 +41,7 @@ public class ChooseHostScreen extends Pane {
         label.setLayoutY(53.0);
         label.setText("Play Online");
         label.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 35.0));
+//        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 35.0));
 
         createRoom.setLayoutX(122.0);
         createRoom.setLayoutY(297.0);
@@ -50,7 +50,7 @@ public class ChooseHostScreen extends Pane {
         createRoom.setPrefWidth(164.0);
         createRoom.getStyleClass().add("btn");
         createRoom.setText("Create Room");
-        createRoom.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 21.0));
+  //      createRoom.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 21.0));
         createRoom.setOnAction(EventController.ChooseHost.createOnAction());
 
         joinRoom.setLayoutX(415.0);
@@ -60,7 +60,7 @@ public class ChooseHostScreen extends Pane {
         joinRoom.setPrefWidth(164.0);
         joinRoom.getStyleClass().add("btn");
         joinRoom.setText("Enter Room");
-        joinRoom.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 19.0));
+    //    joinRoom.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 19.0));
         joinRoom.setOnAction(EventController.ChooseHost.joinOnAction());
 
         arrow.setLayoutX(52.0);

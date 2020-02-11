@@ -38,7 +38,7 @@ public class WaitRoomScreen extends Pane {
         label.setLayoutX(104.0);
         label.setText("Wait For Connecting");
         label.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 30.0));
+//        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 30.0));
 
         imageView0.setFitHeight(409.0);
         imageView0.setFitWidth(542.0);

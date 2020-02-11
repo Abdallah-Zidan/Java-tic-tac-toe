@@ -62,52 +62,52 @@ public class RegisterScreen extends Pane {
         label.setPrefWidth(253.0);
         label.setText("New User");
         label.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 31.0));
+//        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 31.0));
 
         label0.setLayoutX(172.0);
         label0.setLayoutY(122.0);
         label0.setText("First Name");
         label0.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+//        label0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
 
         fname.setLayoutX(303.0);
         fname.setLayoutY(128.0);
         fname.setPrefHeight(34.0);
         fname.setPrefWidth(245.0);
         fname.getStyleClass().add("txt");
-        fname.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 22.0));
+//        fname.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 22.0));
 
         label1.setLayoutX(172.0);
         label1.setLayoutY(185.0);
         label1.setText("Last Name");
         label1.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+//        label1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
 
         lname.setLayoutX(303.0);
         lname.setLayoutY(189.0);
         lname.setPrefHeight(34.0);
         lname.setPrefWidth(245.0);
         lname.getStyleClass().add("txt");
-        lname.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 22.0));
+//        lname.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 22.0));
 
         label2.setLayoutX(172.0);
         label2.setLayoutY(249.0);
         label2.setText("Username");
         label2.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label2.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+//        label2.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
 
         username.setLayoutX(303.0);
         username.setLayoutY(252.0);
         username.setPrefHeight(34.0);
         username.setPrefWidth(245.0);
         username.getStyleClass().add("txt");
-        username.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 22.0));
+//        username.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 22.0));
 
         label3.setLayoutX(172.0);
         label3.setLayoutY(308.0);
         label3.setText("Password");
         label3.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label3.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+//        label3.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
 
         pass.setLayoutX(303.0);
         pass.setLayoutY(314.0);
@@ -131,7 +131,7 @@ public class RegisterScreen extends Pane {
         regGo.getStyleClass().add("btn");
         regGo.setText("Go");
         regGo.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-        regGo.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 25.0));
+//        regGo.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 25.0));
         regGo.setCursor(Cursor.HAND);
         regGo.setOnAction(EventController.Register.registerOnAction(this));
 

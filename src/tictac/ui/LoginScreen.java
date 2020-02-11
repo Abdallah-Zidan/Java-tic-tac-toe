@@ -53,7 +53,7 @@ public class LoginScreen extends Pane {
         label.setPrefWidth(378.0);
         label.setText("Are you Ready");
         label.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 31.0));
+     //   label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 31.0));
 
         label0.setLayoutX(242.0);
         label0.setLayoutY(137.0);
@@ -61,14 +61,14 @@ public class LoginScreen extends Pane {
         label0.setPrefWidth(222.0);
         label0.setText("Enter Your username");
         label0.setTextFill(javafx.scene.paint.Color.valueOf("#fcfcfc"));
-        label0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+       // label0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
 
         username.setLayoutX(202.0);
         username.setLayoutY(194.0);
         username.setPrefHeight(38.0);
         username.setPrefWidth(296.0);
         username.getStyleClass().add("txt");
-        username.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),18.0));
+       // username.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),18.0));
 
         label1.setLayoutX(242.0);
         label1.setLayoutY(248.0);
@@ -76,7 +76,7 @@ public class LoginScreen extends Pane {
         label1.setPrefWidth(222.0);
         label1.setText("Enter Your Password");
         label1.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+//        label1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
 
         pass.setLayoutX(202.0);
         pass.setLayoutY(305.0);
@@ -100,7 +100,7 @@ public class LoginScreen extends Pane {
         logGo.getStyleClass().add("btn");
         logGo.setText("Go");
         logGo.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-        logGo.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+//        logGo.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
         logGo.setCursor(Cursor.HAND);
         logGo.setOnAction(EventController.Login.loginOnAction(this));
 

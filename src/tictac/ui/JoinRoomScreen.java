@@ -47,20 +47,20 @@ public class JoinRoomScreen extends Pane {
         label.setPrefWidth(433.0);
         label.setText("Connect Room");
         label.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 38.0));
+       // label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 38.0));
 
         typeip.setLayoutX(315.0);
         typeip.setLayoutY(224.0);
         typeip.setPrefHeight(43.0);
         typeip.setPrefWidth(239.0);
         typeip.getStyleClass().add("txt");
-        typeip.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 18.0));
+        //typeip.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 18.0));
 
         label0.setLayoutX(147.0);
         label0.setLayoutY(208.0);
         label0.setText("Ip address");
         label0.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 35.0));
+        //label0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 35.0));
         label0.setFont(new Font("Rushink DEMO", 35.0));
 
         validator.setLayoutX(270.0);
@@ -76,7 +76,7 @@ public class JoinRoomScreen extends Pane {
         connect.setPrefWidth(132.0);
         connect.getStyleClass().add("btn");
         connect.setText("Start");
-        connect.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 25.0));
+       // connect.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 25.0));
         connect.setOnAction(EventController.JoinRoom.connectOnAction(this));
 
         arrow.setLayoutX(52.0);

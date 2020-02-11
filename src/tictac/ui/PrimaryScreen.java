@@ -51,7 +51,7 @@ public class PrimaryScreen extends Pane {
         register.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
         register.setWrapText(true);
         register.setCursor(Cursor.HAND);
-        register.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/RushinkDemo.ttf").toExternalForm(), 25.0));
+//        register.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/RushinkDemo.ttf").toExternalForm(), 25.0));
         register.setOnAction(EventController.Primary.registerOnAction());
 
         login.setLayoutX(414.0);
@@ -65,7 +65,7 @@ public class PrimaryScreen extends Pane {
         login.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
         login.setWrapText(true);
         login.setCursor(Cursor.HAND);
-        login.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/RushinkDemo.ttf").toExternalForm(), 25.0));
+//        login.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/RushinkDemo.ttf").toExternalForm(), 25.0));
         login.setOnAction(EventController.Primary.loginOnAction());
 
         label.setLayoutX(93.0);
@@ -74,13 +74,13 @@ public class PrimaryScreen extends Pane {
         label.setPrefWidth(177.0);
         label.setText("Tic ");
         label.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-        label.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/BrushKing.otf").toExternalForm(), 63.0));
+//        label.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/BrushKing.otf").toExternalForm(), 63.0));
 
         label0.setLayoutX(250.0);
         label0.setLayoutY(140.0);
         label0.setText("Game");
         label0.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-        label0.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/BrushKing.otf").toExternalForm(), 63.0));
+//        label0.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/BrushKing.otf").toExternalForm(), 63.0));
 
         label1.setLayoutX(446.0);
         label1.setLayoutY(-33.0);
@@ -88,7 +88,7 @@ public class PrimaryScreen extends Pane {
         label1.setPrefWidth(177.0);
         label1.setText("Toe");
         label1.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-        label1.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/BrushKing.otf").toExternalForm(), 63.0));
+//        label1.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/BrushKing.otf").toExternalForm(), 63.0));
 
         label2.setLayoutX(259.0);
         label2.setLayoutY(-33.0);
@@ -96,7 +96,7 @@ public class PrimaryScreen extends Pane {
         label2.setPrefWidth(177.0);
         label2.setText("Tac");
         label2.setTextFill(javafx.scene.paint.Color.valueOf("#fcfcfc"));
-        label2.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/BrushKing.otf").toExternalForm(), 63.0));
+//        label2.setFont(Font.loadFont(getClass().getResource("/tictac/ui/fonts/BrushKing.otf").toExternalForm(), 63.0));
 
         getChildren().add(imageView);
         getChildren().add(register);
