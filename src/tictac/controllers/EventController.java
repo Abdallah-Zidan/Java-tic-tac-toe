@@ -183,7 +183,7 @@ public class EventController {
                 user.getUserInfo();
                 Player player = Player.getPlayer(1);
 
-                ReplayGame replay = new ReplayGame(player, user, game.getSymbol(), game.getId(), ui);
+                ReplayGame replay = new ReplayGame(player, user,String.valueOf(game.getSymbol()).toUpperCase().charAt(0)  , game.getId(), ui);
 
                 MainGame.game.setParentScene(new Scene(ui));
                 MainGame.game.initializeScene();
@@ -296,13 +296,13 @@ public class EventController {
 
         public static EventHandler<ActionEvent> xOnAction(String screen, ChooseSymbolScreen pane) {
             return (event) -> {
-                startGame('X', screen, pane);
+                startGame(Constants.CROSS, screen, pane);
             };
         }
 
         public static EventHandler<ActionEvent> oOnAction(String screen, ChooseSymbolScreen pane) {
             return (event) -> {
-                startGame('O', screen, pane);
+                startGame(Constants.CIRCLE, screen, pane);
             };
         }
 
@@ -346,7 +346,7 @@ public class EventController {
             Player player = Player.getPlayer(1);
 
             if (screen.toLowerCase().equals("single")) {
-                game = new SingleMode(pane.getRecord(), player, user, symbol,1 ,(GameBodyScreen)ui);
+                game = new SingleMode(pane.getRecord(), player, user, symbol,pane.getDifficulty() ,(GameBodyScreen)ui);
                 game.startActionHandling();
             }
             else if (screen.toLowerCase().equals("two")) {

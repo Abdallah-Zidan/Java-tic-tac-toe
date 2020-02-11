@@ -8,5 +8,6 @@ public class Constants {
     public final static String OPPENENT = "oponent";
     public final static char CROSS = 'X', CIRCLE = 'O';
     public final static int EASY =1 ;
+    public final static int MEDIUM =2;
     public final static int HARD =3;
 }
