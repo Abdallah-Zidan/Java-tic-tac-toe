@@ -8,7 +8,7 @@ import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import tictac.ui.GameBodyB;
+import tictac.ui.GameBodyScreen;
 
 public class GameOver extends AnchorPane {
 
@@ -40,15 +40,21 @@ public class GameOver extends AnchorPane {
     }
 
     public void setState(int state) {
-        if (state == 1) {
-            image.setImage(win);
-            audio = new AudioClip(getClass().getResource("win.mp3").toString());
-        } else if (state == 2) {
-            image.setImage(loss);
-            audio = new AudioClip(getClass().getResource("lose.wav").toString());
-        } else if (state == 3) {
-            image.setImage(tie);
-            audio = new AudioClip(getClass().getResource("sad.mp3").toString());
+        switch (state) {
+            case 1:
+                image.setImage(win);
+                audio = new AudioClip(getClass().getResource("win.mp3").toString());
+                break;
+            case 2:
+                image.setImage(loss);
+                audio = new AudioClip(getClass().getResource("lose.wav").toString());
+                break;
+            case 3:
+                image.setImage(tie);
+                audio = new AudioClip(getClass().getResource("sad.mp3").toString());
+                break;
+            default:
+                break;
         }
     }
 
@@ -60,7 +66,7 @@ public class GameOver extends AnchorPane {
         audio.stop();
     }
 
-    public Stage prepareEndStage(GameBodyB ui) {
+    public Stage prepareEndStage(GameBodyScreen ui) {
         final Stage endStage = new Stage();
         endStage.initModality(Modality.WINDOW_MODAL);
         endStage.initStyle(StageStyle.UNDECORATED);
@@ -71,7 +77,7 @@ public class GameOver extends AnchorPane {
         return endStage;
     }
     
-    public void showStage(int state, Stage stage  ,GameBodyB ui) {
+    public void showStage(int state, Stage stage  ,GameBodyScreen ui) {
       //  highlightButtons(state);
         ui.stopSound();
         this.setState(state);

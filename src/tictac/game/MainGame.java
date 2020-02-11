@@ -3,12 +3,11 @@ package tictac.game;
 import java.net.ServerSocket;
 import java.net.Socket;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tictac.controllers.GameController;
 import tictac.database.User;
-import tictac.ui.PrimaryB;
+import tictac.ui.PrimaryScreen;
 
 public class MainGame extends Application {
     public static GameController game;
@@ -21,6 +20,7 @@ public class MainGame extends Application {
         public ServerSocket serverSocket;
         public Socket socket;
         public boolean isServer = false;
+        public String IpAddress;
 
         public void setUser(User user) {
             id = user.getId();
@@ -34,10 +34,9 @@ public class MainGame extends Application {
         primaryStage.setOnCloseRequest((e) -> {
             System.exit(0);
         });
-        
-        Scene scene = new Scene(new PrimaryB());
 
         gameInfo = new GameInfo();
+        Scene scene = new Scene(new PrimaryScreen());
         game = new GameController(primaryStage);
         game.setParentScene(scene);
         game.initializeGame();

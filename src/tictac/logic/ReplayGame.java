@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import tictac.database.*;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
-import tictac.ui.GameBodyB;
+import tictac.ui.GameBodyScreen;
 
 public class ReplayGame {
 
     int counter;
     ReplayTimer timer;
     int gameId;
-    GameBodyB ui;
+    GameBodyScreen ui;
     char myMark;
     char oppenentMark;
     User user;
@@ -19,7 +19,7 @@ public class ReplayGame {
     Button[][] buttons;
     ArrayList<Step> steps = null;
 
-    public ReplayGame(Player oppenent, User user, char myMark, int gameId, GameBodyB ui) {
+    public ReplayGame(Player oppenent, User user, char myMark, int gameId, GameBodyScreen ui) {
         counter = 0;
         this.gameId = gameId;
         this.user = user;

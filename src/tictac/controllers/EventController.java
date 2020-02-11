@@ -1,12 +1,8 @@
 /*
-Single
-Multi
-Record
-Fetch game, players from DB
-Close socket on back
-Handle play again
-Audio not reloading
-Handle all text areas values
+Fetch game, players from DB, Store new players to DB on connect
+Function in gamebody to disable play again
+send levels
+X & O font change from the Game class, missing with the design font
  */
 
  /*
@@ -17,42 +13,36 @@ Handle all text areas values
 package tictac.controllers;
 
 import java.io.IOException;
-import java.net.Socket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import tictac.animation.GameOver;
 import tictac.database.Player;
+import tictac.database.SavedGameModel;
 import tictac.database.User;
 import tictac.game.MainGame;
 import tictac.logic.*;
 import tictac.network.Client;
 import tictac.network.Server;
-import tictac.ui.ChooseRoleUI;
-import tictac.ui.ChooseSymB;
-import tictac.ui.GameBodyB;
-import tictac.ui.LoginB;
-import tictac.ui.PlayB;
-import tictac.ui.PrimaryB;
-import tictac.ui.RegisterB;
+import tictac.ui.*;
 
 /**
  *
  * @author Tarek
  */
 public class EventController {
-
-    private EventController() {
-    }
+    private EventController() {}
 
     public static class Primary {
-
-        private Primary() {
-        }
+        private Primary() {}
 
         public static EventHandler<ActionEvent> registerOnAction() {
             return (event) -> {
-                MainGame.game.setParentScene(new Scene(new RegisterB()));
+                MainGame.game.setParentScene(new Scene(new RegisterScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };
@@ -60,84 +50,90 @@ public class EventController {
 
         public static EventHandler<ActionEvent> loginOnAction() {
             return (event) -> {
-                MainGame.game.setParentScene(new Scene(new LoginB()));
+                MainGame.game.setParentScene(new Scene(new LoginScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };
         }
     }
 
-    // TODO: Register
     public static class Register {
+        private Register() {}
 
-        private Register() {
-        }
-
-        public static EventHandler<ActionEvent> registerOnAction(RegisterB pane) {
+        public static EventHandler<ActionEvent> registerOnAction(RegisterScreen pane) {
             return (event) -> {
-                User user = new User(pane.getUsername().getText(), pane.getPassword().getText(), "Test", "Test");
+                String username = pane.getUsername().getText();
+                String password = pane.getPassword().getText();
+                String fname = pane.getFirstName().getText();
+                String lname = pane.getLastName().getText();
 
-                if (user.userExist(user.getUsername())) {
-                    System.out.println("User exists");
-                } else {
-                    user.save();
-                    MainGame.gameInfo.setUser(user);
-                    MainGame.game.setParentScene(new Scene(new PlayB()));
-                    MainGame.game.initializeScene();
-                    MainGame.game.showScene();
+                if (username.isEmpty() || password.isEmpty() || fname.isEmpty() || lname.isEmpty())
+                    pane.setValidator("Enter missing info");
+                else {
+                    User user = new User(username, password, fname, lname);
+
+                    if (user.userExist(username))
+                        pane.setValidator("Username already exists");
+                    else {
+                        user.save();
+                        MainGame.gameInfo.setUser(user);
+                        MainGame.game.setParentScene(new Scene(new PlayScreen()));
+                        MainGame.game.initializeScene();
+                        MainGame.game.showScene();
+                    }
                 }
             };
         }
 
         public static EventHandler<ActionEvent> backOnAction() {
             return (event) -> {
-                MainGame.game.setParentScene(new Scene(new PrimaryB()));
+                MainGame.game.setParentScene(new Scene(new PrimaryScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };
         }
     }
 
-    // TODO: Login
     public static class Login {
+        private Login() {}
 
-        private Login() {
-        }
-
-        public static EventHandler<ActionEvent> loginOnAction(LoginB pane) {
+        public static EventHandler<ActionEvent> loginOnAction(LoginScreen pane) {
             return (event) -> {
-                User user = new User(pane.getUsername().getText(), "temp");
+                String username = pane.getUsername().getText();
+                String password = pane.getPassword().getText();
 
-                if (!user.isAuthentic()) {
-                    System.out.println("User is not valid");
-                } else {
-                    MainGame.gameInfo.setUser(user);
-                    MainGame.game.setParentScene(new Scene(new PlayB()));
-                    MainGame.game.initializeScene();
-                    MainGame.game.showScene();
+                if (username.isEmpty() || password.isEmpty())
+                    pane.setValidator("Enter missing data");
+                else {
+                    User user = new User(username, password);
+
+                    if (!user.isAuthentic())
+                        pane.setValidator("Invalid username or password");
+                    else {
+                        MainGame.gameInfo.setUser(user);
+                        MainGame.game.setParentScene(new Scene(new PlayScreen()));
+                        MainGame.game.initializeScene();
+                        MainGame.game.showScene();
+                    }
                 }
             };
         }
 
         public static EventHandler<ActionEvent> backOnAction() {
             return (event) -> {
-                MainGame.game.setParentScene(new Scene(new PrimaryB()));
+                MainGame.game.setParentScene(new Scene(new PrimaryScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };
         }
     }
 
-    // TODO: Online
-    // TODO: Replay
     public static class Play {
-
-        private Play() {
-        }
+        private Play() {}
 
         public static EventHandler<ActionEvent> singleOnAction() {
             return (event) -> {
-                MainGame.game.setParentScene(new Scene(new ChooseSymB("single")));
+                MainGame.game.setParentScene(new Scene(new ChooseSymbolScreen("single")));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };
@@ -145,7 +141,7 @@ public class EventController {
 
         public static EventHandler<ActionEvent> twoOnAction() {
             return (event) -> {
-                MainGame.game.setParentScene(new Scene(new ChooseSymB("two")));
+                MainGame.game.setParentScene(new Scene(new ChooseSymbolScreen("two")));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };
@@ -153,24 +149,53 @@ public class EventController {
 
         public static EventHandler<ActionEvent> onlineOnAction() {
             return (event) -> {
-                MainGame.game.setParentScene(new Scene(new ChooseRoleUI()));
+                MainGame.game.setParentScene(new Scene(new ChooseHostScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };
         }
 
-        public static EventHandler<ActionEvent> replayOnAction() {
+        public static EventHandler<ActionEvent> savedOnAction() {
             return (event) -> {
-                // TODO: Replay
-//                MainGame.game.setParentScene(new Scene(new RecordGameB()));
-//                MainGame.game.initializeScene();
-//                MainGame.game.showScene();
+                MainGame.game.setParentScene(new Scene(new SavedGameScreen()));
+                MainGame.game.initializeScene();
+                MainGame.game.showScene();
             };
         }
 
         public static EventHandler<ActionEvent> backOnAction() {
             return (event) -> {
-                MainGame.game.setParentScene(new Scene(new PrimaryB()));
+                MainGame.game.setParentScene(new Scene(new PrimaryScreen()));
+                MainGame.game.initializeScene();
+                MainGame.game.showScene();
+            };
+        }
+    }
+
+    public static class SavedGame {
+        private SavedGame() {}
+
+        public static EventHandler<ActionEvent> replayOnAction(SavedGameScreen pane) {
+            return (event) -> {
+                GameBodyScreen ui = new GameBodyScreen();
+                SavedGameModel game = (SavedGameModel)pane.getTable().getSelectionModel().getSelectedItem();
+                User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
+                user.getUserInfo();
+                Player player = Player.getPlayer(1);
+
+                ReplayGame replay = new ReplayGame(player, user, game.getSymbol(), game.getId(), ui);
+
+                MainGame.game.setParentScene(new Scene(ui));
+                MainGame.game.initializeScene();
+                MainGame.game.showScene();
+
+                ui.playSound();
+            };
+        }
+
+        public static EventHandler<ActionEvent> backOnAction() {
+            return (event) -> {
+                MainGame.game.setParentScene(new Scene(new PlayScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };
@@ -178,149 +203,265 @@ public class EventController {
     }
 
     public static class ChooseHost {
+        private ChooseHost() {}
 
-        private ChooseHost() {
-        }
-
-        public static EventHandler<ActionEvent> serverOnAction() {
+        public static EventHandler<ActionEvent> createOnAction() {
             return (event) -> {
+                String ip = "";
+                try {
+                    ip = InetAddress.getLocalHost().getHostAddress();
+                }
+                catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                CreateRoomScreen pane = new CreateRoomScreen();
+                pane.setIpAddress(ip);
+
                 MainGame.gameInfo.isServer = true;
-                MainGame.game.setParentScene(new Scene(new ChooseSymB("online")));
+                MainGame.game.setParentScene(new Scene(pane));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };
         }
 
-        public static EventHandler<ActionEvent> clientOnAction() {
+        public static EventHandler<ActionEvent> joinOnAction() {
             return (event) -> {
                 MainGame.gameInfo.isServer = false;
-                MainGame.game.setParentScene(new Scene(new ChooseSymB("online")));
+                MainGame.game.setParentScene(new Scene(new JoinRoomScreen()));
+                MainGame.game.initializeScene();
+                MainGame.game.showScene();
+            };
+        }
+
+        public static EventHandler<ActionEvent> backOnAction() {
+            return (event) -> {
+                MainGame.game.setParentScene(new Scene(new PlayScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };
         }
     }
 
-    // TODO: Online
-    public static class ChooseSymbol {
+    public static class CreateRoom {
+        private CreateRoom() {}
 
-        private ChooseSymbol() {
-        }
-         static Game g;
-        public static EventHandler<ActionEvent> xOnAction(String screen) {
+        public static EventHandler<ActionEvent> createOnAction() {
             return (event) -> {
-                startGame('X', screen);
-            };
-        }
-
-        public static EventHandler<ActionEvent> oOnAction(String screen) {
-            return (event) -> {
-                startGame('O', screen);
-            };
-        }
-
-        public static EventHandler<ActionEvent> backOnAction() {
-            return (event) -> {
-                MainGame.game.setParentScene(new Scene(new PlayB()));
+                MainGame.game.setParentScene(new Scene(new ChooseSymbolScreen("online")));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };
         }
 
-        private static void startGame(char symbol, String screen) {
-            // TODO: Online
-            GameBodyB ui = new GameBodyB();
+        public static EventHandler<ActionEvent> backOnAction() {
+            return (event) -> {
+                MainGame.game.setParentScene(new Scene(new ChooseHostScreen()));
+                MainGame.game.initializeScene();
+                MainGame.game.showScene();
+            };
+        }
+    }
+
+    public static class JoinRoom {
+        private JoinRoom() {}
+
+        public static EventHandler<ActionEvent> connectOnAction(JoinRoomScreen pane) {
+            return (event) -> {
+                String ip = pane.getIpAddress().getText();
+
+                if (ip.isEmpty())
+                    pane.setValidator("Enter ip address");
+                else {
+                    MainGame.gameInfo.IpAddress = ip;
+                    MainGame.game.setParentScene(new Scene(new ChooseSymbolScreen("online")));
+                    MainGame.game.initializeScene();
+                    MainGame.game.showScene();
+                }
+            };
+        }
+
+        public static EventHandler<ActionEvent> backOnAction() {
+            return (event) -> {
+                MainGame.game.setParentScene(new Scene(new ChooseHostScreen()));
+                MainGame.game.initializeScene();
+                MainGame.game.showScene();
+            };
+        }
+    }
+
+    public static class ChooseSymbol {
+        static Game game;
+
+        private ChooseSymbol() {}
+
+        public static EventHandler<ActionEvent> xOnAction(String screen, ChooseSymbolScreen pane) {
+            return (event) -> {
+                startGame('X', screen, pane);
+            };
+        }
+
+        public static EventHandler<ActionEvent> oOnAction(String screen, ChooseSymbolScreen pane) {
+            return (event) -> {
+                startGame('O', screen, pane);
+            };
+        }
+
+        public static EventHandler<ActionEvent> recordOnAction(ChooseSymbolScreen pane) {
+            return (event) -> {
+                pane.changeRecord();
+            };
+        }
+
+        public static EventHandler<ActionEvent> easyOnAction(ChooseSymbolScreen pane) {
+            return (event) -> {
+                pane.changeDifficulty("easy");
+            };
+        }
+
+        public static EventHandler<ActionEvent> mediumOnAction(ChooseSymbolScreen pane) {
+            return (event) -> {
+                pane.changeDifficulty("medium");
+            };
+        }
+
+        public static EventHandler<ActionEvent> hardOnAction(ChooseSymbolScreen pane) {
+            return (event) -> {
+                pane.changeDifficulty("hard");
+            };
+        }
+
+        public static EventHandler<ActionEvent> backOnAction() {
+            return (event) -> {
+                MainGame.game.setParentScene(new Scene(new PlayScreen()));
+                MainGame.game.initializeScene();
+                MainGame.game.showScene();
+            };
+        }
+
+        private static void startGame(char symbol, String screen, ChooseSymbolScreen pane) {
+            Pane ui = new GameBodyScreen();
             GameOver endUi = new GameOver();
             User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
             user.getUserInfo();
             Player player = Player.getPlayer(1);
 
             if (screen.toLowerCase().equals("single")) {
-               g = new SingleMode(true, player, user, symbol,Constants.HARD, ui);
-                g.startActionHandling();
-            } else if (screen.toLowerCase().equals("two")) {
-                g = new TwoPlayersMode(false, player, user, symbol, ui);
-                g.startActionHandling();
-            } else if (screen.toLowerCase().equals("online")) {
+                game = new SingleMode(pane.getRecord(), player, user, symbol,1 ,(GameBodyScreen)ui);
+                game.startActionHandling();
+            }
+            else if (screen.toLowerCase().equals("two")) {
+                game = new TwoPlayersMode(pane.getRecord(), player, user, symbol, (GameBodyScreen)ui);
+                game.startActionHandling();
+            }
+            else if (screen.toLowerCase().equals("online")) {
+                ui = new WaitRoomScreen();
+
                 if (MainGame.gameInfo.isServer) {
                     Thread test = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Server server = new Server();
-//                            Socket socket = server.getSocket();
-
-                            if (MainGame.gameInfo.socket != null) {
-                                g = new TwoPlayersNetwork(false, player, user, symbol, ui, MainGame.gameInfo.socket, true);
-                                g.startActionHandling();
-                            }
-                        }
-                    });
-
-                    test.start();
-                } else {
-                    Thread test = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Client client = new Client("127.0.0.1");    // 172.16.1.221
-//                            Socket socket = client.getSocket();
-
-                            if (MainGame.gameInfo.socket != null) {
-                                g = new TwoPlayersNetwork(false, player, user, symbol, ui, MainGame.gameInfo.socket, false);
-                                g.startActionHandling();
-                            }
+                            new Server();
+                            Platform.runLater(() -> {
+                                showOnlineGame(pane.getRecord(), player, user, symbol, true);
+                            });
                         }
                     });
 
                     test.start();
                 }
-            } else if (screen.toLowerCase().equals("replay")) {
-                ReplayGame replay = new ReplayGame(player, user, symbol, 0, ui);
+                else {
+                    Thread test = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new Client(MainGame.gameInfo.IpAddress);    // 172.16.1.221
+                            Platform.runLater(() -> {
+                                showOnlineGame(pane.getRecord(), player, user, symbol, false);
+                            });
+                        }
+                    });
+
+                    test.start();
+                }
             }
 
             MainGame.game.setParentScene(new Scene(ui));
             MainGame.game.initializeScene();
             MainGame.game.showScene();
+
+            if (!screen.toLowerCase().equals("online"))
+                ((GameBodyScreen)ui).playSound();
+        }
+
+        private static void showOnlineGame(boolean isRecord, Player player, User user, char symbol, boolean isServer) {
+            GameBodyScreen ui = new GameBodyScreen();
+            MainGame.game.setParentScene(new Scene(ui));
+            MainGame.game.initializeScene();
+            MainGame.game.showScene();
             ui.playSound();
+
+            if (MainGame.gameInfo.socket != null) {
+                game = new TwoPlayersNetwork(isRecord, player, user, symbol, ui, MainGame.gameInfo.socket, isServer);
+                game.startActionHandling();
+            }
+        }
+    }
+
+    public static class WaitRoom {
+        private WaitRoom() {}
+
+        public static EventHandler<ActionEvent> backOnAction() {
+            return (event) -> {
+                if (MainGame.gameInfo.socket != null) {
+                    try {
+                        MainGame.gameInfo.socket.close();
+                        MainGame.gameInfo.socket = null;
+                    }
+                    catch (IOException e) {}
+                }
+                if (MainGame.gameInfo.serverSocket != null) {
+                    try {
+                        MainGame.gameInfo.serverSocket.close();
+                        MainGame.gameInfo.serverSocket = null;
+                    }
+                    catch (IOException e) {}
+                }
+
+                MainGame.game.setParentScene(new Scene(new ChooseHostScreen()));
+                MainGame.game.initializeScene();
+                MainGame.game.showScene();
+            };
         }
     }
 
     public static class GameBody {
-
-        private GameBody() {
-        }
+        private GameBody() {}
 
         public static EventHandler<ActionEvent> playAgainOnAction() {
             return (event) -> {
-//                MainGame.game.setParentScene(new Scene(new ChooseSymB("online")));
-//                MainGame.game.initializeScene();
-//                MainGame.game.showScene();
-                ChooseSymbol.g.resetGame(ChooseSymbol.g.isMyTurn());
+                ChooseSymbol.game.resetGame(ChooseSymbol.game.isMyTurn());
             };
-                      
         }
 
-        public static EventHandler<ActionEvent> backOnAction(GameBodyB pane) {
+        public static EventHandler<ActionEvent> backOnAction(GameBodyScreen pane) {
             return (event) -> {
                 pane.stopSound();
 
                 if (MainGame.gameInfo.socket != null) {
                     try {
                         MainGame.gameInfo.socket.close();
-                        MainGame.gameInfo.socket=null;
-                    } catch (IOException e) {
-                        // TODO
+                        MainGame.gameInfo.socket = null;
                     }
+                    catch (IOException e) {}
                 }
                 if (MainGame.gameInfo.serverSocket != null) {
                     try {
                         MainGame.gameInfo.serverSocket.close();
                         MainGame.gameInfo.serverSocket = null;
-                    } catch (IOException e) {
-                        // TODO
                     }
+                    catch (IOException e) {}
                 }
 
-                MainGame.game.setParentScene(new Scene(new PlayB()));
+                MainGame.game.setParentScene(new Scene(new PlayScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
             };

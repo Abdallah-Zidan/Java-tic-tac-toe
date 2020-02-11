@@ -1,12 +1,13 @@
 package tictac.logic;
 
 import tictac.database.*;
-import tictac.ui.GameBodyB;
+
 import java.util.*;
+import tictac.ui.GameBodyScreen;
 
 public class SingleMode extends Game {
    
-    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark,int level, GameBodyB ui) {
+    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark,int level, GameBodyScreen ui) {
         super(isRecorded, Constants.SOLO, oppenent, user, myMark,level, ui);
     }
 

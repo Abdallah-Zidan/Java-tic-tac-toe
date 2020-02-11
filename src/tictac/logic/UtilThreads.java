@@ -5,7 +5,8 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import tictac.game.MainGame;
-import tictac.ui.PlayB;
+import tictac.ui.PlayScreen;
+
 
 /**
  * this thread is used to take the read position from the reader thread in order
@@ -63,7 +64,7 @@ class ConnectionLost implements Runnable {
         getClass().getResource("myDialogs.css").toExternalForm());
         dialogPane.getStyleClass().add("myDialog");
         alert.showAndWait();
-        MainGame.game.setParentScene(new Scene(new PlayB()));
+        MainGame.game.setParentScene(new Scene(new PlayScreen()));
         MainGame.game.initializeScene();
         MainGame.game.showScene();
     }

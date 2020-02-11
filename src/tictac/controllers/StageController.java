@@ -64,7 +64,7 @@ public class StageController {
 //        width = 500;
 //        height = 400;
 //        fullScreen = false;
-        resizable = false;
+//        resizable = false;
         title = "Tic Tac Toe";
     }
     // </editor-fold>
@@ -199,11 +199,10 @@ public class StageController {
         }
 
         stage.initStyle(stageStyle);
-
 //        stage.setWidth(width);
 //        stage.setHeight(height);
 //        stage.setFullScreen(fullScreen);
-        stage.setResizable(resizable);
+//        stage.setResizable(resizable);
         stage.setTitle(title);
     }
 

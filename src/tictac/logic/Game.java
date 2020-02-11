@@ -10,7 +10,8 @@ import javafx.scene.control.*;
 import javafx.stage.*;
 import javafx.util.Duration;
 import tictac.animation.GameOver;
-import tictac.ui.GameBodyB;
+
+import tictac.ui.GameBodyScreen;
 
 /*
 this is an abstract class thatcontains the main attributes and methods of the game
@@ -29,10 +30,10 @@ public abstract class Game {
     protected char myMark;  
     protected ArrayList<Step> steps; 
     protected Button[][] buttons; 
-    protected GameBodyB ui; 
+    protected GameBodyScreen ui; 
     protected int gameId;
     protected int level;
-    Game(boolean isRecorded, String gameType, Player oppenent, User user, char myMark,int level, GameBodyB ui) {
+    Game(boolean isRecorded, String gameType, Player oppenent, User user, char myMark,int level, GameBodyScreen ui) {
         this.ui = ui;
         buttons = ui.getBoardButtons();
         gameEnded = false;

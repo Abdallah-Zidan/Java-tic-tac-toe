@@ -10,7 +10,7 @@ public class TwoPlayersNetwork extends Game {
     DataInputStream dis;
     PrintStream printStream;
 
-    public TwoPlayersNetwork(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyB ui, Socket socket, boolean myTurn) {
+    public TwoPlayersNetwork(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyScreen ui, Socket socket, boolean myTurn) {
         super(isRecorded, Constants.DUAL, oppenent, user, myMark,0, ui);
         this.myTurn = myTurn;
         if (!myTurn) {

@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package tictac.database;
 
 import java.sql.Connection;
@@ -17,7 +22,7 @@ public class DBConnection {
             conn = DriverManager.getConnection(url);            
             //System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Faild to connect to database\n"+e.getMessage());
         }
         return conn;
     }
@@ -26,7 +31,11 @@ public class DBConnection {
             connection.close();
             //System.out.println("Connection to SQLite has been closed.");
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Faild to close connection with database\n"+ex.getMessage());
         }
+    }
+    
+    public Connection getConnection(){
+        return conn;
     }
 }

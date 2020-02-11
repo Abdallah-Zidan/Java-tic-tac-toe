@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package tictac.database;
 
 import java.sql.Connection;
@@ -28,6 +33,8 @@ public class User {
         this.fname = fname;
         this.lname = lname;
     }
+    
+  
     //login constructor
     public User(String username, String password)
     {
@@ -48,7 +55,7 @@ public class User {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to check if user exist\n"+ex.getMessage());
         }
         return retval;
     }
@@ -67,7 +74,7 @@ public class User {
                 stmt.close();
                 db.disconnect(conn);
             } catch (SQLException ex) {
-                ex.printStackTrace();
+            System.err.println("Failed to check if user is authentic\n"+ex.getMessage());
             }
         }
         return retval;
@@ -87,7 +94,7 @@ public class User {
             return true;
         }
         catch(SQLException se){
-            se.printStackTrace();
+            System.err.println("Failed to save the game\n"+se.getMessage());
             return false;
         }
     }
@@ -107,12 +114,12 @@ public class User {
             }
             stmt.close();
             db.disconnect(conn);
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
+            System.err.println("Failed to retrieve the user info from database\n"+ex.getMessage());
         }
         return this;
     }
-
-    
     public void setUsername(String username){
         this.username = username;
     }
@@ -162,7 +169,7 @@ public class User {
             db.disconnect(conn);
             return true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to increment the score by 3\n"+ex.getMessage());
             return false;
         }
     }
@@ -178,7 +185,7 @@ public class User {
             db.disconnect(conn);
             return true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to increment the score by 1\n"+ex.getMessage());
             return false;
         }
     }
@@ -192,12 +199,14 @@ public class User {
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
                 GameModel g = new GameModel(rs.getString("game_type"), rs.getString("Sympol").charAt(0), rs.getInt("player_id"),rs.getInt("user_id") ,rs.getString("result"), rs.getString("level"));
+                g.setId(rs.getInt("id"));
+                g.setTimestamp(rs.getString("timestamp"));
                 games.add(g);
             }
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to retrieve the user games from database\n"+ex.getMessage());
         }
         return games;
     }
@@ -216,22 +225,8 @@ public class User {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to retrieve players from database\n"+ex.getMessage());
         }
         return players;
     }
-//    public static void main(String[] args) {
-//        User user = new User("test", "test");
-//        
-//        user.draw();
-//        user = user.getUserInfo();
-//        ArrayList<GameModel> ar = user.games();
-//        
-//        for(GameModel game: ar){
-//            System.out.println(game.getType());
-//        }
-//        user.incrementGameCount();
-//        user = user.getUserInfo();
-//        System.out.println(user.getGameCount()); 
-//    }
 }

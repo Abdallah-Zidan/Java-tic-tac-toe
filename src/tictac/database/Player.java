@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package tictac.database;
 
 import java.sql.Connection;
@@ -27,6 +32,7 @@ public class Player {
     public Player(String ip_address){
         this.ip_address = ip_address;
     }
+    
     //insert player to database
     public boolean save()
     {
@@ -41,7 +47,7 @@ public class Player {
             return true;
         }
         catch(SQLException se){
-            se.printStackTrace();
+            System.err.println("Failed to save player\n"+se.getMessage());
             return false;
         }
     }
@@ -59,7 +65,7 @@ public class Player {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to check if player exist\n"+ex.getMessage());
         }
         return retval;
     }
@@ -81,7 +87,7 @@ public class Player {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to retrieve player info from database\n"+ex.getMessage());
         }
         return this;
     }
@@ -101,7 +107,7 @@ public class Player {
             stmt.close();
             db.disconnect(conn);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println("Failed to retrieve player info from database\n"+ex.getMessage());
         }
         return p;
     }
@@ -135,14 +141,4 @@ public class Player {
     public int getUserId(){
         return user_id;
     }
-    
-//    public static void main(String[] args) {
-//        Player player ;
-//        //boolean x = player.save();
-//
-//        player = Player.getPlayer(1);
-//
-//        System.out.println(player.getIpAddress());
-//    }
-
 }
