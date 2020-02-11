@@ -21,15 +21,15 @@ public abstract class Game {
     protected Board board;
     protected boolean gameEnded;
     protected boolean myTurn;
-    protected boolean isRecorded; // if the player wants to record the game or not 
+    protected boolean isRecorded; 
     protected String game_type;
     protected Player oppenent;
     protected User user;
-    protected char oppenentMark; // ( x or o)
-    protected char myMark;  // ( x or o )
-    protected ArrayList<Step> steps; // the moves in order to replay them later if the game is recorded
-    protected Button[][] buttons; // board buttons in the game play
-    protected GameBodyB ui; // simple ui for testing
+    protected char oppenentMark; 
+    protected char myMark;  
+    protected ArrayList<Step> steps; 
+    protected Button[][] buttons; 
+    protected GameBodyB ui; 
     protected int gameId;
     protected int level;
     Game(boolean isRecorded, String gameType, Player oppenent, User user, char myMark,int level, GameBodyB ui) {
@@ -44,10 +44,10 @@ public abstract class Game {
         this.user = user;
         this.myMark = myMark;
         this.level = level;
-        if (myMark == Constants.Circle) {
-            oppenentMark = Constants.Cross;
+        if (myMark == Constants.CIRCLE) {
+            oppenentMark = Constants.CROSS;
         } else {
-            oppenentMark = Constants.Circle;
+            oppenentMark = Constants.CIRCLE;
         }
         if (isRecorded) {
             steps = new ArrayList<>();
@@ -210,9 +210,7 @@ public abstract class Game {
                 break;
         }
         delay = new PauseTransition(Duration.seconds(4));
-        delay.setOnFinished(event -> {
-            endStage.close();
-        });
+        delay.setOnFinished(event -> {endStage.close();});
         delay.play();
        
     }
@@ -259,7 +257,6 @@ public abstract class Game {
             if (socket != null) {
                 socket.close();
             }
-
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -271,15 +268,6 @@ public abstract class Game {
                 buttons[i][j].setText("");
                 ui.highLight(buttons[i][j], 11);
             }
-        }
-    }
-
-    public void closeGame(DataInputStream dis, PrintStream ps) {
-        try {
-            ps.close();
-            dis.close();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
         }
     }
 

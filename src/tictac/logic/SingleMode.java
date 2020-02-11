@@ -1,6 +1,5 @@
 package tictac.logic;
 
-import com.sun.corba.se.impl.orbutil.closure.Constant;
 import tictac.database.*;
 import tictac.ui.GameBodyB;
 import java.util.*;
@@ -14,7 +13,6 @@ public class SingleMode extends Game {
     /**
      * this function return a new board with computer movement depending on the
      * min and max algorithm
-     *
      * @param board : Board
      * @return bestChild : Board
      */
@@ -94,7 +92,7 @@ public class SingleMode extends Game {
         do {
             x = rand.nextInt(3);
             y = rand.nextInt(3);
-        } while (board.getBoard()[x][y] == Constants.Cross || board.getBoard()[x][y] == Constants.Circle);
+        } while (board.getBoard()[x][y] == Constants.CROSS || board.getBoard()[x][y] == Constants.CIRCLE);
         pos = new Position(x, y);
         return pos;
     }
@@ -102,7 +100,7 @@ public class SingleMode extends Game {
         Position pos = null;
         int[][] preferredMoves = {{1, 1}, {0, 0}, {0, 2}, {2, 0}, {2, 2}, {0, 1}, {1, 0}, {1, 2}, {2, 1}};
         for(int[] move : preferredMoves){
-            if(board.getBoard()[move[0]][move[1]] != Constants.Cross &&board.getBoard()[move[0]][move[1]]!= Constants.Circle ){
+            if(board.getBoard()[move[0]][move[1]] != Constants.CROSS &&board.getBoard()[move[0]][move[1]]!= Constants.CIRCLE ){
                 pos = new Position(move[0], move[1]);
             }
          }

@@ -25,10 +25,10 @@ public class ReplayGame {
         this.user = user;
         this.oppenent = oppenent;
         this.myMark = myMark;
-        if (myMark == Constants.Cross) {
-            oppenentMark = Constants.Circle;
+        if (myMark == Constants.CROSS) {
+            oppenentMark = Constants.CIRCLE;
         } else {
-            oppenentMark = Constants.Cross;
+            oppenentMark = Constants.CROSS;
         }
         this.buttons = ui.getBoardButtons();
         this.steps = GameModel.getSteps(gameId);

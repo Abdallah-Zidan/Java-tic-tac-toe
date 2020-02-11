@@ -51,9 +51,17 @@ class ConnectionLost implements Runnable {
 
     @Override
     public void run() {
+        
         tpn.closeGame(MainGame.gameInfo.socket, tpn.dis, tpn.printStream);
         tpn.ui.stopSound();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Connection Closed", ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Connection closed");
+        alert.setHeaderText("No longer coonnected");
+        alert.setContentText("Connection between you and opponent was closed!");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(
+        getClass().getResource("myDialogs.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
         alert.showAndWait();
         MainGame.game.setParentScene(new Scene(new PlayB()));
         MainGame.game.initializeScene();
