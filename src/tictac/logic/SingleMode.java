@@ -16,28 +16,26 @@ public class SingleMode extends Game {
      * @param board : Board
      * @return bestChild : Board
      */
-    private Board findBestMove(Board board) {
+    private Position findBestPosition(Board board) {
         ArrayList<Position> positions = board.getFreePositions();
-        Board bestChild = null;
         Position bestPosition=null;
         int previous = Integer.MIN_VALUE;
         for (Position p : positions) {
             Board child = new Board(board, p, oppenentMark);
             int current = min(child);
             if (current > previous) {
-                bestChild = child;
                 bestPosition = p;
                 previous = current;
             }
         }
-        return bestChild;
+        return bestPosition;
     }
 
     public int max(Board board) {
         GameState gameState = board.getGameState(myMark, oppenentMark);
         if (null != gameState) {
             switch (gameState) {
-                case OppWin:
+                case YouLose:
                     return 1;
                 case YouWin:
                     return -1;
@@ -63,7 +61,7 @@ public class SingleMode extends Game {
         GameState gameState = board.getGameState(myMark, oppenentMark);
         if (null != gameState) {
             switch (gameState) {
-                case OppWin:
+                case YouLose:
                     return 1;
                 case YouWin:
                     return -1;
@@ -98,16 +96,6 @@ public class SingleMode extends Game {
         pos = new Position(x, y);
         return pos;
     }
-       Position getWinningMove() {
-        Position pos = null;
-        int[][] preferredMoves = {{1, 1}, {0, 0}, {0, 2}, {2, 0}, {2, 2}, {0, 1}, {1, 0}, {1, 2}, {2, 1}};
-        for(int[] move : preferredMoves){
-            if(board.getBoard()[move[0]][move[1]] != Constants.CROSS &&board.getBoard()[move[0]][move[1]]!= Constants.CIRCLE ){
-                pos = new Position(move[0], move[1]);
-            }
-         }
-        return pos;
-    }
     /**
      * overriding the abstract function play to suit single mode playing logic
      *
@@ -137,8 +125,10 @@ public class SingleMode extends Game {
                      recordStep(position.getRow(), position.getColumn(), Constants.OPPENENT);
                 }
                 else{
-                    board = findBestMove(board);
-                    drawBoardOnButtons(board);
+                    position = findBestPosition(board);
+                    board = new Board(board, position, oppenentMark);
+                    ui.setText(buttons[position.getRow()][position.getColumn()], oppenentMark);
+                    recordStep(position.getRow(), position.getColumn(), Constants.OPPENENT);
                 }  
                 myTurn = !myTurn;   
                 result = evaluateGame();

@@ -5,6 +5,7 @@ import tictac.database.*;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
 import tictac.ui.GameBodyScreen;
+import tictac.ui.PrimaryScreen;
 
 public class ReplayGame {
 
@@ -38,6 +39,7 @@ public class ReplayGame {
             timer.start();
         }
         ui.getPlayAgainBtn().setVisible(false);
+        PrimaryScreen.stopSound();
 
     }
 

@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import org.sqlite.SQLiteConfig;
 import tictac.animation.GameOver;
 import tictac.database.Player;
 import tictac.database.SavedGameModel;
@@ -198,6 +199,9 @@ public class EventController {
                 MainGame.game.setParentScene(new Scene(new PlayScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
+                if(!PrimaryScreen.getAudio().isPlaying()){
+                    PrimaryScreen.playSound(); 
+                }
             };
         }
     }
@@ -238,6 +242,9 @@ public class EventController {
                 MainGame.game.setParentScene(new Scene(new PlayScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
+                 if(!PrimaryScreen.getAudio().isPlaying()){
+                    PrimaryScreen.playSound(); 
+                }
             };
         }
     }
@@ -335,6 +342,9 @@ public class EventController {
                 MainGame.game.setParentScene(new Scene(new PlayScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
+                 if(!PrimaryScreen.getAudio().isPlaying()){
+                    PrimaryScreen.playSound(); 
+                }
             };
         }
 
@@ -464,6 +474,9 @@ public class EventController {
                 MainGame.game.setParentScene(new Scene(new PlayScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
+                if(!PrimaryScreen.getAudio().isPlaying()){
+                    PrimaryScreen.playSound(); 
+                } 
             };
         }
     }

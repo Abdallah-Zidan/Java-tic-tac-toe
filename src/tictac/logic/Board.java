@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Board {
 
-    char[][] board; 
+    char[][] board;
+
     public Board() {
         board = new char[3][3];
         for (int y = 0; y < 3; y++) {
@@ -13,10 +14,12 @@ public class Board {
             }
         }
     }
+
     public char[][] getBoard() {
         return board;
     }
-    public Board(Board from, Position position, char sign) {
+
+    Board(Board from, Position position, char sign) {
         board = new char[3][3];
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++) {
@@ -25,8 +28,9 @@ public class Board {
         }
         board[position.getColumn()][position.getRow()] = sign == Constants.CROSS ? Constants.CROSS : Constants.CIRCLE;
     }
-    public ArrayList<Position> getFreePositions() {
-        ArrayList<Position> retArr = new ArrayList<Position>();
+
+    ArrayList<Position> getFreePositions() {
+        ArrayList<Position> retArr = new ArrayList<>();
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++) {
                 if (board[x][y] == 'e') {
@@ -36,11 +40,12 @@ public class Board {
         }
         return retArr;
     }
-    public GameState getGameState(char myMark, char oppenentMark) {
-        if (hasWon(myMark)) {
+
+    GameState getGameState(char myMark, char oppenentMark) {
+        if (isWinner(myMark)) {
             return GameState.YouWin;
-        } else if (hasWon(oppenentMark)) {
-            return GameState.OppWin;
+        } else if (isWinner(oppenentMark)) {
+            return GameState.YouLose;
         } else if (getFreePositions().isEmpty()) {
             return GameState.Draw;
         } else {
@@ -48,7 +53,7 @@ public class Board {
         }
     }
 
-    public boolean hasWon(char sign) {
+    public boolean isWinner(char sign) {
         int x, y;
         if (board[0][0] == sign && board[1][1] == sign && board[2][2] == sign) {
             return true;
@@ -75,19 +80,16 @@ public class Board {
         return false;
     }
 
-    public boolean isMarked(Position position) {
-        if (board[position.getColumn()][position.getRow()] != 'e') {
-            return true;
-        }
-        return false;
+    boolean isMarked(Position position) {
+        return board[position.getColumn()][position.getRow()] != 'e';
     }
-    
 }
 
 final class Position {
+
     private final int column;
     private final int row;
-    
+
     public Position(int column, int row) {
         this.column = column;
         this.row = row;
@@ -103,5 +105,5 @@ final class Position {
 }
 
 enum GameState {
-    Incomplete, YouWin, OppWin, Draw
+    Incomplete, YouWin, YouLose, Draw
 }

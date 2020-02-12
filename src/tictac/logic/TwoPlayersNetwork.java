@@ -2,6 +2,7 @@ package tictac.logic;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import tictac.database.*;
 import tictac.ui.*;
 
@@ -28,6 +29,9 @@ public class TwoPlayersNetwork extends Game {
     @Override
     public void resetGame(boolean enabled) {
         board = new Board();
+        if(isRecorded){
+            steps = new ArrayList<>();
+        }
         if (enabled) {
             myTurn = true;
         } else {

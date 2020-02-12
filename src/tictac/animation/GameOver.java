@@ -33,7 +33,7 @@ public class GameOver extends AnchorPane {
         image.setPreserveRatio(true);
         win = new Image(getClass().getResourceAsStream("Win.gif"));
         loss = new Image(getClass().getResourceAsStream("lossgame.gif"));
-        tie = new Image(getClass().getResourceAsStream("tie2.jpg"));
+        tie = new Image(getClass().getResourceAsStream("tie.gif"));
         getChildren().add(image);
 
     }
