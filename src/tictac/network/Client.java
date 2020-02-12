@@ -14,7 +14,7 @@ public class Client {
             mainSocket = new Socket(ip, 5000);
             MainGame.gameInfo.socket = mainSocket;
         } catch (IOException ex) {
-            System.out.println("Something went Wrong");
+            System.out.println(ex.getMessage());
         }
     }
 

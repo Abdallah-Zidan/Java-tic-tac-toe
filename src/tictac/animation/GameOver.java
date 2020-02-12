@@ -8,6 +8,7 @@ import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import tictac.ui.GameBodyScreen;
 
 public class GameOver extends AnchorPane {
@@ -21,11 +22,9 @@ public class GameOver extends AnchorPane {
     public GameOver() {
 
         image = new ImageView();
-
         setId("AnchorPane");
         setPrefHeight(456.0);
         setPrefWidth(598.0);
-
         image.setFitHeight(437.0);
         image.setFitWidth(591.0);
         image.setLayoutX(3.0);
@@ -34,7 +33,7 @@ public class GameOver extends AnchorPane {
         image.setPreserveRatio(true);
         win = new Image(getClass().getResourceAsStream("Win.gif"));
         loss = new Image(getClass().getResourceAsStream("lossgame.gif"));
-        tie = new Image(getClass().getResourceAsStream("tie.gif"));
+        tie = new Image(getClass().getResourceAsStream("tie2.jpg"));
         getChildren().add(image);
 
     }
@@ -51,7 +50,7 @@ public class GameOver extends AnchorPane {
                 break;
             case 3:
                 image.setImage(tie);
-                audio = new AudioClip(getClass().getResource("sad.mp3").toString());
+                audio = new AudioClip(getClass().getResource("tie.mp3").toString());
                 break;
             default:
                 break;
@@ -70,15 +69,21 @@ public class GameOver extends AnchorPane {
         final Stage endStage = new Stage();
         endStage.initModality(Modality.WINDOW_MODAL);
         endStage.initStyle(StageStyle.UNDECORATED);
-        endStage.initOwner(ui.getScene().getWindow());
-        endStage.setX(ui.getScene().getWindow().getX());
-        endStage.setY(ui.getScene().getWindow().getY());
+        Window window = ui.getScene().getWindow();
+        double width = window.getWidth();
+        double height = window.getHeight();
+        endStage.initOwner(window);
+        endStage.setX(window.getX());
+        endStage.setY(window.getY());
+        endStage.setWidth(width);
+        endStage.setHeight(height);
+        image.setFitWidth(width);
+        image.setFitHeight(height);
         endStage.setResizable(false);
         return endStage;
     }
     
     public void showStage(int state, Stage stage  ,GameBodyScreen ui) {
-      //  highlightButtons(state);
         ui.stopSound();
         this.setState(state);
         this.playSound();

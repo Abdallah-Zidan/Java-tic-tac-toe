@@ -23,7 +23,7 @@ public class Board {
                 board[x][y] = from.board[x][y];
             }
         }
-        board[position.getColumn()][position.getRow()] = sign == Constants.CROSS ? 'X' : 'O';
+        board[position.getColumn()][position.getRow()] = sign == Constants.CROSS ? Constants.CROSS : Constants.CIRCLE;
     }
     public ArrayList<Position> getFreePositions() {
         ArrayList<Position> retArr = new ArrayList<Position>();

@@ -1,7 +1,6 @@
 package tictac.logic;
 
 import tictac.database.*;
-
 import java.util.*;
 import tictac.ui.GameBodyScreen;
 
@@ -20,12 +19,14 @@ public class SingleMode extends Game {
     private Board findBestMove(Board board) {
         ArrayList<Position> positions = board.getFreePositions();
         Board bestChild = null;
+        Position bestPosition=null;
         int previous = Integer.MIN_VALUE;
         for (Position p : positions) {
             Board child = new Board(board, p, oppenentMark);
             int current = min(child);
             if (current > previous) {
                 bestChild = child;
+                bestPosition = p;
                 previous = current;
             }
         }
@@ -84,7 +85,7 @@ public class SingleMode extends Game {
         return best;
     }
 
-    public Position getRandomMove() {
+     Position getRandomMove() {
         Random rand = new Random();
         Position pos;
         int x;
@@ -97,7 +98,7 @@ public class SingleMode extends Game {
         pos = new Position(x, y);
         return pos;
     }
-    public Position getWinningMove() {
+       Position getWinningMove() {
         Position pos = null;
         int[][] preferredMoves = {{1, 1}, {0, 0}, {0, 2}, {2, 0}, {2, 2}, {0, 1}, {1, 0}, {1, 2}, {2, 1}};
         for(int[] move : preferredMoves){
@@ -132,7 +133,8 @@ public class SingleMode extends Game {
                 if(level == Constants.EASY){
                      position = getRandomMove();
                      board = new Board(board, position, oppenentMark);
-                      ui.setText(buttons[position.getRow()][position.getColumn()], oppenentMark);
+                     ui.setText(buttons[position.getRow()][position.getColumn()], oppenentMark);
+                     recordStep(position.getRow(), position.getColumn(), Constants.OPPENENT);
                 }
                 else{
                     board = findBestMove(board);

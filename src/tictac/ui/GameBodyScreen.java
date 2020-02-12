@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import tictac.controllers.EventController;
 
 public class GameBodyScreen extends Pane {
+
     protected final ImageView imageView;
     protected final Label osym;
     protected final Label p1name;
@@ -88,7 +89,7 @@ public class GameBodyScreen extends Pane {
         score.setLayoutY(109.0);
         score.setText("Score: ");
         score.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-       // score.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 30.0));
+        // score.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 30.0));
 
         scorenum.setLayoutX(120.0);
         scorenum.setLayoutY(108.0);
@@ -148,7 +149,7 @@ public class GameBodyScreen extends Pane {
         forthB.setPrefWidth(103.0);
         forthB.getStyleClass().add("sym");
         forthB.setCursor(Cursor.HAND);
-       // forthB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
+        // forthB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
 
         centerB.setLayoutX(440.0);
         centerB.setLayoutY(214.0);
@@ -157,7 +158,7 @@ public class GameBodyScreen extends Pane {
         centerB.setPrefWidth(92.0);
         centerB.getStyleClass().add("sym");
         centerB.setCursor(Cursor.HAND);
-       // centerB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
+        // centerB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
 
         sixB.setLayoutX(549.0);
         sixB.setLayoutY(214.0);
@@ -286,20 +287,85 @@ public class GameBodyScreen extends Pane {
         }
     }
 
-    public void highLight(Button btn ,int state) {
-        if(state == 1)
-            btn.setStyle("-fx-background-color: yellow;-fx-text-fill: white;");
-        else if(state==11)
-            btn.setStyle("-fx-background-color: transparent;");
-        else
-            btn.setStyle("-fx-background-color: red;-fx-text-fill: white;");
+    public void highLight(Button btn, int state) {
+        switch (state) {
+            case 1:
+                btn.setStyle("-fx-background-color: yellow;-fx-text-fill: white;");
+                break;
+            case 11:
+                btn.setStyle("-fx-background-color: transparent;");
+                break;
+            default:
+                btn.setStyle("-fx-background-color: red;-fx-text-fill: white;");
+                break;
+        }
     }
 
-    public void stopSound(){
+    public void stopSound() {
         audio.stop();
     }
 
-    public void playSound(){
+    public void playSound() {
         audio.play();
+    }
+    public Button getPlayAgainBtn(){return playagain;}
+    public void disableButtons() {
+        Button[][] buttons = getBoardButtons();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                buttons[i][j].setDisable(true);
+            }
+        }
+    }
+
+    public void enableButtons() {
+        Button[][] buttons = getBoardButtons();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                buttons[i][j].setDisable(false);
+            }
+
+        }
+    }
+
+    public void clearButtons() {
+        Button[][] buttons = getBoardButtons();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                buttons[i][j].setText("");
+                highLight(buttons[i][j], 11);
+            }
+        }
+    }
+
+    private void highlightTrio(Button btn1, Button btn2, Button btn3, int state) {
+        highLight(btn1, state);
+        highLight(btn2, state);
+        highLight(btn3, state);
+    }
+
+    // highlight the winning buttons at the end of the game
+    public void highlightButtons(int state) {
+        Button[][] buttons = getBoardButtons();
+        if (buttons[0][0].getText().equals(buttons[1][1].getText()) && buttons[0][0].getText().equals(buttons[2][2].getText())) {
+            highlightTrio(buttons[0][0], buttons[1][1], buttons[2][2], state);
+        } else if (buttons[0][2].getText().equals(buttons[1][1].getText()) && buttons[0][2].getText().equals(buttons[2][0].getText())) {
+            highlightTrio(buttons[0][2], buttons[1][1], buttons[2][0], state);
+        } else {
+            for (int x = 0; x < 3; x++) {
+                String st1 = buttons[x][0].getText(), st2 = buttons[x][1].getText(), st3 = buttons[x][2].getText();
+                if (st1.equals(st2) && st1.equals(st3) && st1.equals("X") || st1.equals(st2) && st1.equals(st3) && st1.equals("O")) {
+                    highlightTrio(buttons[x][0], buttons[x][1], buttons[x][2], state);
+                    break;
+                }
+            }
+            for (int y = 0; y < 3; y++) {
+                String st1 = buttons[0][y].getText(), st2 = buttons[1][y].getText(), st3 = buttons[2][y].getText();
+                if (st1.equals(st2) && st1.equals(st3) && st1.equals("X") || st1.equals(st2) && st1.equals(st3) && st1.equals("O")) {
+                    highlightTrio(buttons[0][y], buttons[1][y], buttons[2][y], state);
+                    break;
+                }
+            }
+        }
     }
 }

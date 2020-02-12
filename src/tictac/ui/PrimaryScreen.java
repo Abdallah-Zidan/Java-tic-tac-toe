@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 import tictac.controllers.EventController;
 
@@ -17,7 +18,7 @@ public class PrimaryScreen extends Pane {
     protected final Label label0;
     protected final Label label1;
     protected final Label label2;
-
+    protected AudioClip audio;
     public PrimaryScreen() {
         imageView = new ImageView();
         register = new Button();
@@ -105,5 +106,15 @@ public class PrimaryScreen extends Pane {
         getChildren().add(label0);
         getChildren().add(label1);
         getChildren().add(label2);
+        audio = new AudioClip(getClass().getResource("primetheme.mp3").toString());
+        audio.setCycleCount(1000);
+        playSound();
+    }
+    public void stopSound() {
+        audio.stop();
+    }
+
+    public void playSound() {
+        audio.play();
     }
 }

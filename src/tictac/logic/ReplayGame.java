@@ -37,15 +37,16 @@ public class ReplayGame {
             timer = new ReplayTimer();
             timer.start();
         }
+        ui.getPlayAgainBtn().setVisible(false);
 
     }
 
     public void startReplay() {
-        SingleMode sm = new SingleMode(false, null, null, 'c',Constants.EASY, ui);
+       
         if (counter >= steps.size()) {
             timer.stop();
-            if (steps.size() >= 6) {
-                sm.highlightButtons(1);
+            if (steps.size() >= 5) {
+                ui.highlightButtons(1);
             }
 
         } else {
@@ -62,11 +63,10 @@ public class ReplayGame {
             if (steps != null && steps.size() > 0) {
                 startReplay();
             }
-
             try {
-                Thread.sleep(700);
+                Thread.sleep(900);
             } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                System.out.println(ex.getMessage());
             }
 
         }

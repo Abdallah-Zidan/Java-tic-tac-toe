@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.stage.*;
 import javafx.util.Duration;
 import tictac.animation.GameOver;
-
 import tictac.ui.GameBodyScreen;
 
 /*
@@ -18,7 +17,6 @@ this is an abstract class thatcontains the main attributes and methods of the ga
 regardless of it type
  */
 public abstract class Game {
-
     protected Board board;
     protected boolean gameEnded;
     protected boolean myTurn;
@@ -53,6 +51,7 @@ public abstract class Game {
         if (isRecorded) {
             steps = new ArrayList<>();
         }
+        ui.getPlayAgainBtn().setVisible(false);
 
     }
 
@@ -75,27 +74,9 @@ public abstract class Game {
         buttons[2][2].setOnAction((ActionEvent event) -> {play(2, 2);});
     }
 
-    // disable the game buttons when game ends
-    public void disableButtons() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                buttons[i][j].setDisable(true);
-            }
-        }
-    }
-
-    public void enableButtons() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                buttons[i][j].setDisable(false);
-            }
-
-        }
-    }
-
     protected int evaluateGame() {
         GameState gameState = board.getGameState(myMark, oppenentMark);
-        int retval = 4;
+        int retval ;
         gameEnded = true;
         switch (gameState) {
             case YouWin:
@@ -115,12 +96,14 @@ public abstract class Game {
                 retval = 4;
                 break;
         }
+        if(gameEnded)
+            ui.getPlayAgainBtn().setVisible(true);
         return retval;
     }
 
     // check if clicked position is available or not ... if available return it
     Position makeMove(int x, int y) {
-        Position position = null;
+        Position position;
         position = new Position(y, x);
         if (board.isMarked(position)) {
             position = null;
@@ -154,39 +137,7 @@ public abstract class Game {
             }
         }
     }
-
-    private void highlightTrio(Button btn1, Button btn2, Button btn3, int state) {
-        ui.highLight(btn1, state);
-        ui.highLight(btn2, state);
-        ui.highLight(btn3, state);
-    }
-
-    // highlight the winning buttons at the end of the game
-    public void highlightButtons(int state) {
-
-        if (buttons[0][0].getText().equals(buttons[1][1].getText()) && buttons[0][0].getText().equals(buttons[2][2].getText())) {
-            highlightTrio(buttons[0][0], buttons[1][1], buttons[2][2], state);
-        } else if (buttons[0][2].getText().equals(buttons[1][1].getText()) && buttons[0][2].getText().equals(buttons[2][0].getText())) {
-            highlightTrio(buttons[0][2], buttons[1][1], buttons[2][0], state);
-        } else {
-            for (int x = 0; x < 3; x++) {
-                String st1 = buttons[x][0].getText(), st2 = buttons[x][1].getText(), st3 = buttons[x][2].getText();
-                if (st1.equals(st2) && st1.equals(st3) && st1.equals("X") || st1.equals(st2) && st1.equals(st3) && st1.equals("O")) {
-                    highlightTrio(buttons[x][0], buttons[x][1], buttons[x][2], state);
-                    break;
-                }
-            }
-            for (int y = 0; y < 3; y++) {
-                String st1 = buttons[0][y].getText(), st2 = buttons[1][y].getText(), st3 = buttons[2][y].getText();
-                if (st1.equals(st2) && st1.equals(st3) && st1.equals("X") || st1.equals(st2) && st1.equals(st3) && st1.equals("O")) {
-                    highlightTrio(buttons[0][y], buttons[1][y], buttons[2][y], state);
-                    break;
-                }
-            }
-        }
-    }
-
-    // show the game end results to the user
+   // show the game end results to the user
     public void showResult(int result) {
         GameOver showEnd;
         showEnd = new GameOver();
@@ -194,13 +145,13 @@ public abstract class Game {
         PauseTransition delay;
         switch (result) {
             case 1:
-                 highlightButtons(1);
+                ui.highlightButtons(1);
                 showEnd.showStage(1, endStage , ui);
                 user.victory();
                 saveGame("victory");
                 break;
             case 2:
-                 highlightButtons(2);
+                 ui.highlightButtons(2);
                 showEnd.showStage(2, endStage,ui);
                 saveGame("loss");
                 break;
@@ -212,8 +163,7 @@ public abstract class Game {
         }
         delay = new PauseTransition(Duration.seconds(4));
         delay.setOnFinished(event -> {endStage.close();});
-        delay.play();
-       
+        delay.play();      
     }
 
     // save the game if recorded into the database using GameModel
@@ -221,9 +171,9 @@ public abstract class Game {
         String nivel ="";
         if (isRecorded) {
             if(game_type.equals(Constants.SOLO)){
-                if(level ==1){
+                if(level ==Constants.EASY){
                      nivel = "easy";
-                }else if(level ==3){
+                }else if(level ==Constants.HARD){
                     nivel = "hard";                }   
             } else{
                 nivel = "no level";
@@ -245,10 +195,12 @@ public abstract class Game {
 
     // save the steps at the end of the game
     public void saveSteps(int gameId) {
-        for (Step step : steps) {
+        steps.stream().map((step) -> {
             step.setGameId(gameId);
+            return step;
+        }).forEachOrdered((step) -> {
             step.save();
-        }
+        }); 
     }
 
     public void closeGame(Socket socket, DataInputStream dis, PrintStream ps) {
@@ -263,21 +215,13 @@ public abstract class Game {
         }
     }
 
-    public void clearButtons() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                buttons[i][j].setText("");
-                ui.highLight(buttons[i][j], 11);
-            }
-        }
-    }
-
     public void resetGame(boolean enabled) {
         board = new Board();
         myTurn = true;
-        clearButtons();
+        ui.clearButtons();
         gameEnded = false;
-        enableButtons();
+        ui.enableButtons();
+        ui.getPlayAgainBtn().setVisible(false);
         ui.playSound();
     }
 

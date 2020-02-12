@@ -31,7 +31,7 @@ class PlayLater implements Runnable {
         tpn.play(x, y);
         tpn.myTurn = true;
         if (!tpn.gameEnded) {
-            tpn.enableButtons();
+            tpn.ui.enableButtons();
         }
     }
 }
@@ -98,7 +98,7 @@ class Reader extends Thread {
                         Platform.runLater(new PlayLater(x, y, tpn));
                     } else {
                         Platform.runLater(() -> {
-                            tpn.enableButtons();
+                            tpn.ui.enableButtons();
                         });
                     }
                 } else {

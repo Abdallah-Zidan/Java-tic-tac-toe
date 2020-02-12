@@ -14,7 +14,7 @@ public class TwoPlayersNetwork extends Game {
         super(isRecorded, Constants.DUAL, oppenent, user, myMark,0, ui);
         this.myTurn = myTurn;
         if (!myTurn) {
-            disableButtons();
+            ui.disableButtons();
         }
         try {
             this.dis = new DataInputStream(socket.getInputStream());
@@ -31,11 +31,11 @@ public class TwoPlayersNetwork extends Game {
         if (enabled) {
             myTurn = true;
         } else {
-            disableButtons();
+            ui.disableButtons();
             myTurn = false;
             printStream.println(1);
         }
-        clearButtons();
+        ui.clearButtons();
         gameEnded = false;
         ui.playSound();
     }
@@ -46,7 +46,7 @@ public class TwoPlayersNetwork extends Game {
         if (!gameEnded) {
             Position position;
             if (myTurn) {
-                enableButtons();
+                ui.enableButtons();
                 position = makeMove(x, y);
                 if (position != null) {
                     board = new Board(board, position, myMark);
@@ -55,7 +55,7 @@ public class TwoPlayersNetwork extends Game {
                     printStream.flush();
                     recordStep(x, y, Constants.MINE);
                     myTurn = !myTurn;
-                    disableButtons();
+                    ui.disableButtons();
                     result = evaluateGame();
                 }
             }
