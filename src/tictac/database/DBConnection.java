@@ -115,8 +115,19 @@ public class DBConnection {
             System.out.println("Faild to drop create database\n"+ex.getMessage());
         }
     }
-    public static void main(String[] args) {
-        DBConnection db = new DBConnection();
-        db.dropDB();
-    }
-}
+//    public void seedUserTable(){
+//        try{
+//            DBConnection db = new DBConnection();
+//            conn = db.connect();
+//            Statement stmt = conn.createStatement();
+//            String queryString = "INSERT INTO 'users'('username', 'password', 'fname', 'lname') VALUES ('"+username+"', '"+password+"', '"+fname+"', '"+lname+"')";
+//        }
+//        catch(){
+//            
+//        }
+//    }
+//    public static void main(String[] args) {
+//        DBConnection db = new DBConnection();
+//        db.dropDB();
+//    }
+//}
