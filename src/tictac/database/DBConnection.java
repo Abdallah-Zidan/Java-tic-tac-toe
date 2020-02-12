@@ -50,7 +50,7 @@ public class DBConnection {
             String userTable = "CREATE TABLE \"users\" (\n" +
                     "	\"id\"	INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                     "	\"username\"	TEXT NOT NULL UNIQUE,\n" +
-                    "	\"password\"	TEXT NOT NULL UNIQUE,\n" +
+                    "	\"password\"	TEXT NOT NULL,\n" +
                     "	\"fname\"	TEXT DEFAULT 'user',\n" +
                     "	\"lname\"	TEXT,\n" +
                     "	\"score\"	INTEGER DEFAULT 0\n" +
@@ -115,19 +115,5 @@ public class DBConnection {
             System.out.println("Faild to drop create database\n"+ex.getMessage());
         }
     }
-//    public void seedUserTable(){
-//        try{
-//            DBConnection db = new DBConnection();
-//            conn = db.connect();
-//            Statement stmt = conn.createStatement();
-//            String queryString = "INSERT INTO 'users'('username', 'password', 'fname', 'lname') VALUES ('"+username+"', '"+password+"', '"+fname+"', '"+lname+"')";
-//        }
-//        catch(){
-//            
-//        }
-//    }
-//    public static void main(String[] args) {
-//        DBConnection db = new DBConnection();
-//        db.dropDB();
-//    }
+
 }
