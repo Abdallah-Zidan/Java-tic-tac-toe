@@ -23,7 +23,9 @@ public class TwoPlayersNetwork extends Game {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-        new Reader(this).start();
+        
+        Reader reader = new Reader(this);
+        reader.start();
     }
 
     @Override
@@ -43,7 +45,6 @@ public class TwoPlayersNetwork extends Game {
         gameEnded = false;
         ui.playSound();
     }
-
     @Override
     public void play(int x, int y) {
         int result = 4;

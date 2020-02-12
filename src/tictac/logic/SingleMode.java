@@ -5,9 +5,9 @@ import java.util.*;
 import tictac.ui.GameBodyScreen;
 
 public class SingleMode extends Game {
-   
-    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark,int level, GameBodyScreen ui) {
-        super(isRecorded, Constants.SOLO, oppenent, user, myMark,level, ui);
+  
+    public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark, int level, GameBodyScreen ui) {
+        super(isRecorded, Constants.SOLO, oppenent, user, myMark, level, ui);
     }
 
     /**
@@ -18,7 +18,7 @@ public class SingleMode extends Game {
      */
     private Position findBestPosition(Board board) {
         ArrayList<Position> positions = board.getFreePositions();
-        Position bestPosition=null;
+        Position bestPosition = null;
         int previous = Integer.MIN_VALUE;
         for (Position p : positions) {
             Board child = new Board(board, p, oppenentMark);
@@ -83,7 +83,7 @@ public class SingleMode extends Game {
         return best;
     }
 
-     Position getRandomMove() {
+    Position getRandomMove() {
         Random rand = new Random();
         Position pos;
         int x;
@@ -96,6 +96,13 @@ public class SingleMode extends Game {
         pos = new Position(x, y);
         return pos;
     }
+
+    void insertMove(Position position) {
+        board = new Board(board, position, oppenentMark);
+        ui.setText(buttons[position.getRow()][position.getColumn()], oppenentMark);
+        recordStep(position.getRow(), position.getColumn(), Constants.OPPENENT);
+    }
+
     /**
      * overriding the abstract function play to suit single mode playing logic
      *
@@ -106,7 +113,7 @@ public class SingleMode extends Game {
     public void play(int x, int y) {
         int result = 4;
         if (!gameEnded) {
-            Position position;
+            Position position =null;
             if (myTurn) {
                 position = makeMove(x, y);
                 if (position != null) {
@@ -118,19 +125,23 @@ public class SingleMode extends Game {
                 }
             }
             if (!myTurn && !board.getFreePositions().isEmpty()) {
-                if(level == Constants.EASY){
-                     position = getRandomMove();
-                     board = new Board(board, position, oppenentMark);
-                     ui.setText(buttons[position.getRow()][position.getColumn()], oppenentMark);
-                     recordStep(position.getRow(), position.getColumn(), Constants.OPPENENT);
+                switch (level) {
+                    case Constants.EASY:
+                        position = getRandomMove();
+                        break;
+                    case Constants.HARD:
+                        position = findBestPosition(board);
+                        break;
+                    default:
+                        if(counter <3){
+                             position = findBestPosition(board);
+                        }else if(counter <=4){
+                              position = getRandomMove();
+                        }
+                        counter++;
                 }
-                else{
-                    position = findBestPosition(board);
-                    board = new Board(board, position, oppenentMark);
-                    ui.setText(buttons[position.getRow()][position.getColumn()], oppenentMark);
-                    recordStep(position.getRow(), position.getColumn(), Constants.OPPENENT);
-                }  
-                myTurn = !myTurn;   
+                insertMove(position);
+                myTurn = !myTurn;
                 result = evaluateGame();
             }
         }

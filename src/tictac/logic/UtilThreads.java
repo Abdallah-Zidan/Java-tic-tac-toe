@@ -2,10 +2,9 @@ package tictac.logic;
 
 import java.io.IOException;
 import javafx.application.Platform;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import tictac.animation.CustomAlert;
 import tictac.game.MainGame;
-import tictac.ui.PlayScreen;
 
 
 /**
@@ -43,30 +42,16 @@ class PlayLater implements Runnable {
  * the current TwoPlayersNetwork object
  */
 class ConnectionLost implements Runnable {
-
     TwoPlayersNetwork tpn;
-
     public ConnectionLost(TwoPlayersNetwork tpn) {
         this.tpn = tpn;
     }
 
     @Override
-    public void run() {
-        
+    public void run() {        
         tpn.closeGame(MainGame.gameInfo.socket, tpn.dis, tpn.printStream);
         tpn.ui.stopSound();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Connection closed");
-        alert.setHeaderText("No longer coonnected");
-        alert.setContentText("Connection between you and opponent was closed!");
-        DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(
-        getClass().getResource("myDialogs.css").toExternalForm());
-        dialogPane.getStyleClass().add("myDialog");
-        alert.showAndWait();
-        MainGame.game.setParentScene(new Scene(new PlayScreen()));
-        MainGame.game.initializeScene();
-        MainGame.game.showScene();
+        CustomAlert alert = new CustomAlert(Alert.AlertType.INFORMATION);  
     }
 }
 
@@ -89,14 +74,13 @@ class Reader extends Thread {
             try {
                 String move = tpn.dis.readLine();
                 if (move != null) {
-                    System.out.println(move);
                     if (move.length() > 2) {
                         String[] pos = move.split(",");
                         int x = Integer.parseInt(pos[0]);
                         int y = Integer.parseInt(pos[1]);
                         System.out.println(x + " , " + y);
                         Platform.runLater(new PlayLater(x, y, tpn));
-                    } else {
+                    } else if(move.equals("1")) {
                         Platform.runLater(() -> {
                             tpn.ui.enableButtons();
                         });

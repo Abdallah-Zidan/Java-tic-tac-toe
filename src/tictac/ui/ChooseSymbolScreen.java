@@ -37,7 +37,7 @@ public class ChooseSymbolScreen extends Pane {
         button0 = new Button();
         button1 = new Button();
         isRecord = false;
-        difficulty = 0;
+        difficulty = 2;
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);

@@ -32,7 +32,7 @@ public abstract class Game {
     protected GameBodyScreen ui;
     protected int gameId;
     protected int level;
-
+     int counter ;
     Game(boolean isRecorded, String gameType, Player oppenent, User user, char myMark, int level, GameBodyScreen ui) {
         this.ui = ui;
         buttons = ui.getBoardButtons();
@@ -53,6 +53,7 @@ public abstract class Game {
         if (isRecorded) {
             steps = new ArrayList<>();
         }
+         counter =0;
         ui.getPlayAgainBtn().setVisible(false);
         PrimaryScreen.stopSound();
     }
@@ -82,15 +83,12 @@ public abstract class Game {
         gameEnded = true;
         switch (gameState) {
             case YouWin:
-                System.out.println("You Won!");
                 retval = 1;
                 break;
             case YouLose:
-                System.out.println("openent Won!");
                 retval = 2;
                 break;
             case Draw:
-                System.out.println("Draw!");
                 retval = 3;
                 break;
             default:
@@ -204,6 +202,7 @@ public abstract class Game {
         ui.enableButtons();
         ui.getPlayAgainBtn().setVisible(false);
         ui.playSound();
+        counter =0;
     }
 
     // abstract method that should be implemented to specify how the game is played in single or two players mode
