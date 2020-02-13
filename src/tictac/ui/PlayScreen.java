@@ -18,6 +18,8 @@ public class PlayScreen extends Pane {
     protected final ImageView imageView0;
     protected final Button about;
     protected final ImageView imageView1;
+    protected final Button exit;
+    protected final ImageView imageView2;
 
     public PlayScreen() {
         imageView = new ImageView();
@@ -29,6 +31,8 @@ public class PlayScreen extends Pane {
         imageView0 = new ImageView();
         about = new Button();
         imageView1 = new ImageView();
+        exit = new Button();
+        imageView2 = new ImageView();
         
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -91,11 +95,11 @@ public class PlayScreen extends Pane {
         savedgames.setCursor(Cursor.HAND);
         savedgames.setOnAction(EventController.Play.savedOnAction());
 
-        arrow.setLayoutX(52.0);
+        arrow.setLayoutX(82.0);
         arrow.setLayoutY(410.0);
         arrow.setMnemonicParsing(false);
-        arrow.setPrefHeight(39.0);
-        arrow.setPrefWidth(29.0);
+        arrow.setPrefHeight(20.0);
+        arrow.setPrefWidth(10.0);
         arrow.getStyleClass().add("arrow");
         arrow.setCursor(Cursor.HAND);
         arrow.setOnAction(EventController.Play.backOnAction());
@@ -109,12 +113,25 @@ public class PlayScreen extends Pane {
         about.setLayoutY(14.0);
         about.setMnemonicParsing(false);
         about.getStyleClass().add("arrow");
+        about.setOnAction(EventController.Play.aboutOnAction());
 
         imageView1.setFitHeight(42.0);
         imageView1.setFitWidth(44.0);
         imageView1.setImage(new Image(getClass().getResource("images/about.png").toExternalForm()));
         about.setGraphic(imageView1);
         about.setCursor(Cursor.HAND);
+        
+        exit.setLayoutX(8.0);
+        exit.setLayoutY(420.0);
+        exit.setMnemonicParsing(false);
+        exit.getStyleClass().add("exit");
+        exit.setCursor(Cursor.HAND);
+        exit.setOnAction(EventController.Play.exitOnAction());
+
+        imageView2.setFitHeight(55.0);
+        imageView2.setFitWidth(45.0);
+        imageView2.setImage(new Image(getClass().getResource("images/exit.png").toExternalForm()));
+        exit.setGraphic(imageView2);
 
         getChildren().add(imageView);
         getChildren().add(singlePlayer);
@@ -123,5 +140,6 @@ public class PlayScreen extends Pane {
         getChildren().add(savedgames);
         getChildren().add(arrow);
         getChildren().add(about);
+        getChildren().add(exit);
     }
 }

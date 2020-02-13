@@ -14,6 +14,7 @@ import tictac.controllers.EventController;
 import tictac.database.GameModel;
 import tictac.database.SavedGameModel;
 import tictac.database.User;
+import tictac.game.MainGame;
 
 public class SavedGameScreen extends Pane {
     protected final ImageView imageView;
@@ -22,8 +23,6 @@ public class SavedGameScreen extends Pane {
     protected final TableColumn<SavedGameModel, String> tableColumn0;
     protected final TableColumn<SavedGameModel, String> tableColumn1;
     protected final TableColumn<SavedGameModel, String> tableColumn2;
-    protected final Label label;
-    protected final Label label0;
     protected final Button replay;
     protected final Button arrow;
     protected final ImageView imageView0;
@@ -35,8 +34,6 @@ public class SavedGameScreen extends Pane {
         tableColumn0 = new TableColumn<>("Game Type");
         tableColumn1 = new TableColumn<>("Player Name");
         tableColumn2 = new TableColumn<>("Result");
-        label = new Label();
-        label0 = new Label();
         replay = new Button();
         arrow = new Button();
         imageView0 = new ImageView();
@@ -59,28 +56,20 @@ public class SavedGameScreen extends Pane {
         tableView.setPrefWidth(425.0);
 
         tableColumn.setPrefWidth(87.0);
+        tableColumn.getStyleClass().add("col");
         tableColumn.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
 
         tableColumn0.setPrefWidth(108.0);
+        tableColumn0.getStyleClass().add("col");
         tableColumn0.setCellValueFactory(new PropertyValueFactory<>("gameType"));
 
         tableColumn1.setPrefWidth(118.0);
-        tableColumn1.setCellValueFactory(new PropertyValueFactory<>("player"));
+        tableColumn1.getStyleClass().add("col");
+        tableColumn1.setCellValueFactory(new PropertyValueFactory<>("playerName"));
 
         tableColumn2.setPrefWidth(111.0);
+        tableColumn2.getStyleClass().add("col");
         tableColumn2.setCellValueFactory(new PropertyValueFactory<>("result"));
-
-        label.setLayoutX(40.0);
-        label.setLayoutY(120.0);
-        label.setText("Player ");
-        label.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 30.0));
-
-        label0.setLayoutX(144.0);
-        label0.setLayoutY(121.0);
-        label0.setText("Ahmed");
-        label0.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        label0.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 28.0));
 
         replay.setLayoutX(64.0);
         replay.setLayoutY(250.0);
@@ -112,8 +101,6 @@ public class SavedGameScreen extends Pane {
         tableView.getColumns().add(tableColumn1);
         tableView.getColumns().add(tableColumn2);
         getChildren().add(tableView);
-        getChildren().add(label);
-        getChildren().add(label0);
         getChildren().add(replay);
         getChildren().add(arrow);
 
@@ -121,14 +108,14 @@ public class SavedGameScreen extends Pane {
     }
 
     private void loadSavedGames() {
-        User user = new User("test", "test");
+        User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
         user.getUserInfo();
 
         for (GameModel game : user.games())
             tableView.getItems().add(new SavedGameModel(game.getId(),
                                                         game.getTimestamp(),
                                                         game.getType(),
-                                                        String.valueOf(game.getUserId()),
+                                                        game.getPlayerId(),
                                                         game.getResult(),
                                                         game.getSympol()));
     }

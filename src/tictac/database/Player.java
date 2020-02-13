@@ -5,6 +5,7 @@
  */
 package tictac.database;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,20 +15,19 @@ import java.sql.Statement;
  *
  * @author al-haitham
  */
-public class Player {
-    private int id;
+public class Player implements Serializable {
+    private transient int id;
     private String ip_address;
     private String fname;
     private String lname;
-    private int user_id;
-    private DBConnection db = new DBConnection();
+    private transient DBConnection db = new DBConnection();
     
     public Player(){}
-    public Player(String fname, String lname, String ip_address, int user_id){
+    public Player(String fname, String lname, String ip_address){
         this.fname = fname;
         this.lname = lname;
         this.ip_address = ip_address;
-        this.user_id = user_id;
+        
     }
     public Player(String ip_address){
         this.ip_address = ip_address;
@@ -40,7 +40,7 @@ public class Player {
             Connection conn;
             conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "INSERT INTO 'players'('fname', 'lname', 'ip_address', 'user_id') VALUES ('"+fname+"', '"+lname+"', '"+ip_address+"', '"+user_id+"')";
+            String queryString = "INSERT INTO 'players'('fname', 'lname', 'ip_address') VALUES ('"+fname+"', '"+lname+"', '"+ip_address+"')";
             stmt.executeUpdate(queryString);
             stmt.close();
             db.disconnect(conn);
@@ -52,12 +52,12 @@ public class Player {
         }
     }
     //check if ip already exist in db
-    public boolean playerExist(String ip_address, int user_id){
+    public boolean playerExist(String ip_address){
         boolean retval = false;
         try {
             Connection conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "SELECT * FROM players WHERE ip_address ='" + ip_address + "' AND user_id = '"+ user_id + "'";
+            String queryString = "SELECT * FROM players WHERE ip_address ='" + ip_address+"'";
             ResultSet rs = stmt.executeQuery(queryString);
             if (rs.next()) {
                 retval = true;
@@ -81,7 +81,6 @@ public class Player {
                 setFname(rs.getString("fname"));
                 setLname(rs.getString("lname"));
                 setId(rs.getInt("id"));
-                setUserId(rs.getInt("user_id"));
                 setIpAddress(rs.getString("ip_address"));
             }
             stmt.close();
@@ -101,7 +100,7 @@ public class Player {
             String queryString = "SELECT * FROM players WHERE id = '" + id + "'";
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
-                p = new Player(rs.getString("fname"), rs.getString("lname"), rs.getString("ip_address"), rs.getInt("user_id"));
+                p = new Player(rs.getString("fname"), rs.getString("lname"), rs.getString("ip_address"));
                 p.setId(rs.getInt("id"));
             }
             stmt.close();
@@ -114,9 +113,7 @@ public class Player {
     public void setId(int id){
         this.id = id;
     }
-    public void setUserId(int user_id){
-        this.user_id = user_id;
-    }
+
     public void setFname(String fname){
         this.fname = fname;
     }
@@ -137,8 +134,5 @@ public class Player {
     }
     public String getIpAddress(){
         return ip_address;
-    }
-    public int getUserId(){
-        return user_id;
     }
 }

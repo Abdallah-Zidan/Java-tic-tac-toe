@@ -159,6 +159,7 @@ public class StageController {
         stage.initStyle(stageStyle);
         stage.setResizable(resizable);
         stage.setTitle(title);
+        stage.sizeToScene();
     }
 
     /**

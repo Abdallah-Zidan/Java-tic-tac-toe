@@ -210,23 +210,4 @@ public class User {
         }
         return games;
     }
-    //static method that returns a collectopn of players who played with this user
-    public ArrayList<Player> players() {
-        ArrayList<Player> players = new ArrayList<>();
-        try {
-            Connection conn = db.connect();
-            Statement stmt = conn.createStatement();
-            String queryString = "SELECT * FROM players WHERE user_id = "+id;
-            ResultSet rs = stmt.executeQuery(queryString);
-            while (rs.next()) {
-                Player p = new Player(rs.getString("fname"), rs.getString("lname"), rs.getString("ip_address"), rs.getInt("user_id"));
-                players.add(p);
-            }
-            stmt.close();
-            db.disconnect(conn);
-        } catch (SQLException ex) {
-            System.err.println("Failed to retrieve players from database\n"+ex.getMessage());
-        }
-        return players;
-    }
 }

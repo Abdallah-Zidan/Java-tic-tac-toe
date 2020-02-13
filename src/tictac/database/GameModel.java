@@ -146,4 +146,8 @@ public class GameModel {
     public int getUserId(){
         return user_id;
     }
+     public int getPlayerId(){
+        return player_id;
+    }
+    
 }

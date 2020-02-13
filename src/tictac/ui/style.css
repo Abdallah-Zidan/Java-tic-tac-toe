@@ -16,7 +16,7 @@
     -fx-text-fill: white;
     -fx-text-alignment: center;
 }
-.arrow {
+.arrow, .exit {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-background-radius: 20;
@@ -41,4 +41,11 @@
 .txt {
     -fx-background-color: #fbfbfb;
     -fx-padding: 0px 10px;
+}
+.name {
+    -fx-translate-y: 260;
+}
+.table-view .column-header.col .label {
+    -fx-text-fill: #fbfbfb;
+    -fx-background-color: #cd1515;
 }

@@ -204,7 +204,7 @@ public class GameBodyScreen extends Pane {
         turn.setPrefWidth(83.0);
         turn.setText("Your Turn");
         turn.setTextFill(Color.valueOf("#fbfbfb"));
-        turn.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 80.0));
+        turn.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 17.0));
 
         
         
@@ -260,7 +260,7 @@ public class GameBodyScreen extends Pane {
         getChildren().add(arrow);
         getChildren().add(playagain);
         getChildren().add(turn);
-        audio = new AudioClip(getClass().getResource("gameloop.mp3").toString());
+        audio = new AudioClip(getClass().getResource("spyloop.mp3").toString());
         audio.setCycleCount(1000);
     }
 
@@ -416,5 +416,8 @@ public class GameBodyScreen extends Pane {
                 }
             }
         }
+    }
+    public void hideTurn(){
+        turn.setVisible(false);
     }
 }

@@ -46,7 +46,7 @@ public class JoinRoomScreen extends Pane {
         typeip.setPrefWidth(239.0);
         typeip.setText("127.0.0.1");
         typeip.getStyleClass().add("txt");
-//        typeip.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 18.0));
+        typeip.setFont(Font.loadFont(getClass().getResource("fonts/BoughiesDemo.ttf").toExternalForm(), 18.0));
 
         label.setLayoutX(135.0);
         label.setLayoutY(244.0);

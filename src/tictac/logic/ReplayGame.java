@@ -39,6 +39,7 @@ public class ReplayGame {
             timer.start();
         }
         ui.getPlayAgainBtn().setVisible(false);
+        ui.hideTurn();
         PrimaryScreen.stopSound();
 
     }

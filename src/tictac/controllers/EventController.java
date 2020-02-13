@@ -1,11 +1,4 @@
 /*
-Fetch game, players from DB, Store new players to DB on connect
-Function in gamebody to disable play again
-send levels
-X & O font change from the Game class, missing with the design font
- */
-
- /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -17,11 +10,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import tictac.animation.GameOver;
 import tictac.database.Player;
 import tictac.database.SavedGameModel;
@@ -31,6 +26,7 @@ import tictac.logic.*;
 import tictac.network.Client;
 import tictac.network.Server;
 import tictac.ui.*;
+
 /**
  *
  * @author Tarek
@@ -163,6 +159,21 @@ public class EventController {
                 MainGame.game.showScene();
             };
         }
+        
+        public static EventHandler<ActionEvent> aboutOnAction() {
+            return (event) -> {
+                AboutScreen pane = new AboutScreen();
+                MainGame.game.setParentScene(new Scene(pane));
+                MainGame.game.initializeScene();
+
+                Duration d = Duration.millis(4500);
+                TranslateTransition tr = new TranslateTransition(d, pane.getPane());
+                tr.setByY(-300);
+                tr.play();
+
+                MainGame.game.showScene();
+            };
+        }
 
         public static EventHandler<ActionEvent> backOnAction() {
             return (event) -> {
@@ -171,9 +182,15 @@ public class EventController {
                 MainGame.game.showScene();
             };
         }
+
+        public static EventHandler<ActionEvent> exitOnAction() {
+            return (event) -> {
+                System.exit(0);
+            };
+        }
     }
 
-      public static class SavedGame {
+    public static class SavedGame {
         private SavedGame() {}
 
         public static EventHandler<ActionEvent> replayOnAction(SavedGameScreen pane) {
@@ -182,15 +199,14 @@ public class EventController {
                 SavedGameModel game = (SavedGameModel)pane.getTable().getSelectionModel().getSelectedItem();
                 User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
                 user.getUserInfo();
-                Player player = Player.getPlayer(1);
-
+                Player player = game.getPlayer();
                 ui.setFirstName(user.getFname());
                 ui.setFirstSymbol(game.getSymbol());
                 ui.setSecondName(player.getFname());
                 ui.setSecondSymbol(game.getSymbol() == 'x' ? 'o' : 'x');
                 ui.setScore(user.getScore());
 
-                ReplayGame replay = new ReplayGame(player, user, String.valueOf(game.getSymbol()).toUpperCase().charAt(0), game.getId(), ui);
+                ReplayGame replay = new ReplayGame(player, user, Character.toUpperCase(game.getSymbol()), game.getId(), ui);
 
                 MainGame.game.setParentScene(new Scene(ui));
                 MainGame.game.initializeScene();
@@ -205,7 +221,7 @@ public class EventController {
                 MainGame.game.setParentScene(new Scene(new PlayScreen()));
                 MainGame.game.initializeScene();
                 MainGame.game.showScene();
-                if(!PrimaryScreen.getAudio().isPlaying()){
+                 if(!PrimaryScreen.getAudio().isPlaying()){
                     PrimaryScreen.playSound(); 
                 }
             };
@@ -309,13 +325,13 @@ public class EventController {
 
         public static EventHandler<ActionEvent> xOnAction(String screen, ChooseSymbolScreen pane) {
             return (event) -> {
-                startGame(Constants.CROSS, screen, pane);
+                startGame('X', screen, pane);
             };
         }
 
         public static EventHandler<ActionEvent> oOnAction(String screen, ChooseSymbolScreen pane) {
             return (event) -> {
-                startGame(Constants.CIRCLE, screen, pane);
+                startGame('O', screen, pane);
             };
         }
 
@@ -354,24 +370,27 @@ public class EventController {
             };
         }
 
-         private static void startGame(char symbol, String screen, ChooseSymbolScreen pane) {
+        private static void startGame(char symbol, String screen, ChooseSymbolScreen pane) {
             Pane ui = new GameBodyScreen();
             GameOver endUi = new GameOver();
             User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
             user.getUserInfo();
-            Player player = Player.getPlayer(1);
+            Player player;
 
             ((GameBodyScreen)ui).setFirstName(user.getFname());
             ((GameBodyScreen)ui).setFirstSymbol(symbol);
-            ((GameBodyScreen)ui).setSecondName(player.getFname());
             ((GameBodyScreen)ui).setSecondSymbol(symbol == 'x' ? 'o' : 'x');
             ((GameBodyScreen)ui).setScore(user.getScore());
 
             if (screen.toLowerCase().equals("single")) {
+                player = Player.getPlayer(1);
+                ((GameBodyScreen)ui).setSecondName(player.getFname());
                 game = new SingleMode(pane.getRecord(), player, user, symbol, pane.getDifficulty(), (GameBodyScreen)ui);
                 game.startActionHandling();
             }
             else if (screen.toLowerCase().equals("two")) {
+                player =Player.getPlayer(2);
+                ((GameBodyScreen)ui).setSecondName(player.getFname());
                 game = new TwoPlayersMode(pane.getRecord(), player, user, symbol, (GameBodyScreen)ui);
                 game.startActionHandling();
             }
@@ -387,19 +406,20 @@ public class EventController {
                             if (MainGame.gameInfo.socket != null && !MainGame.gameInfo.socket.isClosed()) {
                                 User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
                                 user.getUserInfo();
+                                Player p = new Player();
 
                                 try {
-                                    Player p = new Player(user.getFname(), user.getLname(), MainGame.gameInfo.IpAddress, 0);
+                                    Player player = new Player(user.getFname(), user.getLname(), MainGame.gameInfo.IpAddress);
                                     ObjectOutputStream output = new ObjectOutputStream(MainGame.gameInfo.socket.getOutputStream());
-                                    output.writeObject(p);
+                                    output.writeObject(player);
                                 }
                                 catch (IOException ex) {
                                     System.out.println(ex.getMessage());
                                 }
                                 try {
                                     ObjectInputStream input = new ObjectInputStream(MainGame.gameInfo.socket.getInputStream());
-                                    Player p = (Player)input.readObject();
-                                    addPlayer(p, user);
+                                    p = (Player)input.readObject();
+                                    addPlayer(p);
                                 }
                                 catch (IOException ex) {
                                     System.out.println(ex.getMessage());
@@ -408,9 +428,7 @@ public class EventController {
                                     System.out.println(ex.getMessage());
                                 }
 
-                                Platform.runLater(() -> {
-                                    showOnlineGame(pane.getRecord(), player, user, symbol, true);
-                                });
+                                Platform.runLater(new ShowOnline(pane.getRecord(), p, user, symbol, true));
                             }
                         }
                     });
@@ -426,19 +444,20 @@ public class EventController {
                             if (MainGame.gameInfo.socket != null && !MainGame.gameInfo.socket.isClosed()) {
                                 User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
                                 user.getUserInfo();
+                                Player p = new Player();
 
                                 try {
-                                    Player p = new Player("Test", "Test", MainGame.gameInfo.IpAddress, 1);
+                                    Player player = new Player(user.getFname(), user.getLname(), MainGame.gameInfo.IpAddress);
                                     ObjectOutputStream output = new ObjectOutputStream(MainGame.gameInfo.socket.getOutputStream());
-                                    output.writeObject(p);
+                                    output.writeObject(player);
                                 }
                                 catch (IOException ex) {
                                     System.out.println(ex.getMessage());
                                 }
                                 try {
                                     ObjectInputStream input = new ObjectInputStream(MainGame.gameInfo.socket.getInputStream());
-                                    Player p = (Player)input.readObject();
-                                    addPlayer(p, user);
+                                    p = (Player)input.readObject();
+                                    addPlayer(p);
                                 }
                                 catch (IOException ex) {
                                     System.out.println(ex.getMessage());
@@ -447,9 +466,7 @@ public class EventController {
                                     System.out.println(ex.getMessage());
                                 }
 
-                                Platform.runLater(() -> {
-                                    showOnlineGame(pane.getRecord(), player, user, symbol, false);
-                                });
+                                Platform.runLater(new ShowOnline(pane.getRecord(), p, user, symbol, false));
                             }
                         }
                     });
@@ -466,32 +483,13 @@ public class EventController {
                 ((GameBodyScreen)ui).playSound();
         }
 
-        private static void showOnlineGame(boolean isRecord, Player player, User user, char symbol, boolean isServer) {
-            GameBodyScreen ui = new GameBodyScreen();
+        private static void addPlayer(Player player) {
+            player = new Player(player.getFname(), player.getLname(), player.getIpAddress());
 
-            ui.setFirstName(user.getFname());
-            ui.setFirstSymbol(symbol);
-            ui.setSecondName(player.getFname());
-            ui.setSecondSymbol(symbol == 'x' ? 'o' : 'x');
-            ui.setScore(user.getScore());
-
-            MainGame.game.setParentScene(new Scene(ui));
-            MainGame.game.initializeScene();
-            MainGame.game.showScene();
-            ui.playSound();
-
-            game = new TwoPlayersNetwork(isRecord, player, user, symbol, ui, MainGame.gameInfo.socket, isServer);
-            game.startActionHandling();
-        }
-
-        private static void addPlayer(Player player, User user) {
-            if (!player.playerExist(player.getIpAddress(), user.getId())) {
-                player.setId(user.getId());
+            if (!player.playerExist(player.getIpAddress()))
                 player.save();
-            }
         }
     }
-
 
     public static class WaitRoom {
         private WaitRoom() {}
@@ -556,5 +554,52 @@ public class EventController {
                 } 
             };
         }
+    }
+    
+    public static class About {
+        private About() {}
+
+        public static EventHandler<ActionEvent> backOnAction() {
+            return (event) -> {
+                MainGame.game.setParentScene(new Scene(new PlayScreen()));
+                MainGame.game.initializeScene();
+                MainGame.game.showScene();
+            };
+        }
+    }
+}
+
+class ShowOnline implements Runnable {
+    private boolean isRecord;
+    private Player player;
+    private User user;
+    private char symbol;
+    private boolean isServer;
+
+    public ShowOnline(boolean isRecord, Player player, User user, char symbol, boolean isServer) {
+        this.isRecord = isRecord;
+        this.player = player;
+        this.user = user;
+        this.symbol = symbol;
+        this.isServer = isServer;
+    }
+
+    @Override
+    public void run() {
+        GameBodyScreen ui = new GameBodyScreen();
+
+        ui.setFirstName(user.getFname());
+        ui.setFirstSymbol(symbol);
+        ui.setSecondName(player.getFname());
+        ui.setSecondSymbol(symbol == 'x' ? 'o' : 'x');
+        ui.setScore(user.getScore());
+
+        MainGame.game.setParentScene(new Scene(ui));
+        MainGame.game.initializeScene();
+        MainGame.game.showScene();
+        ui.playSound();
+
+        EventController.ChooseSymbol.game = new TwoPlayersNetwork(isRecord, player, user, symbol, ui, MainGame.gameInfo.socket, isServer);
+         EventController.ChooseSymbol.game.startActionHandling();
     }
 }

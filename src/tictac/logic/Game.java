@@ -200,6 +200,7 @@ public abstract class Game {
     public void resetGame(boolean enabled) {
         board = new Board();
         myTurn = true;
+        ui.changeTurn(myTurn);
         ui.clearButtons();
         if(isRecorded){
             steps = new ArrayList<>();
