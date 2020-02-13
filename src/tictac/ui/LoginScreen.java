@@ -16,7 +16,6 @@ public class LoginScreen extends Pane {
     protected final Label label;
     protected final Label label0;
     protected final TextField username;
-    protected final Label label1;
     protected final PasswordField pass;
     protected final Label validator;
     protected final Button logGo;
@@ -28,7 +27,6 @@ public class LoginScreen extends Pane {
         label = new Label();
         label0 = new Label();
         username = new TextField();
-        label1 = new Label();
         pass = new PasswordField();
         validator = new Label();
         logGo = new Button();
@@ -46,37 +44,30 @@ public class LoginScreen extends Pane {
 
         imageView.setFitHeight(500.0);
         imageView.setFitWidth(700.0);
-        imageView.setImage(new Image(getClass().getResource("images/tex3.jpeg").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("images/log.png").toExternalForm()));
 
-        label.setLayoutX(154.0);
-        label.setPrefHeight(125.0);
-        label.setPrefWidth(378.0);
-        label.setText("Are you Ready");
-        label.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-     //   label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 31.0));
-
-        label0.setLayoutX(242.0);
-        label0.setLayoutY(137.0);
-        label0.setPrefHeight(57.0);
-        label0.setPrefWidth(222.0);
-        label0.setText("Enter Your username");
-        label0.setTextFill(javafx.scene.paint.Color.valueOf("#fcfcfc"));
-       // label0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+        label.setLayoutX(242.0);
+        label.setLayoutY(137.0);
+        label.setPrefHeight(57.0);
+        label.setPrefWidth(222.0);
+        label.setText("Enter Your username");
+        label.setTextFill(javafx.scene.paint.Color.valueOf("#fcfcfc"));
+        label.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 22.0));
 
         username.setLayoutX(202.0);
         username.setLayoutY(194.0);
         username.setPrefHeight(38.0);
         username.setPrefWidth(296.0);
         username.getStyleClass().add("txt");
-       // username.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),18.0));
+        username.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(),18.0));
 
-        label1.setLayoutX(242.0);
-        label1.setLayoutY(248.0);
-        label1.setPrefHeight(57.0);
-        label1.setPrefWidth(222.0);
-        label1.setText("Enter Your Password");
-        label1.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-//        label1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+        label0.setLayoutX(242.0);
+        label0.setLayoutY(248.0);
+        label0.setPrefHeight(57.0);
+        label0.setPrefWidth(222.0);
+        label0.setText("Enter Your Password");
+        label0.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
+        label0.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(),22.0));
 
         pass.setLayoutX(202.0);
         pass.setLayoutY(305.0);
@@ -85,11 +76,12 @@ public class LoginScreen extends Pane {
         pass.getStyleClass().add("txt");
         pass.setFont(new Font("system", 18.0));
 
-        validator.setLayoutX(255.0);
+        validator.setLayoutX(280.0);
         validator.setLayoutY(381.0);
         validator.setPrefHeight(16.0);
         validator.setPrefWidth(190.0);
-        validator.setTextFill(javafx.scene.paint.Color.valueOf("#f2f2f2"));
+        validator.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
+        validator.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(),12.0));
 
         logGo.setDefaultButton(true);
         logGo.setLayoutX(279.0);
@@ -100,7 +92,7 @@ public class LoginScreen extends Pane {
         logGo.getStyleClass().add("btn");
         logGo.setText("Go");
         logGo.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-//        logGo.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+        logGo.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 24.0));
         logGo.setCursor(Cursor.HAND);
         logGo.setOnAction(EventController.Login.loginOnAction(this));
 
@@ -122,7 +114,6 @@ public class LoginScreen extends Pane {
         getChildren().add(label);
         getChildren().add(label0);
         getChildren().add(username);
-        getChildren().add(label1);
         getChildren().add(pass);
         getChildren().add(validator);
         getChildren().add(logGo);

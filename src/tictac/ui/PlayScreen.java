@@ -2,7 +2,6 @@ package tictac.ui;
 
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -11,24 +10,26 @@ import tictac.controllers.EventController;
 
 public class PlayScreen extends Pane {
     protected final ImageView imageView;
-    protected final Label label;
     protected final Button singlePlayer;
     protected final Button twoPlayer;
     protected final Button playOnline;
     protected final Button savedgames;
     protected final Button arrow;
     protected final ImageView imageView0;
+    protected final Button about;
+    protected final ImageView imageView1;
 
     public PlayScreen() {
         imageView = new ImageView();
-        label = new Label();
         singlePlayer = new Button();
         twoPlayer = new Button();
         playOnline = new Button();
         savedgames = new Button();
         arrow = new Button();
         imageView0 = new ImageView();
-
+        about = new Button();
+        imageView1 = new ImageView();
+        
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
@@ -40,15 +41,7 @@ public class PlayScreen extends Pane {
 
         imageView.setFitHeight(507.0);
         imageView.setFitWidth(700.0);
-        imageView.setImage(new Image(getClass().getResource("images/tex3.jpeg").toExternalForm()));
-
-        label.setLayoutX(106.0);
-        label.setLayoutY(-10.0);
-        label.setPrefHeight(161.0);
-        label.setPrefWidth(488.0);
-        label.setText("Play New Game");
-        label.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-//        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 40.0));
+        imageView.setImage(new Image(getClass().getResource("images/newgame.png").toExternalForm()));
 
         singlePlayer.setLayoutX(225.0);
         singlePlayer.setLayoutY(179.0);
@@ -58,7 +51,7 @@ public class PlayScreen extends Pane {
         singlePlayer.getStyleClass().add("btn");
         singlePlayer.setText("Single Player");
         singlePlayer.setTextFill(javafx.scene.paint.Color.WHITE);
-//        singlePlayer.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+        singlePlayer.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(),24.0));
         singlePlayer.setCursor(Cursor.HAND);
         singlePlayer.setOnAction(EventController.Play.singleOnAction());
 
@@ -70,7 +63,7 @@ public class PlayScreen extends Pane {
         twoPlayer.getStyleClass().add("btn");
         twoPlayer.setText("Two Player");
         twoPlayer.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-//        twoPlayer.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+        twoPlayer.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(),24.0));
         twoPlayer.setCursor(Cursor.HAND);
         twoPlayer.setOnAction(EventController.Play.twoOnAction());
 
@@ -82,7 +75,7 @@ public class PlayScreen extends Pane {
         playOnline.getStyleClass().add("btn");
         playOnline.setText("Play Online");
         playOnline.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-//        playOnline.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+        playOnline.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(),24.0));
         playOnline.setCursor(Cursor.HAND);
         playOnline.setOnAction(EventController.Play.onlineOnAction());
 
@@ -94,7 +87,7 @@ public class PlayScreen extends Pane {
         savedgames.getStyleClass().add("btn");
         savedgames.setText("Saved Games");
         savedgames.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-//        savedgames.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(),24.0));
+        savedgames.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(),24.0));
         savedgames.setCursor(Cursor.HAND);
         savedgames.setOnAction(EventController.Play.savedOnAction());
 
@@ -111,13 +104,24 @@ public class PlayScreen extends Pane {
         imageView0.setFitWidth(63.0);
         imageView0.setImage(new Image(getClass().getResource("images/imgar.png").toExternalForm()));
         arrow.setGraphic(imageView0);
+        
+        about.setLayoutX(20.0);
+        about.setLayoutY(14.0);
+        about.setMnemonicParsing(false);
+        about.getStyleClass().add("arrow");
+
+        imageView1.setFitHeight(42.0);
+        imageView1.setFitWidth(44.0);
+        imageView1.setImage(new Image(getClass().getResource("images/about.png").toExternalForm()));
+        about.setGraphic(imageView1);
+        about.setCursor(Cursor.HAND);
 
         getChildren().add(imageView);
-        getChildren().add(label);
         getChildren().add(singlePlayer);
         getChildren().add(twoPlayer);
         getChildren().add(playOnline);
         getChildren().add(savedgames);
         getChildren().add(arrow);
+        getChildren().add(about);
     }
 }

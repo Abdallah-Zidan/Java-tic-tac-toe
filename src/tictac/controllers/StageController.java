@@ -19,9 +19,6 @@ public class StageController {
     private Stage stage;
     private Stage parentStage;
     private StageStyle stageStyle;
-    private double width;
-    private double height;
-    private boolean fullScreen;
     private boolean resizable;
     private String title;
 
@@ -61,10 +58,7 @@ public class StageController {
         this.stage = stage;
         this.parentStage = parentStage;
         stageStyle = StageStyle.DECORATED;
-//        width = 500;
-//        height = 400;
-//        fullScreen = false;
-//        resizable = false;
+        resizable = false;
         title = "Tic Tac Toe";
     }
     // </editor-fold>
@@ -87,24 +81,6 @@ public class StageController {
      * @param stageStyle the style of the stage
      */
     public void setStageStyle(StageStyle stageStyle) { this.stageStyle = stageStyle; }
-
-    /**
-     * Set stage width
-     * @param width the width of the stage
-     */
-    public void setWidth(double width) { this.width = width; }
-
-    /**
-     * Set stage height
-     * @param height the height of the stage
-     */
-    public void setHeight(double height) { this.height = height; }
-
-    /**
-     * Set full screen flag
-     * @param fullScreen the full screen flag for the stage
-     */
-    public void setFullScreen(boolean fullScreen) { this.fullScreen = fullScreen; }
 
     /**
      * Set resize flag
@@ -151,24 +127,6 @@ public class StageController {
     public StageStyle getStageStyle() { return stageStyle; }
 
     /**
-     * Get stage width
-     * @return returns the width of the stage
-     */
-    public double getWidth() { return width; }
-
-    /**
-     * Get stage height
-     * @return returns the height of the stage
-     */
-    public double getHeight() { return height; }
-
-    /**
-     * Get full screen flag
-     * @return returns the full screen flag for the stage
-     */
-    public boolean getFullScreen() { return fullScreen; }
-
-    /**
      * Get resize flag
      * @return returns the resize flag for the stage
      */
@@ -199,10 +157,7 @@ public class StageController {
         }
 
         stage.initStyle(stageStyle);
-//        stage.setWidth(width);
-//        stage.setHeight(height);
-//        stage.setFullScreen(fullScreen);
-//        stage.setResizable(resizable);
+        stage.setResizable(resizable);
         stage.setTitle(title);
     }
 

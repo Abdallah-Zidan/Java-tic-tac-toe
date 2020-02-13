@@ -1,106 +1,19 @@
 package tictac.logic;
 
 import tictac.database.*;
-import java.util.*;
 import tictac.ui.GameBodyScreen;
 
 public class SingleMode extends Game {
-  
+    Computer comp;
     public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark, int level, GameBodyScreen ui) {
         super(isRecorded, Constants.SOLO, oppenent, user, myMark, level, ui);
+        comp = new Computer();
     }
-
-    /**
-     * this function return a new board with computer movement depending on the
-     * min and max algorithm
-     * @param board : Board
-     * @return bestChild : Board
-     */
-    private Position findBestPosition(Board board) {
-        ArrayList<Position> positions = board.getFreePositions();
-        Position bestPosition = null;
-        int previous = Integer.MIN_VALUE;
-        for (Position p : positions) {
-            Board child = new Board(board, p, oppenentMark);
-            int current = min(child);
-            if (current > previous) {
-                bestPosition = p;
-                previous = current;
-            }
-        }
-        return bestPosition;
-    }
-
-    public int max(Board board) {
-        GameState gameState = board.getGameState(myMark, oppenentMark);
-        if (null != gameState) {
-            switch (gameState) {
-                case YouLose:
-                    return 1;
-                case YouWin:
-                    return -1;
-                case Draw:
-                    return 0;
-                default:
-                    break;
-            }
-        }
-        ArrayList<Position> positions = board.getFreePositions();
-        int best = Integer.MIN_VALUE;
-        for (Position p : positions) {
-            Board b = new Board(board, p, oppenentMark);
-            int move = min(b);
-            if (move > best) {
-                best = move;
-            }
-        }
-        return best;
-    }
-
-    public int min(Board board) {
-        GameState gameState = board.getGameState(myMark, oppenentMark);
-        if (null != gameState) {
-            switch (gameState) {
-                case YouLose:
-                    return 1;
-                case YouWin:
-                    return -1;
-                case Draw:
-                    return 0;
-                default:
-                    break;
-            }
-        }
-        ArrayList<Position> positions = board.getFreePositions();
-        int best = Integer.MAX_VALUE;
-        for (Position p : positions) {
-            Board b = new Board(board, p, myMark);
-            int move = max(b);
-            if (move < best) {
-                best = move;
-            }
-        }
-        return best;
-    }
-
-    Position getRandomMove() {
-        Random rand = new Random();
-        Position pos;
-        int x;
-        int y;
-        // Generate random move
-        do {
-            x = rand.nextInt(3);
-            y = rand.nextInt(3);
-        } while (board.getBoard()[x][y] == Constants.CROSS || board.getBoard()[x][y] == Constants.CIRCLE);
-        pos = new Position(x, y);
-        return pos;
-    }
-
+    
     void insertMove(Position position) {
-        board = new Board(board, position, oppenentMark);
-        ui.setText(buttons[position.getRow()][position.getColumn()], oppenentMark);
-        recordStep(position.getRow(), position.getColumn(), Constants.OPPENENT);
+        board = new Board(board, position, opponentMark);
+        ui.setText(buttons[position.getRow()][position.getColumn()], opponentMark);
+        recordStep(position.getRow(), position.getColumn(), Constants.OPPONENT);
     }
 
     /**
@@ -127,16 +40,16 @@ public class SingleMode extends Game {
             if (!myTurn && !board.getFreePositions().isEmpty()) {
                 switch (level) {
                     case Constants.EASY:
-                        position = getRandomMove();
+                        position = comp.getRandomMove(board);
                         break;
                     case Constants.HARD:
-                        position = findBestPosition(board);
+                        position = comp.findBestPosition(board,myMark , opponentMark);
                         break;
                     default:
                         if(counter <3){
-                             position = findBestPosition(board);
+                             position = comp.findBestPosition(board,myMark , opponentMark);
                         }else if(counter <=4){
-                              position = getRandomMove();
+                              position = comp.getRandomMove(board);
                         }
                         counter++;
                 }

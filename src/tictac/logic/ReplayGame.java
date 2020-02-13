@@ -66,7 +66,7 @@ public class ReplayGame {
                 startReplay();
             }
             try {
-                Thread.sleep(900);
+                Thread.sleep(700);
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());
             }

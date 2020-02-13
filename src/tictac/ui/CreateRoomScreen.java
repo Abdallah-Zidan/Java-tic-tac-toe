@@ -13,7 +13,6 @@ public class CreateRoomScreen extends Pane {
     protected final ImageView imageView;
     protected final Label label;
     protected final Label ipshow;
-    protected final Label label0;
     protected final Button create;
     protected final Button arrow;
     protected final ImageView imageView0;
@@ -22,7 +21,6 @@ public class CreateRoomScreen extends Pane {
         imageView = new ImageView();
         label = new Label();
         ipshow = new Label();
-        label0 = new Label();
         create = new Button();
         arrow = new Button();
         imageView0 = new ImageView();
@@ -37,26 +35,19 @@ public class CreateRoomScreen extends Pane {
 
         imageView.setFitHeight(500.0);
         imageView.setFitWidth(700.0);
-        imageView.setImage(new Image(getClass().getResource("images/tex3.jpeg").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("images/create.png").toExternalForm()));
 
-        label.setLayoutX(163.0);
-        label.setLayoutY(8.0);
-        label.setPrefHeight(145.0);
-        label.setPrefWidth(374.0);
-        label.setText("New Room Ip");
-        label.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-      //  label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 36.0));
-
-        ipshow.setLayoutX(357.0);
-        ipshow.setLayoutY(250.0);
+        ipshow.setLayoutX(360.0);
+        ipshow.setLayoutY(237.0);
+        ipshow.setText("127.0.0.1");
         ipshow.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        //ipshow.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 28.0));
+        ipshow.setFont(Font.loadFont(getClass().getResource("fonts/BoughiesDemo.ttf").toExternalForm(), 28.0));
 
-        label0.setLayoutX(169.0);
-        label0.setLayoutY(237.0);
-        label0.setText("IP Address");
-        label0.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        //label0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 35.0));
+        label.setLayoutX(172.0);
+        label.setLayoutY(247.0);
+        label.setText("IP Address");
+        label.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
+        label.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 35.0));
 
         create.setLayoutX(275.0);
         create.setLayoutY(398.0);
@@ -66,7 +57,7 @@ public class CreateRoomScreen extends Pane {
         create.getStyleClass().add("btn");
         create.setText("Start");
         create.setCursor(Cursor.HAND);
-        //create.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 23.0));
+        create.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 23.0));
         create.setOnAction(EventController.CreateRoom.createOnAction());
 
         arrow.setLayoutX(52.0);
@@ -86,7 +77,6 @@ public class CreateRoomScreen extends Pane {
         getChildren().add(imageView);
         getChildren().add(label);
         getChildren().add(ipshow);
-        getChildren().add(label0);
         getChildren().add(create);
         getChildren().add(arrow);
     }

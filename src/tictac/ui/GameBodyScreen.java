@@ -7,11 +7,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import tictac.controllers.EventController;
 
 public class GameBodyScreen extends Pane {
-
     protected final ImageView imageView;
     protected final Label osym;
     protected final Label p1name;
@@ -76,40 +76,40 @@ public class GameBodyScreen extends Pane {
         osym.setPrefHeight(107.0);
         osym.setPrefWidth(63.0);
         osym.setText("O");
-        osym.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        //osym.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 83.0));
+        osym.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
+        osym.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 83.0));
 
-        p1name.setLayoutX(107.0);
-        p1name.setLayoutY(24.0);
+        p1name.setLayoutX(100.0);
+        p1name.setLayoutY(37.0);
         p1name.setText("Ahmed");
         p1name.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        //p1name.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 35.0));
+        p1name.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 27.0));
 
-        score.setLayoutX(20.0);
-        score.setLayoutY(109.0);
+        score.setLayoutX(23.0);
+        score.setLayoutY(121.0);
         score.setText("Score: ");
         score.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        // score.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 30.0));
+        score.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 30.0));
 
-        scorenum.setLayoutX(120.0);
-        scorenum.setLayoutY(108.0);
+        scorenum.setLayoutX(126.0);
+        scorenum.setLayoutY(107.0);
         scorenum.setText("20");
         scorenum.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        //scorenum.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 30.0));
+        scorenum.setFont(Font.loadFont(getClass().getResource("fonts/BoughiesDemo.ttf").toExternalForm(), 27.0));
 
         xsym.setLayoutX(23.0);
         xsym.setLayoutY(240.0);
         xsym.setPrefHeight(95.0);
         xsym.setPrefWidth(63.0);
         xsym.setText("X");
-        xsym.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-        //xsym.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 83.0));
+        xsym.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
+        xsym.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 83.0));
 
-        p2name.setLayoutX(107.0);
-        p2name.setLayoutY(258.0);
+        p2name.setLayoutX(100.0);
+        p2name.setLayoutY(273.0);
         p2name.setText("Ahmed");
         p2name.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-        //p2name.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 35.0));
+        p2name.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 27.0));
 
         firstB.setDepthTest(javafx.scene.DepthTest.DISABLE);
         firstB.setLayoutX(319.0);
@@ -120,7 +120,7 @@ public class GameBodyScreen extends Pane {
         firstB.getStyleClass().add("sym");
         firstB.setTextFill(javafx.scene.paint.Color.valueOf("#030000"));
         firstB.setCursor(Cursor.HAND);
-        //firstB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 81.0));
+        firstB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 81.0));
 
         secB.setLayoutX(440.0);
         secB.setLayoutY(93.0);
@@ -130,7 +130,7 @@ public class GameBodyScreen extends Pane {
         secB.getStyleClass().add("sym");
         secB.setTextFill(javafx.scene.paint.Color.valueOf("#110000"));
         secB.setCursor(Cursor.HAND);
-        //secB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
+        secB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 80.0));
 
         thirdB.setLayoutX(549.0);
         thirdB.setLayoutY(93.0);
@@ -140,7 +140,7 @@ public class GameBodyScreen extends Pane {
         thirdB.getStyleClass().add("sym");
         thirdB.setTextFill(javafx.scene.paint.Color.valueOf("#140000"));
         thirdB.setCursor(Cursor.HAND);
-        //thirdB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
+        thirdB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 80.0));
 
         forthB.setLayoutX(319.0);
         forthB.setLayoutY(214.0);
@@ -149,7 +149,7 @@ public class GameBodyScreen extends Pane {
         forthB.setPrefWidth(103.0);
         forthB.getStyleClass().add("sym");
         forthB.setCursor(Cursor.HAND);
-        // forthB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
+        forthB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 80.0));
 
         centerB.setLayoutX(440.0);
         centerB.setLayoutY(214.0);
@@ -158,7 +158,7 @@ public class GameBodyScreen extends Pane {
         centerB.setPrefWidth(92.0);
         centerB.getStyleClass().add("sym");
         centerB.setCursor(Cursor.HAND);
-        // centerB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
+        centerB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 80.0));
 
         sixB.setLayoutX(549.0);
         sixB.setLayoutY(214.0);
@@ -167,7 +167,7 @@ public class GameBodyScreen extends Pane {
         sixB.setPrefWidth(103.0);
         sixB.getStyleClass().add("sym");
         sixB.setCursor(Cursor.HAND);
-        //sixB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
+        sixB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 80.0));
 
         sevB.setLayoutX(319.0);
         sevB.setLayoutY(325.0);
@@ -176,7 +176,7 @@ public class GameBodyScreen extends Pane {
         sevB.setPrefWidth(103.0);
         sevB.getStyleClass().add("sym");
         sevB.setCursor(Cursor.HAND);
-        //sevB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
+        sevB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 80.0));
 
         eightB.setLayoutX(440.0);
         eightB.setLayoutY(325.0);
@@ -185,7 +185,7 @@ public class GameBodyScreen extends Pane {
         eightB.setPrefWidth(91.0);
         eightB.getStyleClass().add("sym");
         eightB.setCursor(Cursor.HAND);
-        //eightB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
+        eightB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 80.0));
 
         lastB.setLayoutX(549.0);
         lastB.setLayoutY(325.0);
@@ -194,7 +194,7 @@ public class GameBodyScreen extends Pane {
         lastB.setPrefWidth(103.0);
         lastB.getStyleClass().add("sym");
         lastB.setCursor(Cursor.HAND);
-        //lastB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular-Vm1l.ttf").toExternalForm(), 80.0));
+        lastB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 80.0));
 
         imageView0.setFitHeight(349.0);
         imageView0.setFitWidth(350.0);
@@ -253,7 +253,7 @@ public class GameBodyScreen extends Pane {
     }
 
     public void setText(Button btn, char sign) {
-        btn.setFont(Font.font("verdana", 40));
+//        btn.setFont(Font.font("verdana", 40));
         btn.setText(String.valueOf(sign));
     }
 
@@ -287,13 +287,13 @@ public class GameBodyScreen extends Pane {
         }
     }
 
-    public void highLight(Button btn, int state) {
+    public void highLight(Button btn ,int state) {
         switch (state) {
             case 1:
-                btn.setStyle("-fx-background-color: yellow;-fx-text-fill: white;");
+                btn.setStyle("-fx-background-color: yellow;-fx-text-fill: transparent;");
                 break;
             case 11:
-                btn.setStyle("-fx-background-color: transparent;");
+                btn.setStyle("-fx-background-color: white;");
                 break;
             default:
                 btn.setStyle("-fx-background-color: red;-fx-text-fill: white;");
@@ -301,14 +301,46 @@ public class GameBodyScreen extends Pane {
         }
     }
 
-    public void stopSound() {
+    public void stopSound(){
         audio.stop();
     }
 
-    public void playSound() {
+    public void playSound(){
         audio.play();
     }
-    public Button getPlayAgainBtn(){return playagain;}
+
+    public void setFirstName(String name) {
+        p1name.setText(name);
+    }
+
+    public void setSecondName(String name) {
+        p2name.setText(name);
+    }
+
+    public void setFirstSymbol(char symbol) {
+        osym.setText(String.valueOf(symbol).toUpperCase());
+    }
+
+    public void setSecondSymbol(char symbol) {
+        xsym.setText(String.valueOf(symbol).toUpperCase());
+    }
+
+    public void setScore(int score) {
+        scorenum.setText(Integer.toString(score));
+    }
+
+    public void changeTurn() {
+        if (xsym.getTextFill().equals(Color.valueOf("#cd1515"))) {
+            xsym.setTextFill(Color.valueOf("#fbfbfb"));
+            osym.setTextFill(Color.valueOf("#cd1515"));
+        }
+        else {
+            xsym.setTextFill(Color.valueOf("#cd1515"));
+            osym.setTextFill(Color.valueOf("#fbfbfb"));
+        }
+    }
+    
+        public Button getPlayAgainBtn(){return playagain;}
     public void disableButtons() {
         Button[][] buttons = getBoardButtons();
         for (int i = 0; i < 3; i++) {

@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
 import tictac.controllers.EventController;
 
 public class WaitRoomScreen extends Pane {
@@ -33,12 +32,7 @@ public class WaitRoomScreen extends Pane {
 
         imageView.setFitHeight(500.0);
         imageView.setFitWidth(700.0);
-        imageView.setImage(new Image(getClass().getResource("images/tex3.jpeg").toExternalForm()));
-
-        label.setLayoutX(104.0);
-        label.setText("Wait For Connecting");
-        label.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-//        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 30.0));
+        imageView.setImage(new Image(getClass().getResource("images/wait.png").toExternalForm()));
 
         imageView0.setFitHeight(409.0);
         imageView0.setFitWidth(542.0);

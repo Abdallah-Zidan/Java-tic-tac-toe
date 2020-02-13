@@ -30,9 +30,9 @@ public class TwoPlayersMode extends Game {
             if (!myTurn && !board.getFreePositions().isEmpty()) {
                 position = makeMove(x, y);
                 if (position != null) {
-                    board = new Board(board, position, oppenentMark);
-                    ui.setText(buttons[x][y], oppenentMark);
-                    recordStep(x, y, Constants.OPPENENT);
+                    board = new Board(board, position, opponentMark);
+                    ui.setText(buttons[x][y], opponentMark);
+                    recordStep(x, y, Constants.OPPONENT);
                     myTurn = !myTurn;
                     result = evaluateGame();
                 } 

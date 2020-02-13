@@ -1,14 +1,14 @@
 .btn:hover {
     -fx-background-color: transparent;
     -fx-border-color: #cd1515;
-    -fx-border-radius:20;
+    -fx-border-radius: 20;
     -fx-text-alignment: center;
 }
 .btn:pressed {
     -fx-text-fill: white;
-    -fx-background-radius:20px;
+    -fx-background-radius: 20px;
     -fx-text-alignment: center;
-    -fx-rotate:10;
+    -fx-rotate: 10;
 }
 .btn {
     -fx-background-color: #cd1515;
@@ -19,11 +19,11 @@
 .arrow {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
-    -fx-background-radius:20;
+    -fx-background-radius: 20;
 }
 .arrow:pressed {
     -fx-background-radius: 20;
-    -fx-rotate:10;
+    -fx-rotate: 10;
 }
 .sym {
     -fx-padding: 0px;
@@ -35,11 +35,8 @@
     -fx-background-color: transparent;
     -fx-padding: 0px;
 }
-.symbol:pressed {
-    -fx-font-size: 96px;
-}
 .pan {
-    -fx-border-color:blue;
+    -fx-border-color: blue;
 }
 .txt {
     -fx-background-color: #fbfbfb;

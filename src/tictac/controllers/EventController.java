@@ -13,6 +13,8 @@ X & O font change from the Game class, missing with the design font
 package tictac.controllers;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import javafx.application.Platform;
@@ -20,7 +22,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import org.sqlite.SQLiteConfig;
 import tictac.animation.GameOver;
 import tictac.database.Player;
 import tictac.database.SavedGameModel;
@@ -30,7 +31,6 @@ import tictac.logic.*;
 import tictac.network.Client;
 import tictac.network.Server;
 import tictac.ui.*;
-
 /**
  *
  * @author Tarek
@@ -173,7 +173,7 @@ public class EventController {
         }
     }
 
-    public static class SavedGame {
+      public static class SavedGame {
         private SavedGame() {}
 
         public static EventHandler<ActionEvent> replayOnAction(SavedGameScreen pane) {
@@ -184,7 +184,13 @@ public class EventController {
                 user.getUserInfo();
                 Player player = Player.getPlayer(1);
 
-                ReplayGame replay = new ReplayGame(player, user,String.valueOf(game.getSymbol()).toUpperCase().charAt(0)  , game.getId(), ui);
+                ui.setFirstName(user.getFname());
+                ui.setFirstSymbol(game.getSymbol());
+                ui.setSecondName(player.getFname());
+                ui.setSecondSymbol(game.getSymbol() == 'x' ? 'o' : 'x');
+                ui.setScore(user.getScore());
+
+                ReplayGame replay = new ReplayGame(player, user, String.valueOf(game.getSymbol()).toUpperCase().charAt(0), game.getId(), ui);
 
                 MainGame.game.setParentScene(new Scene(ui));
                 MainGame.game.initializeScene();
@@ -348,15 +354,21 @@ public class EventController {
             };
         }
 
-        private static void startGame(char symbol, String screen, ChooseSymbolScreen pane) {
+         private static void startGame(char symbol, String screen, ChooseSymbolScreen pane) {
             Pane ui = new GameBodyScreen();
             GameOver endUi = new GameOver();
             User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
             user.getUserInfo();
             Player player = Player.getPlayer(1);
 
+            ((GameBodyScreen)ui).setFirstName(user.getFname());
+            ((GameBodyScreen)ui).setFirstSymbol(symbol);
+            ((GameBodyScreen)ui).setSecondName(player.getFname());
+            ((GameBodyScreen)ui).setSecondSymbol(symbol == 'x' ? 'o' : 'x');
+            ((GameBodyScreen)ui).setScore(user.getScore());
+
             if (screen.toLowerCase().equals("single")) {
-                game = new SingleMode(pane.getRecord(), player, user, symbol,pane.getDifficulty() ,(GameBodyScreen)ui);
+                game = new SingleMode(pane.getRecord(), player, user, symbol, pane.getDifficulty(), (GameBodyScreen)ui);
                 game.startActionHandling();
             }
             else if (screen.toLowerCase().equals("two")) {
@@ -371,9 +383,35 @@ public class EventController {
                         @Override
                         public void run() {
                             new Server();
-                            Platform.runLater(() -> {
-                                showOnlineGame(pane.getRecord(), player, user, symbol, true);
-                            });
+
+                            if (MainGame.gameInfo.socket != null && !MainGame.gameInfo.socket.isClosed()) {
+                                User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
+                                user.getUserInfo();
+
+                                try {
+                                    Player p = new Player(user.getFname(), user.getLname(), MainGame.gameInfo.IpAddress, 0);
+                                    ObjectOutputStream output = new ObjectOutputStream(MainGame.gameInfo.socket.getOutputStream());
+                                    output.writeObject(p);
+                                }
+                                catch (IOException ex) {
+                                    System.out.println(ex.getMessage());
+                                }
+                                try {
+                                    ObjectInputStream input = new ObjectInputStream(MainGame.gameInfo.socket.getInputStream());
+                                    Player p = (Player)input.readObject();
+                                    addPlayer(p, user);
+                                }
+                                catch (IOException ex) {
+                                    System.out.println(ex.getMessage());
+                                }
+                                catch (ClassNotFoundException ex) {
+                                    System.out.println(ex.getMessage());
+                                }
+
+                                Platform.runLater(() -> {
+                                    showOnlineGame(pane.getRecord(), player, user, symbol, true);
+                                });
+                            }
                         }
                     });
 
@@ -383,10 +421,36 @@ public class EventController {
                     Thread test = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            new Client(MainGame.gameInfo.IpAddress);    // 172.16.1.221
-                            Platform.runLater(() -> {
-                                showOnlineGame(pane.getRecord(), player, user, symbol, false);
-                            });
+                            new Client(MainGame.gameInfo.IpAddress);
+
+                            if (MainGame.gameInfo.socket != null && !MainGame.gameInfo.socket.isClosed()) {
+                                User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
+                                user.getUserInfo();
+
+                                try {
+                                    Player p = new Player("Test", "Test", MainGame.gameInfo.IpAddress, 1);
+                                    ObjectOutputStream output = new ObjectOutputStream(MainGame.gameInfo.socket.getOutputStream());
+                                    output.writeObject(p);
+                                }
+                                catch (IOException ex) {
+                                    System.out.println(ex.getMessage());
+                                }
+                                try {
+                                    ObjectInputStream input = new ObjectInputStream(MainGame.gameInfo.socket.getInputStream());
+                                    Player p = (Player)input.readObject();
+                                    addPlayer(p, user);
+                                }
+                                catch (IOException ex) {
+                                    System.out.println(ex.getMessage());
+                                }
+                                catch (ClassNotFoundException ex) {
+                                    System.out.println(ex.getMessage());
+                                }
+
+                                Platform.runLater(() -> {
+                                    showOnlineGame(pane.getRecord(), player, user, symbol, false);
+                                });
+                            }
                         }
                     });
 
@@ -404,17 +468,30 @@ public class EventController {
 
         private static void showOnlineGame(boolean isRecord, Player player, User user, char symbol, boolean isServer) {
             GameBodyScreen ui = new GameBodyScreen();
+
+            ui.setFirstName(user.getFname());
+            ui.setFirstSymbol(symbol);
+            ui.setSecondName(player.getFname());
+            ui.setSecondSymbol(symbol == 'x' ? 'o' : 'x');
+            ui.setScore(user.getScore());
+
             MainGame.game.setParentScene(new Scene(ui));
             MainGame.game.initializeScene();
             MainGame.game.showScene();
             ui.playSound();
 
-            if (MainGame.gameInfo.socket != null) {
-                game = new TwoPlayersNetwork(isRecord, player, user, symbol, ui, MainGame.gameInfo.socket, isServer);
-                game.startActionHandling();
+            game = new TwoPlayersNetwork(isRecord, player, user, symbol, ui, MainGame.gameInfo.socket, isServer);
+            game.startActionHandling();
+        }
+
+        private static void addPlayer(Player player, User user) {
+            if (!player.playerExist(player.getIpAddress(), user.getId())) {
+                player.setId(user.getId());
+                player.save();
             }
         }
     }
+
 
     public static class WaitRoom {
         private WaitRoom() {}

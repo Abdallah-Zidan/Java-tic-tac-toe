@@ -14,7 +14,6 @@ import tictac.controllers.EventController;
 import tictac.database.GameModel;
 import tictac.database.SavedGameModel;
 import tictac.database.User;
-import tictac.game.MainGame;
 
 public class SavedGameScreen extends Pane {
     protected final ImageView imageView;
@@ -66,7 +65,7 @@ public class SavedGameScreen extends Pane {
         tableColumn0.setCellValueFactory(new PropertyValueFactory<>("gameType"));
 
         tableColumn1.setPrefWidth(118.0);
-        tableColumn1.setCellValueFactory(new PropertyValueFactory<>("playerName"));
+        tableColumn1.setCellValueFactory(new PropertyValueFactory<>("player"));
 
         tableColumn2.setPrefWidth(111.0);
         tableColumn2.setCellValueFactory(new PropertyValueFactory<>("result"));
@@ -75,13 +74,13 @@ public class SavedGameScreen extends Pane {
         label.setLayoutY(120.0);
         label.setText("Player ");
         label.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-//        label.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 30.0));
+        label.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 30.0));
 
         label0.setLayoutX(144.0);
         label0.setLayoutY(121.0);
         label0.setText("Ahmed");
         label0.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-//        label0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 29.0));
+        label0.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 28.0));
 
         replay.setLayoutX(64.0);
         replay.setLayoutY(250.0);
@@ -90,7 +89,7 @@ public class SavedGameScreen extends Pane {
         replay.setPrefWidth(131.0);
         replay.getStyleClass().add("btn");
         replay.setText("Replay");
-//        replay.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+        replay.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 24.0));
         replay.setOnAction(EventController.SavedGame.replayOnAction(this));
 
         arrow.setLayoutX(52.0);
@@ -122,13 +121,16 @@ public class SavedGameScreen extends Pane {
     }
 
     private void loadSavedGames() {
-        User user = new User(MainGame.gameInfo.username,MainGame.gameInfo.password);
-        System.out.println(MainGame.gameInfo.username);
-        System.out.println(MainGame.gameInfo.password);
+        User user = new User("test", "test");
         user.getUserInfo();
 
         for (GameModel game : user.games())
-            tableView.getItems().add(new SavedGameModel(game.getId(), game.getTimestamp(), game.getType(), Integer.toString(game.getUserId()), game.getResult(), game.getSympol()));
+            tableView.getItems().add(new SavedGameModel(game.getId(),
+                                                        game.getTimestamp(),
+                                                        game.getType(),
+                                                        String.valueOf(game.getUserId()),
+                                                        game.getResult(),
+                                                        game.getSympol()));
     }
 
     public TableView getTable() {

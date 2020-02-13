@@ -23,16 +23,16 @@ public abstract class Game {
     protected boolean myTurn;
     protected boolean isRecorded;
     protected String game_type;
-    protected Player oppenent;
+    protected Player opponent;
     protected User user;
-    protected char oppenentMark;
+    protected char opponentMark;
     protected char myMark;
     protected ArrayList<Step> steps;
     protected Button[][] buttons;
     protected GameBodyScreen ui;
     protected int gameId;
     protected int level;
-     int counter ;
+    int counter ;
     Game(boolean isRecorded, String gameType, Player oppenent, User user, char myMark, int level, GameBodyScreen ui) {
         this.ui = ui;
         buttons = ui.getBoardButtons();
@@ -41,14 +41,14 @@ public abstract class Game {
         board = new Board();
         this.isRecorded = isRecorded;
         this.game_type = gameType;
-        this.oppenent = oppenent;
+        this.opponent = oppenent;
         this.user = user;
         this.myMark = myMark;
         this.level = level;
         if (myMark == Constants.CIRCLE) {
-            oppenentMark = Constants.CROSS;
+            opponentMark = Constants.CROSS;
         } else {
-            oppenentMark = Constants.CIRCLE;
+            opponentMark = Constants.CIRCLE;
         }
         if (isRecorded) {
             steps = new ArrayList<>();
@@ -78,7 +78,7 @@ public abstract class Game {
     }
 
     protected int evaluateGame() {
-        GameState gameState = board.getGameState(myMark, oppenentMark);
+        GameState gameState = board.getGameState(myMark, opponentMark);
         int retval;
         gameEnded = true;
         switch (gameState) {
@@ -143,18 +143,24 @@ public abstract class Game {
 
     // save the game if recorded into the database using GameModel
     public void saveGame(String result) {
-        String nivel = "";
+        String nivel ;
         if (isRecorded) {
             if (game_type.equals(Constants.SOLO)) {
-                if (level == Constants.EASY) {
-                    nivel = "easy";
-                } else if (level == Constants.HARD) {
-                    nivel = "hard";
+                switch (level) {
+                    case Constants.EASY:
+                        nivel = "easy";
+                        break;
+                    case Constants.HARD:
+                        nivel = "hard";
+                        break;
+                    default:
+                        nivel = "medium";
+                        break;
                 }
             } else {
                 nivel = "no level";
             }
-            GameModel game = new GameModel(game_type, myMark, oppenent.getId(), user.getId(), result, nivel);
+            GameModel game = new GameModel(game_type, myMark, opponent.getId(), user.getId(), result, nivel);
             game = game.save();
             gameId = game.getId();
             saveSteps(gameId);

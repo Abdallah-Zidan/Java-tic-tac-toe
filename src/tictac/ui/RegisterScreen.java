@@ -20,7 +20,6 @@ public class RegisterScreen extends Pane {
     protected final TextField lname;
     protected final Label label2;
     protected final TextField username;
-    protected final Label label3;
     protected final PasswordField pass;
     protected final Label validator;
     protected final Button regGo;
@@ -36,7 +35,6 @@ public class RegisterScreen extends Pane {
         lname = new TextField();
         label2 = new Label();
         username = new TextField();
-        label3 = new Label();
         pass = new PasswordField();
         validator = new Label();
         regGo = new Button();
@@ -54,84 +52,77 @@ public class RegisterScreen extends Pane {
 
         imageView.setFitHeight(500.0);
         imageView.setFitWidth(700.0);
-        imageView.setImage(new Image(getClass().getResource("images/tex3.jpeg").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("images/reg.png").toExternalForm()));
 
-        label.setLayoutX(224.0);
-        label.setLayoutY(-13.0);
-        label.setPrefHeight(125.0);
-        label.setPrefWidth(253.0);
-        label.setText("New User");
-        label.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-//        label.setFont(Font.loadFont(getClass().getResource("fonts/BrushKing.otf").toExternalForm(), 31.0));
-
-        label0.setLayoutX(172.0);
-        label0.setLayoutY(122.0);
-        label0.setText("First Name");
-        label0.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-//        label0.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+        label.setLayoutX(160.0);
+        label.setLayoutY(153.0);
+        label.setText("First Name");
+        label.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
+        label.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 24.0));
 
         fname.setLayoutX(303.0);
-        fname.setLayoutY(128.0);
+        fname.setLayoutY(153.0);
         fname.setPrefHeight(34.0);
         fname.setPrefWidth(245.0);
         fname.getStyleClass().add("txt");
-//        fname.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 22.0));
+        fname.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 22.0));
 
-        label1.setLayoutX(172.0);
-        label1.setLayoutY(185.0);
-        label1.setText("Last Name");
-        label1.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-//        label1.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+        label0.setLayoutX(160.0);
+        label0.setLayoutY(205.0);
+        label0.setText("Last Name");
+        label0.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
+        label0.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 25.0));
 
         lname.setLayoutX(303.0);
-        lname.setLayoutY(189.0);
+        lname.setLayoutY(206.0);
         lname.setPrefHeight(34.0);
         lname.setPrefWidth(245.0);
         lname.getStyleClass().add("txt");
-//        lname.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 22.0));
+        lname.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 22.0));
 
-        label2.setLayoutX(172.0);
-        label2.setLayoutY(249.0);
-        label2.setText("Username");
-        label2.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-//        label2.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+        label1.setLayoutX(160.0);
+        label1.setLayoutY(259.0);
+        label1.setText("Username");
+        label1.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
+        label1.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 25.0));
 
         username.setLayoutX(303.0);
-        username.setLayoutY(252.0);
+        username.setLayoutY(261.0);
         username.setPrefHeight(34.0);
         username.setPrefWidth(245.0);
         username.getStyleClass().add("txt");
-//        username.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 22.0));
+        username.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 22.0));
 
-        label3.setLayoutX(172.0);
-        label3.setLayoutY(308.0);
-        label3.setText("Password");
-        label3.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
-//        label3.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 24.0));
+        label2.setLayoutX(160.0);
+        label2.setLayoutY(317.0);
+        label2.setText("Password");
+        label2.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
+        label2.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 25.0));
 
         pass.setLayoutX(303.0);
-        pass.setLayoutY(314.0);
+        pass.setLayoutY(315.0);
         pass.setPrefHeight(34.0);
         pass.setPrefWidth(245.0);
         pass.getStyleClass().add("txt");
         pass.setFont(new Font("system", 22.0));
 
-        validator.setLayoutX(255.0);
-        validator.setLayoutY(375.0);
+        validator.setLayoutX(280.0);
+        validator.setLayoutY(381.0);
         validator.setPrefHeight(16.0);
         validator.setPrefWidth(190.0);
-        validator.setTextFill(javafx.scene.paint.Color.valueOf("#f2f2f2"));
+        validator.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
+        validator.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(),12.0));
 
         regGo.setDefaultButton(true);
-        regGo.setLayoutX(292.0);
-        regGo.setLayoutY(413.0);
+        regGo.setLayoutX(279.0);
+        regGo.setLayoutY(421.0);
         regGo.setMnemonicParsing(false);
-        regGo.setPrefHeight(59.0);
-        regGo.setPrefWidth(116.0);
+        regGo.setPrefHeight(57.0);
+        regGo.setPrefWidth(128.0);
         regGo.getStyleClass().add("btn");
         regGo.setText("Go");
         regGo.setTextFill(javafx.scene.paint.Color.valueOf("#cd1515"));
-//        regGo.setFont(Font.loadFont(getClass().getResource("fonts/RushinkDemo.ttf").toExternalForm(), 25.0));
+        regGo.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 24.0));
         regGo.setCursor(Cursor.HAND);
         regGo.setOnAction(EventController.Register.registerOnAction(this));
 
@@ -157,7 +148,6 @@ public class RegisterScreen extends Pane {
         getChildren().add(lname);
         getChildren().add(label2);
         getChildren().add(username);
-        getChildren().add(label3);
         getChildren().add(pass);
         getChildren().add(validator);
         getChildren().add(regGo);
