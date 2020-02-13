@@ -80,7 +80,6 @@ public class DBConnection {
                     "	\"y\"	INTEGER NOT NULL,\n" +
                     "	\"game_id\"	INTEGER NOT NULL,\n" +
                     "	\"turn\"	TEXT NOT NULL CHECK(turn IN ('mine','oponent')),\n" +
-                    "	\"step_no\"	INTEGER,\n" +
                     "	FOREIGN KEY(\"game_id\") REFERENCES \"games\"(\"id\")\n" +
                     ");";
             stmt.execute(userTable);
