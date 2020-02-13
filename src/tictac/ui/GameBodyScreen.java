@@ -10,6 +10,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import tictac.controllers.EventController;
+import tictac.logic.Constants;
 
 public class GameBodyScreen extends Pane {
     protected final ImageView imageView;
@@ -34,6 +35,7 @@ public class GameBodyScreen extends Pane {
     protected final Button playagain;
     protected final ImageView imageView2;
     protected AudioClip audio;
+    protected final Label turn;
 
     public GameBodyScreen() {
         imageView = new ImageView();
@@ -57,7 +59,7 @@ public class GameBodyScreen extends Pane {
         imageView1 = new ImageView();
         playagain = new Button();
         imageView2 = new ImageView();
-
+        turn = new Label();
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
@@ -195,7 +197,17 @@ public class GameBodyScreen extends Pane {
         lastB.getStyleClass().add("sym");
         lastB.setCursor(Cursor.HAND);
         lastB.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 80.0));
+        
+        turn.setLayoutX(210.0);
+        turn.setLayoutY(45.0);
+        turn.setPrefHeight(19.0);
+        turn.setPrefWidth(83.0);
+        turn.setText("Your Turn");
+        turn.setTextFill(Color.valueOf("#fbfbfb"));
+        turn.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 80.0));
 
+        
+        
         imageView0.setFitHeight(349.0);
         imageView0.setFitWidth(350.0);
         imageView0.setLayoutX(310.0);
@@ -247,13 +259,16 @@ public class GameBodyScreen extends Pane {
         getChildren().add(imageView0);
         getChildren().add(arrow);
         getChildren().add(playagain);
-
+        getChildren().add(turn);
         audio = new AudioClip(getClass().getResource("gameloop.mp3").toString());
         audio.setCycleCount(1000);
     }
 
     public void setText(Button btn, char sign) {
-//        btn.setFont(Font.font("verdana", 40));
+        if(sign==Constants.CROSS)
+            btn.setTextFill(Color.valueOf("#cd1515"));
+        else
+            btn.setTextFill(Color.valueOf("#fbfbfb"));
         btn.setText(String.valueOf(sign));
     }
 
@@ -290,10 +305,10 @@ public class GameBodyScreen extends Pane {
     public void highLight(Button btn ,int state) {
         switch (state) {
             case 1:
-                btn.setStyle("-fx-background-color: yellow;-fx-text-fill: transparent;");
+                btn.setStyle("-fx-background-color: yellow;-fx-text-fill: white;");
                 break;
             case 11:
-                btn.setStyle("-fx-background-color: white;");
+                btn.setStyle("-fx-background-color: transparent;");
                 break;
             default:
                 btn.setStyle("-fx-background-color: red;-fx-text-fill: white;");
@@ -329,18 +344,20 @@ public class GameBodyScreen extends Pane {
         scorenum.setText(Integer.toString(score));
     }
 
-    public void changeTurn() {
-        if (xsym.getTextFill().equals(Color.valueOf("#cd1515"))) {
+    public void changeTurn(boolean myTurn) {
+        if (myTurn) {
             xsym.setTextFill(Color.valueOf("#fbfbfb"));
             osym.setTextFill(Color.valueOf("#cd1515"));
+            turn.setVisible(true);
         }
         else {
             xsym.setTextFill(Color.valueOf("#cd1515"));
             osym.setTextFill(Color.valueOf("#fbfbfb"));
+            turn.setVisible(false);
         }
     }
     
-        public Button getPlayAgainBtn(){return playagain;}
+    public Button getPlayAgainBtn(){return playagain;}
     public void disableButtons() {
         Button[][] buttons = getBoardButtons();
         for (int i = 0; i < 3; i++) {

@@ -21,12 +21,15 @@ public class CustomAlert extends Alert {
         super(alertType);
         this.setTitle("Connection closed");
         this.setHeaderText("No longer coonnected");
-        this.setContentText("Connection between you and opponent was closed!");
+        this.setContentText("Connection between you and your friend was closed!");
+        
         DialogPane dialogPane = this.getDialogPane();
         dialogPane.getStylesheets().add(
         getClass().getResource("myDialogs.css").toExternalForm());
         dialogPane.getStyleClass().add("myDialog");
+        
         this.showAndWait();
+        
         MainGame.game.setParentScene(new Scene(new PlayScreen()));
         MainGame.game.initializeScene();
         MainGame.game.showScene();

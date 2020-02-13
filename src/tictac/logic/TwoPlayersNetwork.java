@@ -14,6 +14,7 @@ public class TwoPlayersNetwork extends Game {
     public TwoPlayersNetwork(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyScreen ui, Socket socket, boolean myTurn) {
         super(isRecorded, Constants.DUAL, oppenent, user, myMark,0, ui);
         this.myTurn = myTurn;
+        ui.changeTurn(myTurn);
         if (!myTurn) {
             ui.disableButtons();
         }
@@ -60,6 +61,7 @@ public class TwoPlayersNetwork extends Game {
                     printStream.flush();
                     recordStep(x, y, Constants.MINE);
                     myTurn = !myTurn;
+                    ui.changeTurn(myTurn);
                     ui.disableButtons();
                     result = evaluateGame();
                 }
@@ -71,6 +73,7 @@ public class TwoPlayersNetwork extends Game {
                     ui.setText(buttons[x][y], opponentMark);
                     recordStep(x, y, Constants.OPPONENT);
                     myTurn = !myTurn;
+                    ui.changeTurn(myTurn);
                     result = evaluateGame();
                 }
             }

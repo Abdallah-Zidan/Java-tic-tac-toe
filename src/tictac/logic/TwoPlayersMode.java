@@ -6,6 +6,7 @@ import tictac.ui.GameBodyScreen;
 public class TwoPlayersMode extends Game {
     public TwoPlayersMode(boolean isRecorded, Player oppenent, User user, char myMark, GameBodyScreen ui) {
         super(isRecorded, Constants.DUAL, oppenent, user, myMark,0, ui);
+        ui.changeTurn(true);
     }
     /**
      * overriding the abstract function play to suit two players mode playing logic
@@ -24,6 +25,7 @@ public class TwoPlayersMode extends Game {
                     ui.setText(buttons[x][y], myMark);
                     recordStep(x, y, Constants.MINE);
                     myTurn = !myTurn;
+                    ui.changeTurn(myTurn);
                     result = evaluateGame();
                 }
             }
@@ -34,6 +36,7 @@ public class TwoPlayersMode extends Game {
                     ui.setText(buttons[x][y], opponentMark);
                     recordStep(x, y, Constants.OPPONENT);
                     myTurn = !myTurn;
+                    ui.changeTurn(myTurn);
                     result = evaluateGame();
                 } 
             }

@@ -8,6 +8,7 @@ public class SingleMode extends Game {
     public SingleMode(boolean isRecorded, Player oppenent, User user, char myMark, int level, GameBodyScreen ui) {
         super(isRecorded, Constants.SOLO, oppenent, user, myMark, level, ui);
         comp = new Computer();
+        ui.changeTurn(true);
     }
     
     void insertMove(Position position) {
@@ -34,6 +35,7 @@ public class SingleMode extends Game {
                     ui.setText(buttons[x][y], myMark);
                     recordStep(x, y, Constants.MINE);
                     myTurn = !myTurn;
+                    ui.changeTurn(myTurn);
                     result = evaluateGame();
                 }
             }
@@ -55,6 +57,7 @@ public class SingleMode extends Game {
                 }
                 insertMove(position);
                 myTurn = !myTurn;
+                ui.changeTurn(myTurn);
                 result = evaluateGame();
             }
         }

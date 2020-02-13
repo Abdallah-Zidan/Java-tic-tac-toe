@@ -49,7 +49,7 @@ public class GameModel {
             Connection conn;
             conn = db.connect();
             Statement stmt = conn.createStatement();
-             String mark = String.valueOf(sympol).toLowerCase();
+            String mark = String.valueOf(sympol).toLowerCase();
             String queryString = "INSERT INTO 'games'('game_type', 'sympol', 'player_id', 'result', 'user_id', 'level') VALUES ('"+game_type+"', '"+mark+"', '"+player_id+"', '"+result+"', "+user_id+", '"+level+"')";
             stmt.executeUpdate(queryString);
             ResultSet rs = stmt.getGeneratedKeys();

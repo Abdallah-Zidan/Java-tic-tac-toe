@@ -13,15 +13,11 @@ public class PrimaryScreen extends Pane {
     protected final ImageView imageView;
     protected final Button register;
     protected final Button login;
-    protected final Button about;
-    protected final ImageView imageView0;
     static AudioClip audio;
     public PrimaryScreen() {
         imageView = new ImageView();
         register = new Button();
         login = new Button();
-        about = new Button();
-        imageView0 = new ImageView();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -63,22 +59,10 @@ public class PrimaryScreen extends Pane {
         login.setCursor(Cursor.HAND);
         login.setFont(Font.loadFont(getClass().getResource("fonts/BubbleboddyNeueTrialRegular.ttf").toExternalForm(), 25.0));
         login.setOnAction(EventController.Primary.loginOnAction());
-        
-        about.setLayoutX(20.0);
-        about.setLayoutY(14.0);
-        about.setMnemonicParsing(false);
-        about.getStyleClass().add("arrow");
-
-        imageView0.setFitHeight(42.0);
-        imageView0.setFitWidth(44.0);
-        imageView0.setImage(new Image(getClass().getResource("images/about.png").toExternalForm()));
-        about.setGraphic(imageView0);
-        about.setCursor(Cursor.HAND);
 
         getChildren().add(imageView);
         getChildren().add(register);
         getChildren().add(login);
-        getChildren().add(about);
          if(audio == null){
               audio = new AudioClip(getClass().getResource("maintheme.mp3").toString());
               audio.setCycleCount(1000);
