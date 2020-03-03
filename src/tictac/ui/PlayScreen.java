@@ -95,11 +95,11 @@ public class PlayScreen extends Pane {
         savedgames.setCursor(Cursor.HAND);
         savedgames.setOnAction(EventController.Play.savedOnAction());
 
-        arrow.setLayoutX(82.0);
+        arrow.setLayoutX(52.0);
         arrow.setLayoutY(410.0);
         arrow.setMnemonicParsing(false);
-        arrow.setPrefHeight(20.0);
-        arrow.setPrefWidth(10.0);
+        arrow.setPrefHeight(39.0);
+        arrow.setPrefWidth(29.0);
         arrow.getStyleClass().add("arrow");
         arrow.setCursor(Cursor.HAND);
         arrow.setOnAction(EventController.Play.backOnAction());
@@ -121,8 +121,8 @@ public class PlayScreen extends Pane {
         about.setGraphic(imageView1);
         about.setCursor(Cursor.HAND);
         
-        exit.setLayoutX(8.0);
-        exit.setLayoutY(420.0);
+        exit.setLayoutX(580.0);
+        exit.setLayoutY(410.0);
         exit.setMnemonicParsing(false);
         exit.getStyleClass().add("exit");
         exit.setCursor(Cursor.HAND);

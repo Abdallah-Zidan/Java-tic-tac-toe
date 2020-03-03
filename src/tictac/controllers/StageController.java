@@ -6,6 +6,7 @@
 package tictac.controllers;
 
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -157,6 +158,7 @@ public class StageController {
         }
 
         stage.initStyle(stageStyle);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/tictac/ui/images/xon.png")));
         stage.setResizable(resizable);
         stage.setTitle(title);
         stage.sizeToScene();

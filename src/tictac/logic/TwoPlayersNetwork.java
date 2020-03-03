@@ -44,6 +44,7 @@ public class TwoPlayersNetwork extends Game {
         }
         ui.changeTurn(myTurn);
         ui.clearButtons();
+        ui.getPlayAgainBtn().setVisible(false);
         gameEnded = false;
         ui.playSound();
     }

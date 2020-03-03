@@ -42,7 +42,12 @@ public class SingleMode extends Game {
             if (!myTurn && !board.getFreePositions().isEmpty()) {
                 switch (level) {
                     case Constants.EASY:
-                        position = comp.getRandomMove(board);
+                        if(counter%2 !=0){
+                             position = comp.findBestPosition(board,myMark , opponentMark);
+                        }else{
+                             position = comp.getRandomMove(board);
+                        } 
+                        counter++;
                         break;
                     case Constants.HARD:
                         position = comp.findBestPosition(board,myMark , opponentMark);

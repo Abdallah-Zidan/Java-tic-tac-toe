@@ -95,7 +95,7 @@ public class GameBodyScreen extends Pane {
 
         scorenum.setLayoutX(126.0);
         scorenum.setLayoutY(107.0);
-        scorenum.setText("20");
+        scorenum.setText("0");
         scorenum.setTextFill(javafx.scene.paint.Color.valueOf("#fbfbfb"));
         scorenum.setFont(Font.loadFont(getClass().getResource("fonts/BoughiesDemo.ttf").toExternalForm(), 27.0));
 
@@ -341,6 +341,7 @@ public class GameBodyScreen extends Pane {
     }
 
     public void setScore(int score) {
+        score += Integer.parseInt(scorenum.getText());
         scorenum.setText(Integer.toString(score));
     }
 
@@ -355,6 +356,10 @@ public class GameBodyScreen extends Pane {
             osym.setTextFill(Color.valueOf("#fbfbfb"));
             turn.setVisible(false);
         }
+    }
+    
+    public void hideTurn() {
+        turn.setVisible(false);
     }
     
     public Button getPlayAgainBtn(){return playagain;}
@@ -416,8 +421,5 @@ public class GameBodyScreen extends Pane {
                 }
             }
         }
-    }
-    public void hideTurn(){
-        turn.setVisible(false);
     }
 }

@@ -6,8 +6,10 @@
 package tictac.animation;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DialogPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import tictac.game.MainGame;
 import tictac.ui.PlayScreen;
 
@@ -15,21 +17,23 @@ import tictac.ui.PlayScreen;
  *
  * @author zidan
  */
-public class CustomAlert extends Alert {
+public class CustomAlert{
     
-    public CustomAlert(AlertType alertType) {
-        super(alertType);
-        this.setTitle("Connection closed");
-        this.setHeaderText("No longer coonnected");
-        this.setContentText("Connection between you and your friend was closed!");
-        
-        DialogPane dialogPane = this.getDialogPane();
-        dialogPane.getStylesheets().add(
-        getClass().getResource("myDialogs.css").toExternalForm());
-        dialogPane.getStyleClass().add("myDialog");
-        
-        this.showAndWait();
-        
+    
+    public CustomAlert() {
+        NoConnection noConnection = new NoConnection();
+        Stage conStage = new Stage();
+        Window parent = MainGame.game.getParentScene().getWindow();
+        conStage.setTitle("Disconnected");
+        conStage.initOwner(parent);
+        conStage.initModality(Modality.WINDOW_MODAL);
+        conStage.initStyle(StageStyle.UTILITY);
+        conStage.setResizable(false);
+        Scene scene = new Scene(noConnection);
+        conStage.setScene(scene);
+        conStage.centerOnScreen();
+        conStage.showAndWait();
+      
         MainGame.game.setParentScene(new Scene(new PlayScreen()));
         MainGame.game.initializeScene();
         MainGame.game.showScene();

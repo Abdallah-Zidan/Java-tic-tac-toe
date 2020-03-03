@@ -53,7 +53,7 @@ public abstract class Game {
         if (isRecorded) {
             steps = new ArrayList<>();
         }
-         counter =0;
+        counter =0;
         ui.getPlayAgainBtn().setVisible(false);
         PrimaryScreen.stopSound();
     }
@@ -61,7 +61,7 @@ public abstract class Game {
     public boolean isMyTurn() {
         return myTurn;
     }
-
+   // public GameBodyScreen getUi(){return ui;}
     /*
     this method is responsible for adding action events on the game buttons
      */
@@ -123,6 +123,7 @@ public abstract class Game {
                 ui.highlightButtons(1);
                 showEnd.showStage(1, endStage, ui);
                 user.victory();
+                ui.setScore(3);
                 saveGame("victory");
                 break;
             case 2:
@@ -134,6 +135,7 @@ public abstract class Game {
                 showEnd.showStage(3, endStage, ui);
                 saveGame("draw");
                 user.draw();
+                ui.setScore(1);
                 break;
         }
         delay = new PauseTransition(Duration.seconds(4));

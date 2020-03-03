@@ -27,7 +27,6 @@ public class Player implements Serializable {
         this.fname = fname;
         this.lname = lname;
         this.ip_address = ip_address;
-        
     }
     public Player(String ip_address){
         this.ip_address = ip_address;
@@ -57,7 +56,7 @@ public class Player implements Serializable {
         try {
             Connection conn = db.connect();
             Statement stmt = conn.createStatement();
-            String queryString = "SELECT * FROM players WHERE ip_address ='" + ip_address+"'";
+            String queryString = "SELECT * FROM players WHERE ip_address ='" + ip_address + "'";
             ResultSet rs = stmt.executeQuery(queryString);
             if (rs.next()) {
                 retval = true;
@@ -113,7 +112,6 @@ public class Player implements Serializable {
     public void setId(int id){
         this.id = id;
     }
-
     public void setFname(String fname){
         this.fname = fname;
     }

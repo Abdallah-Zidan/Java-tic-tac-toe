@@ -51,7 +51,7 @@ class ConnectionLost implements Runnable {
     public void run() {        
         tpn.closeGame(MainGame.gameInfo.socket, tpn.dis, tpn.printStream);
         tpn.ui.stopSound();
-        CustomAlert alert = new CustomAlert(Alert.AlertType.INFORMATION);  
+        CustomAlert alert = new CustomAlert();  
     }
 }
 

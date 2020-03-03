@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -200,10 +202,11 @@ public class EventController {
                 User user = new User(MainGame.gameInfo.username, MainGame.gameInfo.password);
                 user.getUserInfo();
                 Player player = game.getPlayer();
+
                 ui.setFirstName(user.getFname());
                 ui.setFirstSymbol(game.getSymbol());
                 ui.setSecondName(player.getFname());
-                ui.setSecondSymbol(game.getSymbol() == 'x' ? 'o' : 'x');
+                ui.setSecondSymbol(Character.toLowerCase(game.getSymbol()) == 'x' ? 'o' : 'x');
                 ui.setScore(user.getScore());
 
                 ReplayGame replay = new ReplayGame(player, user, Character.toUpperCase(game.getSymbol()), game.getId(), ui);
@@ -297,9 +300,12 @@ public class EventController {
         public static EventHandler<ActionEvent> connectOnAction(JoinRoomScreen pane) {
             return (event) -> {
                 String ip = pane.getIpAddress().getText();
+                String pattern = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+                Pattern regex = Pattern.compile(pattern);
+                Matcher match = regex.matcher(ip);
 
-                if (ip.isEmpty())
-                    pane.setValidator("Enter ip address");
+                if (!match.find())
+                    pane.setValidator("Enter valid ip address");
                 else {
                     MainGame.gameInfo.IpAddress = ip;
                     MainGame.game.setParentScene(new Scene(new ChooseSymbolScreen("online")));
@@ -379,7 +385,7 @@ public class EventController {
 
             ((GameBodyScreen)ui).setFirstName(user.getFname());
             ((GameBodyScreen)ui).setFirstSymbol(symbol);
-            ((GameBodyScreen)ui).setSecondSymbol(symbol == 'x' ? 'o' : 'x');
+            ((GameBodyScreen)ui).setSecondSymbol(Character.toLowerCase(symbol) == 'x' ? 'o' : 'x');
             ((GameBodyScreen)ui).setScore(user.getScore());
 
             if (screen.toLowerCase().equals("single")) {
@@ -389,7 +395,7 @@ public class EventController {
                 game.startActionHandling();
             }
             else if (screen.toLowerCase().equals("two")) {
-                player =Player.getPlayer(2);
+                player = Player.getPlayer(2);
                 ((GameBodyScreen)ui).setSecondName(player.getFname());
                 game = new TwoPlayersMode(pane.getRecord(), player, user, symbol, (GameBodyScreen)ui);
                 game.startActionHandling();
@@ -408,8 +414,15 @@ public class EventController {
                                 user.getUserInfo();
                                 Player p = new Player();
 
+                                String ip = "";
                                 try {
-                                    Player player = new Player(user.getFname(), user.getLname(), MainGame.gameInfo.IpAddress);
+                                    ip = InetAddress.getLocalHost().getHostAddress();
+                                }
+                                catch (UnknownHostException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    Player player = new Player(user.getFname(), user.getLname(), ip);
                                     ObjectOutputStream output = new ObjectOutputStream(MainGame.gameInfo.socket.getOutputStream());
                                     output.writeObject(player);
                                 }
@@ -419,7 +432,7 @@ public class EventController {
                                 try {
                                     ObjectInputStream input = new ObjectInputStream(MainGame.gameInfo.socket.getInputStream());
                                     p = (Player)input.readObject();
-                                    addPlayer(p);
+                                    p = addPlayer(p);
                                 }
                                 catch (IOException ex) {
                                     System.out.println(ex.getMessage());
@@ -446,8 +459,15 @@ public class EventController {
                                 user.getUserInfo();
                                 Player p = new Player();
 
+                                String ip = "";
                                 try {
-                                    Player player = new Player(user.getFname(), user.getLname(), MainGame.gameInfo.IpAddress);
+                                    ip = InetAddress.getLocalHost().getHostAddress();
+                                }
+                                catch (UnknownHostException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    Player player = new Player(user.getFname(), user.getLname(), ip);
                                     ObjectOutputStream output = new ObjectOutputStream(MainGame.gameInfo.socket.getOutputStream());
                                     output.writeObject(player);
                                 }
@@ -457,7 +477,7 @@ public class EventController {
                                 try {
                                     ObjectInputStream input = new ObjectInputStream(MainGame.gameInfo.socket.getInputStream());
                                     p = (Player)input.readObject();
-                                    addPlayer(p);
+                                    p = addPlayer(p);
                                 }
                                 catch (IOException ex) {
                                     System.out.println(ex.getMessage());
@@ -483,11 +503,13 @@ public class EventController {
                 ((GameBodyScreen)ui).playSound();
         }
 
-        private static void addPlayer(Player player) {
+        private static Player addPlayer(Player player) {
             player = new Player(player.getFname(), player.getLname(), player.getIpAddress());
 
             if (!player.playerExist(player.getIpAddress()))
                 player.save();
+
+            return player.getPlayerInfo();
         }
     }
 
@@ -501,14 +523,18 @@ public class EventController {
                         MainGame.gameInfo.socket.close();
                         MainGame.gameInfo.socket = null;
                     }
-                    catch (IOException e) {}
+                    catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 if (MainGame.gameInfo.serverSocket != null) {
                     try {
                         MainGame.gameInfo.serverSocket.close();
                         MainGame.gameInfo.serverSocket = null;
                     }
-                    catch (IOException e) {}
+                    catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
 
                 MainGame.game.setParentScene(new Scene(new ChooseHostScreen()));
@@ -536,14 +562,18 @@ public class EventController {
                         MainGame.gameInfo.socket.close();
                         MainGame.gameInfo.socket = null;
                     }
-                    catch (IOException e) {}
+                    catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 if (MainGame.gameInfo.serverSocket != null) {
                     try {
                         MainGame.gameInfo.serverSocket.close();
                         MainGame.gameInfo.serverSocket = null;
                     }
-                    catch (IOException e) {}
+                    catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
 
                 MainGame.game.setParentScene(new Scene(new PlayScreen()));
@@ -591,7 +621,7 @@ class ShowOnline implements Runnable {
         ui.setFirstName(user.getFname());
         ui.setFirstSymbol(symbol);
         ui.setSecondName(player.getFname());
-        ui.setSecondSymbol(symbol == 'x' ? 'o' : 'x');
+        ui.setSecondSymbol(Character.toLowerCase(symbol) == 'x' ? 'o' : 'x');
         ui.setScore(user.getScore());
 
         MainGame.game.setParentScene(new Scene(ui));
@@ -600,6 +630,6 @@ class ShowOnline implements Runnable {
         ui.playSound();
 
         EventController.ChooseSymbol.game = new TwoPlayersNetwork(isRecord, player, user, symbol, ui, MainGame.gameInfo.socket, isServer);
-         EventController.ChooseSymbol.game.startActionHandling();
+        EventController.ChooseSymbol.game.startActionHandling();
     }
 }
